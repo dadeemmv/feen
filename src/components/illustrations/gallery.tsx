@@ -23,10 +23,10 @@ import { EmptyBox } from './empty-box';
 import { HeroBookSpotlight } from './hero-book-spotlight';
 import { ILLUSTRATION_KEYS, Illustration } from './illustration';
 import { KiwiPattern } from './kiwi-pattern';
-import { FoxMascot } from './mascots/fox-mascot';
-import { KoalaMascot } from './mascots/koala-mascot';
-import { OwlMascot } from './mascots/owl-mascot';
-import { SquirrelMascot } from './mascots/squirrel-mascot';
+import { GiverCharacter } from './mascots/giver-character';
+import { SharkCharacter } from './mascots/shark-character';
+import { ValueCharacter } from './mascots/value-character';
+import { VisionaryCharacter } from './mascots/visionary-character';
 import type { IllustrationProps } from './lib/art-svg';
 
 type Entry = { label: string; Art: ComponentType<IllustrationProps> };
@@ -38,10 +38,10 @@ const byKey = (name: (typeof ILLUSTRATION_KEYS)[number]): Entry => ({
 
 /** Variants that the registry does not reach (non-default props, special compositions). */
 const VARIANTS: readonly Entry[] = [
-  { label: 'Mascotte · Scoiattolo', Art: SquirrelMascot },
-  { label: 'Mascotte · Gufo', Art: OwlMascot },
-  { label: 'Mascotte · Volpe', Art: FoxMascot },
-  { label: 'Mascotte · Koala', Art: KoalaMascot },
+  { label: 'Personaggio · Visionaria', Art: VisionaryCharacter },
+  { label: 'Personaggio · Squalo', Art: SharkCharacter },
+  { label: 'Personaggio · Filantropo', Art: GiverCharacter },
+  { label: 'Personaggio · Cassettista', Art: ValueCharacter },
   { label: 'HeroBookSpotlight', Art: HeroBookSpotlight },
   { label: 'course-first-investment · paper', Art: (p) => <Illustration name="course-first-investment" background="paper" {...p} /> },
   { label: 'course-stocks · paper', Art: (p) => <Illustration name="course-stocks" background="paper" {...p} /> },

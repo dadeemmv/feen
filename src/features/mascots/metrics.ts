@@ -2,7 +2,7 @@
  * Geometry of the personality test and the mascot screens, from the kit's metrics where a token
  * exists.
  */
-import { avatarSize, borderWidth, iconSize, progressHeight, tileSize } from '@/components/ui';
+import { avatarSize, borderWidth, iconSize, tileSize } from '@/components/ui';
 import { duration, layout, spacing } from '@/theme';
 
 export const mascotMetrics = {
@@ -13,11 +13,15 @@ export const mascotMetrics = {
   likertBorder: borderWidth.thick + borderWidth.thin / 2,
   /** Pause after a tap before the next statement slides in (the choice stays visible). */
   advanceDelay: duration.base + duration.fast,
-  /** Mascot art sizes: reveal hero, intro lineup, greeting / list row. */
-  revealArt: avatarSize.xl * 2,
-  lineupArt: tileSize.xl + spacing.xl,
-  readyArt: avatarSize.xl + spacing.xxxl,
-  greetingArt: tileSize.xl,
-  rowArt: tileSize.md,
-  traitBar: progressHeight.md,
+  /** Character art: full-figure heights (reveal, ready, lineups) and bust widths (greeting, rows, compass). */
+  revealArtHeight: avatarSize.xl * 2 + spacing.xxxl,
+  readyArtHeight: avatarSize.xl * 2,
+  lineupArtHeight: avatarSize.xl + spacing.xl,
+  greetingBust: tileSize.xl + spacing.xs,
+  rowBust: tileSize.md - spacing.xxs,
+  compassBust: tileSize.lg,
+  /** Compass: the user's dot, the other quadrants' strength, the axis cross. */
+  compassDot: iconSize.md + spacing.xxs,
+  compassDimmed: 0.45,
+  compassAxisOpacity: 0.25,
 } as const;

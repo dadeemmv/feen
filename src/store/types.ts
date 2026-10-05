@@ -17,14 +17,14 @@ import type { ResolvedMilestone } from './milestones';
 
 export type Experience = 'beginner' | 'some' | 'expert';
 
-/** Outcome of the money-personality test ("Che tipo sei con i soldi?"). */
+/** Outcome of the money-compass test ("Che tipo sei con i soldi?"). */
 export type PersonalityResult = {
-  /** The companion mascot assigned by the test. */
+  /** The companion character assigned by the test. */
   mascot: MascotId;
-  /** Lean towards the future on the present ↔ future axis, 0…100. */
-  future: number;
-  /** Lean towards boldness on the safe ↔ bold axis, 0…100. */
-  bold: number;
+  /** Position on the left ↔ right axis (dream home ↔ yacht), 0…100. */
+  right: number;
+  /** Position on the unrisk ↔ risk axis, 0…100. */
+  risk: number;
   /** Epoch ms. */
   takenAt: number;
 };

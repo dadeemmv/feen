@@ -93,16 +93,23 @@ Le regole del progetto per chi continua (anche con un agente AI) sono in `CLAUDE
   note legali e profilo. Sheet "Utilizza codice" (codici demo `FINANZ100`, `STREAK`) e
   "Valuta app".
 
-**Test di personalità e 4 mascotte (aggiunto il 5 ottobre 2026).**
+**Bussola dei soldi e 4 personaggi (aggiunta il 5 ottobre 2026).**
 - Onboarding: nome → *Che tipo sei con i soldi?* (intro) → 12 affermazioni su scala a 7 cerchi
-  stile 16Personalities → rivelazione della mascotte → interessi → livello → ritmo → tutto pronto.
-- Due assi (presente ↔ futuro, prudenza ↔ audacia), sei affermazioni ciascuno, metà in senso
-  inverso. Quadranti: Scoiattolo *Nocciola* (Previdente), Gufo *Otto* (Stratega), Volpe *Lampo*
-  (Intraprendente), Koala *Mochi* (Zen). A pari merito vince lo Scoiattolo.
+  stile 16Personalities → risultato → interessi → livello → ritmo → tutto pronto.
+- Due assi stile political compass, sei affermazioni ciascuno, metà in senso inverso:
+  orizzontale *Left* (i soldi per la casetta dei sogni, chi ami, restituire) ↔ *Right* (i soldi per
+  farne altri, lo yacht); verticale *Unrisk* ↔ *Risk*. A pari merito si cade in Unrisk Left.
+- Quadranti e personaggi (archetipi ispirati, non ritratti): Risk Left *Vera, la Visionaria*;
+  Risk Right *Max, lo Squalo*; Unrisk Left *Teo, il Filantropo*; Unrisk Right *Bruno, il
+  Cassettista*.
 - Dati e testi in `src/content/personality.ts`; punteggio puro in `src/features/mascots/lib/score.ts`;
-  illustrazioni SVG originali in `src/components/illustrations/mascots/` (QA su `/dev/mascots`).
-- Il risultato sta nel profilo (`personality`) e compare in "Tutto pronto", accanto al saluto in
-  Home e in Account → *Il tuo compagno* (`/mascot`), da dove si può rifare il test.
+  bussola in `src/features/mascots/components/money-compass.tsx`; personaggi SVG (figura intera
+  200 × 320 o busto con `framing="bust"`) in `src/components/illustrations/mascots/`, QA su
+  `/dev/mascots`.
+- Il risultato sta nel profilo (`personality`: `mascot`, `right`, `risk`) e compare in "Tutto
+  pronto", accanto al saluto in Home e in Account → *Il tuo personaggio* (`/mascot`), da dove si
+  rifà il test. Un risultato salvato con la versione precedente (animali) viene ignorato e il test
+  viene riproposto.
 
 **Implementate ma senza report di chiusura dell'agente:** il lavoro si è interrotto per i limiti
 di utilizzo subito prima del passaggio finale di verifica.

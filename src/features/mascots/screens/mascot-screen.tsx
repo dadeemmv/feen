@@ -1,8 +1,8 @@
 /**
- * "Il tuo compagno" (/mascot, from the Home greeting and Account): the saved test result on
+ * "Il tuo personaggio" (/mascot, from the Home greeting and Account): the saved money compass on
  * evergreen with "Rifai il test", or — for a profile without a result — the test intro. The retake
  * runs the same quiz in place with its own answers; finishing saves the new result, toasts whether
- * the companion changed and shows the reveal again.
+ * the character changed and shows the reveal again.
  */
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -11,7 +11,7 @@ import { ArrowLeft, Clock, RotateCcw } from 'lucide-react-native';
 import { Button, Card, Chip, Confetti, IconButton, Screen, Spotlight, Text, toast, VStack } from '@/components/ui';
 import { getMascot, type AgreementValue } from '@/content/personality';
 import { goBackOr } from '@/features/shop/lib/navigation';
-import { getStoreState, useStore } from '@/store';
+import { getStoreState, selectPersonality, useStore } from '@/store';
 import { layout, spacing } from '@/theme';
 
 import { MascotLineup } from '../components/mascot-lineup';
@@ -31,7 +31,7 @@ function BackHeader() {
 }
 
 export function MascotScreen() {
-  const personality = useStore((s) => s.personality);
+  const personality = useStore(selectPersonality);
   const [phase, setPhase] = useState<Phase>('result');
   const [answers, setAnswers] = useState<Record<string, AgreementValue>>({});
   const [index, setIndex] = useState(0);

@@ -256,18 +256,31 @@ export const illustration = {
   blushDeep: p.pink8,
 } as const;
 
-/** Raw colours of the four companion mascots, for their SVG art only (features/mascots). */
+/** Raw colours of the four companion characters, for their SVG art only (features/mascots). */
 export const mascotColors = {
-  squirrel: { from: p.squirrelFrom, to: p.squirrelTo, light: p.squirrelLight, dark: p.squirrelDark },
-  owl: { from: p.owlFrom, to: p.owlTo, light: p.owlLight, dark: p.owlDark },
-  fox: { from: p.foxFrom, to: p.foxTo, light: p.foxLight, dark: p.foxDark },
-  koala: {
-    from: p.koalaFrom,
-    to: p.koalaTo,
-    light: p.koalaLight,
-    dark: p.koalaNose,
-    noseLight: p.koalaNoseLight,
-    inner: p.koalaInner,
-  },
+  skin: [p.skinFrom, p.skinTo] as const,
+  tan: [p.tanFrom, p.tanTo] as const,
+  skinShade: p.skinShade,
+  hairSilver: [p.hairSilverFrom, p.hairSilverTo] as const,
+  hairAsh: [p.hairAshFrom, p.hairAshTo] as const,
+  hairDark: [p.hairDarkFrom, p.hairDarkTo] as const,
+  hairHoney: [p.hairHoneyFrom, p.hairHoneyTo] as const,
+  suitNavy: [p.suitNavyFrom, p.suitNavyTo] as const,
+  suitRoyal: [p.suitRoyalFrom, p.suitRoyalTo] as const,
+  sweater: [p.sweaterFrom, p.sweaterTo] as const,
+  khaki: [p.khakiFrom, p.khakiTo] as const,
+  banknote: [p.banknoteFrom, p.banknoteTo] as const,
+  roof: [p.roofFrom, p.roofTo] as const,
+  trouserDark: p.trouserDark,
+  shirt: p.shirt,
+  shirtShade: p.shirtShade,
+  tieRed: p.tieRed,
+  tieGold: p.tieGold,
+  suspenders: p.suspenders,
+  shoe: p.shoe,
+  glassesGold: p.glassesGold,
+  glassesBlack: p.glassesBlack,
+  canRed: p.canRed,
+  wallCream: p.wallCream,
   cheek: p.cheek,
 } as const;

@@ -14,7 +14,7 @@ export const DEV_PAGES: DevRouteLink[] = [
   { title: 'UI kit', subtitle: 'Tutti i componenti e i loro stati', href: '/dev/ui', emoji: '🧩' },
   { title: 'Icone', subtitle: 'Icone economia su carta ed evergreen', href: '/dev/icons', emoji: '💎' },
   { title: 'Illustrazioni', subtitle: 'Copertine, arte delle lezioni, composizioni', href: '/dev/illustrations', emoji: '🎨' },
-  { title: 'Mascotte', subtitle: 'I quattro compagni del test di personalità', href: '/dev/mascots', emoji: '🦊' },
+  { title: 'Personaggi', subtitle: 'I quattro personaggi della bussola dei soldi', href: '/dev/mascots', emoji: '🧭' },
 ];
 
 export const DEV_ROUTES: DevRouteLink[] = [
@@ -28,7 +28,7 @@ export const DEV_ROUTES: DevRouteLink[] = [
   { title: 'Account', subtitle: '/account', href: '/account', emoji: '🤠' },
   { title: 'Impostazioni', subtitle: '/account/settings', href: { pathname: '/account/[section]', params: { section: 'settings' } }, emoji: '⚙️' },
   { title: 'Invita un amico', subtitle: '/invite', href: '/invite', emoji: '💌' },
-  { title: 'Il tuo compagno', subtitle: '/mascot', href: '/mascot', emoji: '🦉' },
+  { title: 'Il tuo personaggio', subtitle: '/mascot', href: '/mascot', emoji: '🧭' },
   { title: 'Finanz Pro', subtitle: '/pro', href: '/pro', emoji: '💜' },
   { title: 'Storia Academy', subtitle: '/story/academy', href: { pathname: '/story/[id]', params: { id: 'academy' } }, emoji: '📖' },
   { title: 'Storia App', subtitle: '/story/app', href: { pathname: '/story/[id]', params: { id: 'app' } }, emoji: '📱' },

@@ -19,17 +19,23 @@ import { getUserLevel, type UserLevel } from './rules/levels';
 import { countCompletedChapters, countCompletedLessons } from './rules/progress';
 import { computeLongestStreak, computeStreak, type StreakInfo } from './rules/streak';
 import { getAvailabilityIssue } from './rules/shop';
-import type { BuyFailureReason, RootState } from './types';
+import type { BuyFailureReason, PersonalityResult, RootState } from './types';
 
 type S = RootState;
 
 /* ── Profile ──────────────────────────────────────────────────────────────────────────────── */
 
-/** The companion mascot from the personality test (null until taken, or if the blob is stale). */
-export const selectMascot = (s: Pick<S, 'personality'>): MascotId | null => {
-  const mascot = s.personality?.mascot;
-  return isMascotId(mascot) ? mascot : null;
+/**
+ * The money-compass result, or null until the test is taken — also for a stale blob from an older
+ * version of the test (other character ids or axes), so the user is simply offered the test again.
+ */
+export const selectPersonality = (s: Pick<S, 'personality'>): PersonalityResult | null => {
+  const p = s.personality;
+  return p && isMascotId(p.mascot) && typeof p.right === 'number' && typeof p.risk === 'number' ? p : null;
 };
+
+/** The companion character from the money compass (null until taken). */
+export const selectMascot = (s: Pick<S, 'personality'>): MascotId | null => selectPersonality(s)?.mascot ?? null;
 
 /* ── Streak ───────────────────────────────────────────────────────────────────────────────── */
 

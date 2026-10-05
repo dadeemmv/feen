@@ -1,6 +1,6 @@
 /**
- * Companion mascots feature: the money-personality test ("Che tipo sei con i soldi?"), its four
- * results and the "Il tuo compagno" page (/mascot). Data and copy of the mascots live in
+ * Companion characters feature: the money-compass test ("Che tipo sei con i soldi?"), its four
+ * quadrants and the "Il tuo personaggio" page (/mascot). Data and copy of the characters live in
  * `@/content/personality`; the artwork in `@/components/illustrations` (`MascotArt`).
  */
 export { MascotScreen } from './screens/mascot-screen';
@@ -8,7 +8,7 @@ export { PersonalityQuiz, type PersonalityQuizProps } from './components/persona
 export { MascotReveal, type MascotRevealProps } from './components/mascot-reveal';
 export { MascotLineup, type MascotLineupProps } from './components/mascot-lineup';
 export { LikertScale, type LikertScaleProps } from './components/likert-scale';
-export { TraitBar, type TraitBarProps } from './components/trait-bar';
+export { MoneyCompass, type MoneyCompassProps } from './components/money-compass';
 export {
   axisLean,
   countAnswered,

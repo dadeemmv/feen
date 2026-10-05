@@ -64,18 +64,18 @@ export function DevIllustrationsScreen() {
   );
 }
 
-/** The four companion mascots, large and at tab-icon size, on paper and on evergreen. */
+/** The four companion characters, full figure and as busts, on paper and on evergreen. */
 export function DevMascotsScreen() {
   return (
     <GalleryPage>
-      <KitPage title="Mascotte">
+      <KitPage title="Personaggi">
         {(['paper', 'evergreen'] as const).map((surface) => (
           <GallerySection key={surface} title={surface === 'paper' ? 'Su carta' : 'Su evergreen'} surface={surface}>
             {MASCOT_IDS.map((id) => (
-              <GalleryCell key={id} label={`${MASCOTS[id].name} · ${MASCOTS[id].animal}`}>
-                <MascotArt id={id} width={160} accessibilityLabel={MASCOTS[id].animal} />
-                <MascotArt id={id} width={56} />
-                <MascotArt id={id} width={28} />
+              <GalleryCell key={id} label={`${MASCOTS[id].name} · ${MASCOTS[id].title} · ${MASCOTS[id].quadrant}`}>
+                <MascotArt id={id} height={240} accessibilityLabel={MASCOTS[id].name} />
+                <MascotArt id={id} framing="bust" width={64} />
+                <MascotArt id={id} framing="bust" width={36} />
               </GalleryCell>
             ))}
           </GallerySection>

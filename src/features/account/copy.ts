@@ -31,7 +31,7 @@ export const ACCOUNT_COPY = {
 
 export const MENU_COPY = {
   settings: { title: 'Impostazioni', subtitle: 'Modifica le impostazioni' },
-  mascot: { title: 'Il tuo compagno', subtitle: 'Il tuo profilo con i soldi' },
+  mascot: { title: 'Il tuo personaggio', subtitle: 'La tua bussola dei soldi' },
   language: { title: 'Lingua e Paese', subtitle: 'Cambia lingua e Paese del tuo account' },
   purchases: { title: 'I tuoi acquisti', subtitle: 'Visualizza i tuoi acquisti' },
   pro: { title: 'Finanz PRO', subtitle: 'Dettagli abbonamento' },

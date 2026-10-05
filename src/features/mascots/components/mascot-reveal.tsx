@@ -1,7 +1,8 @@
 /**
- * The result of the test, for evergreen surfaces: the mascot pops in, "Sei uno Scoiattolo",
- * its type, the motto, the two axes as split bars, strengths, what to train and the other three
- * companions. Content rises in, staggered. Used by onboarding and by the Account page.
+ * The result of the test, for evergreen surfaces: the character pops in, the quadrant ("Risk
+ * Right"), the archetype title, the motto, the money compass with the user's dot, the description,
+ * strengths, what to train and the other three characters. Content rises in, staggered. Used by
+ * onboarding and by the "Il tuo personaggio" page.
  */
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -9,26 +10,26 @@ import { Quote, Sparkles, Target } from 'lucide-react-native';
 
 import { MascotArt } from '@/components/illustrations';
 import { Card, Chip, Divider, HStack, Icon, iconSize, Tag, Text, VStack } from '@/components/ui';
-import { AXIS_POLES, getMascot } from '@/content/personality';
+import { getMascot } from '@/content/personality';
 import { useEntering } from '@/features/onboarding/lib/entering';
 import { PopIn } from '@/features/rewards';
-import { selectMascot, type PersonalityResult } from '@/store';
+import type { PersonalityResult } from '@/store';
 import { duration, spacing } from '@/theme';
 
 import { MASCOT_COPY } from '../copy';
 import { mascotMetrics } from '../metrics';
 import { MascotLineup } from './mascot-lineup';
-import { TraitBar } from './trait-bar';
+import { MoneyCompass } from './money-compass';
 
 export type MascotRevealProps = {
   result: PersonalityResult;
-  /** Show "Gli altri compagni" at the bottom. Default true. */
+  /** Show "Gli altri personaggi" at the bottom. Default true. */
   showOthers?: boolean;
 };
 
 export function MascotReveal({ result, showOthers = true }: MascotRevealProps) {
   const { rise } = useEntering();
-  const mascot = getMascot(selectMascot({ personality: result }) ?? 'squirrel');
+  const mascot = getMascot(result.mascot);
   const copy = MASCOT_COPY.reveal;
 
   return (
@@ -37,8 +38,8 @@ export function MascotReveal({ result, showOthers = true }: MascotRevealProps) {
         <PopIn delay={duration.fast}>
           <MascotArt
             id={mascot.id}
-            width={mascotMetrics.revealArt}
-            accessibilityLabel={copy.artLabel(mascot.animal, mascot.name)}
+            height={mascotMetrics.revealArtHeight}
+            accessibilityLabel={copy.artLabel(mascot.name, mascot.title)}
           />
         </PopIn>
         <Animated.View entering={rise(1)} style={styles.heading}>
@@ -46,11 +47,11 @@ export function MascotReveal({ result, showOthers = true }: MascotRevealProps) {
             {copy.overline}
           </Text>
           <Text variant="displayMd" align="center" accessibilityRole="header">
-            {mascot.youAre}
+            {mascot.quadrant}
           </Text>
-          <Tag label={mascot.type} tone="accent" solid style={styles.tag} />
+          <Tag label={mascot.title} tone="accent" solid style={styles.tag} />
           <Text variant="bodyMd" color="textSecondary" align="center">
-            {copy.meet(mascot.name)}
+            {copy.meet(mascot.name, mascot.title)}
           </Text>
         </Animated.View>
       </VStack>
@@ -69,11 +70,15 @@ export function MascotReveal({ result, showOthers = true }: MascotRevealProps) {
 
       <Animated.View entering={rise(3)}>
         <Card padding="md" contentStyle={styles.profile}>
-          <Text variant="overline" color="textSecondary">
-            {copy.traitsTitle}
-          </Text>
-          <TraitBar left={AXIS_POLES.horizon.negative} right={AXIS_POLES.horizon.positive} value={result.future} />
-          <TraitBar left={AXIS_POLES.risk.negative} right={AXIS_POLES.risk.positive} value={result.bold} />
+          <HStack justify="space-between">
+            <Text variant="overline" color="textSecondary">
+              {copy.compassTitle}
+            </Text>
+            <Text variant="labelSm" color="accentText" tabular>
+              {copy.position(result.right, result.risk)}
+            </Text>
+          </HStack>
+          <MoneyCompass right={result.right} risk={result.risk} mascot={mascot.id} />
           <Divider />
           <Text variant="bodyMd" color="textSecondary">
             {mascot.description}

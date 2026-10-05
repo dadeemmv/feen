@@ -20,6 +20,8 @@ type ArtSvgProps = IllustrationProps & {
   size: readonly [number, number];
   /** 'meet' (default) letterboxes; 'slice' fills the box and crops (covers, patterns). */
   fit?: 'meet' | 'slice';
+  /** Top-left of the visible window in artboard units, to frame a crop of a larger artwork. Default [0, 0]. */
+  origin?: readonly [number, number];
   children: ReactNode;
 };
 
@@ -32,13 +34,13 @@ export function resolveArtSize(size: readonly [number, number], width?: NumberPr
   return { width, height };
 }
 
-export function ArtSvg({ size, fit = 'meet', width, height, style, accessibilityLabel, children }: ArtSvgProps) {
+export function ArtSvg({ size, fit = 'meet', origin = [0, 0], width, height, style, accessibilityLabel, children }: ArtSvgProps) {
   const resolved = resolveArtSize(size, width, height);
   return (
     <Svg
       width={resolved.width}
       height={resolved.height}
-      viewBox={`0 0 ${size[0]} ${size[1]}`}
+      viewBox={`${origin[0]} ${origin[1]} ${size[0]} ${size[1]}`}
       preserveAspectRatio={`xMidYMid ${fit}`}
       style={style}
       {...svgA11y(accessibilityLabel)}

@@ -9,7 +9,7 @@ import {
   Headset,
   Heart,
   HeartHandshake,
-  PawPrint,
+  Compass,
   Settings,
   ShieldCheck,
   ShoppingBag,
@@ -43,10 +43,10 @@ export function AccountMainMenu({ style }: { style?: StyleProp<ViewStyle> }) {
         testID="account-settings"
       />
       <ListItem
-        icon={mascot ? <MascotArt id={mascot} width={mascotMetrics.rowArt} /> : PawPrint}
+        icon={mascot ? <MascotArt id={mascot} framing="bust" width={mascotMetrics.rowBust} /> : Compass}
         iconTone="butter"
         {...MENU_COPY.mascot}
-        value={mascot ? getMascot(mascot).name : undefined}
+        value={mascot ? getMascot(mascot).quadrant : undefined}
         onPress={() => router.push('/mascot')}
       />
       <ListItem icon={Globe} iconTone="sky" {...MENU_COPY.language} onPress={() => openSection('language')} />

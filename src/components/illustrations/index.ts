@@ -49,13 +49,13 @@ export {
 } from './economy/streak-flame-hero';
 export { TrophyCups, type TrophyCupsProps } from './economy/trophy-cups';
 
-// Companion mascots (square, transparent)
+// Companion characters (200 × 320 full figure, or square bust; transparent)
 export { MascotArt, type MascotArtProps } from './mascots/mascot-art';
-export { MASCOT_SIZE } from './mascots/mascot-parts';
-export { FoxMascot } from './mascots/fox-mascot';
-export { KoalaMascot } from './mascots/koala-mascot';
-export { OwlMascot } from './mascots/owl-mascot';
-export { SquirrelMascot } from './mascots/squirrel-mascot';
+export { BUST_FRAME, CHARACTER_SIZE, type Framing } from './mascots/character-parts';
+export { GiverCharacter } from './mascots/giver-character';
+export { SharkCharacter } from './mascots/shark-character';
+export { ValueCharacter } from './mascots/value-character';
+export { VisionaryCharacter } from './mascots/visionary-character';
 
 // Assistant & states
 export { ASSISTANT_ORB_SIZE, AssistantOrb, type AssistantOrbProps } from './assistant-orb';

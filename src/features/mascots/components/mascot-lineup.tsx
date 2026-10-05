@@ -1,7 +1,7 @@
 /**
- * The companions in a grid, each with its animal and type: the 2 × 2 teaser on the test intro,
- * and "Gli altri compagni" in one row under a result (the user's own mascot left out with
- * `exclude`).
+ * The characters in a grid, each with its title and quadrant: the 2 × 2 compass-shaped teaser on
+ * the test intro (risk on top, left on the left), and "Gli altri personaggi" in one row under a
+ * result (the user's own character left out with `exclude`).
  */
 import { StyleSheet, View } from 'react-native';
 
@@ -32,12 +32,12 @@ export function MascotLineup({ exclude, columns, accessibilityLabel }: MascotLin
         <View key={row.join('-')} style={styles.row}>
           {row.map((id) => (
             <View key={id} style={styles.item}>
-              <MascotArt id={id} width={mascotMetrics.lineupArt} />
+              <MascotArt id={id} height={mascotMetrics.lineupArtHeight} />
               <Text variant="labelMd" align="center" numberOfLines={1}>
-                {MASCOTS[id].animal}
+                {MASCOTS[id].title}
               </Text>
               <Text variant="bodySm" color="textSecondary" align="center" numberOfLines={1}>
-                {MASCOTS[id].type}
+                {MASCOTS[id].quadrant}
               </Text>
             </View>
           ))}

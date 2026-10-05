@@ -1,6 +1,6 @@
 /**
  * "Tutto pronto": the celebration that closes onboarding. Evergreen screen, confetti burst,
- * the user's companion mascot (or, without a test result, the avatar) popping in, "Ciao <nome>, il tuo percorso è pronto", a recap of the answers
+ * the user's companion character (or, without a test result, the avatar) popping in, "Ciao <nome>, il tuo percorso è pronto", a recap of the answers
  * and the first course waiting. "Inizia il percorso" writes the profile and enters the app.
  * A returning user ("Ho già un account") gets "Bentornato" with the saved profile instead.
  */
@@ -87,7 +87,7 @@ export function ReadyScreen() {
           <PopIn delay={duration.fast}>
             <View>
               {mascot ? (
-                <MascotArt id={mascot} width={mascotMetrics.readyArt} accessibilityLabel={getMascot(mascot).animal} />
+                <MascotArt id={mascot} height={mascotMetrics.readyArtHeight} accessibilityLabel={getMascot(mascot).name} />
               ) : (
                 <Avatar emoji={profile.avatar} tone={avatarTone(profile.avatar)} size="xl" />
               )}

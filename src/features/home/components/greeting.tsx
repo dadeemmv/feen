@@ -1,7 +1,7 @@
 /**
  * Greeting block: "Ciao Alberto 👋" + a contextual line driven by the streak and the course
- * progress (docs/SCREEN_SPECS.md "Home" §2), with the user's companion mascot on the right
- * (tap → "Il tuo compagno").
+ * progress (docs/SCREEN_SPECS.md "Home" §2), with the user's companion character on the right
+ * (tap → "Il tuo personaggio").
  */
 import { StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
@@ -41,8 +41,8 @@ export function Greeting({ name, streak, studiedToday, courseDone }: GreetingPro
           scaleTo="small"
           haptic="light"
           accessibilityRole="button"
-          accessibilityLabel={HOME_COPY.mascotA11y(getMascot(mascot).name, getMascot(mascot).animal)}>
-          <MascotArt id={mascot} width={mascotMetrics.greetingArt} />
+          accessibilityLabel={HOME_COPY.mascotA11y(getMascot(mascot).name, getMascot(mascot).title)}>
+          <MascotArt id={mascot} framing="bust" width={mascotMetrics.greetingBust} />
         </PressableScale>
       ) : null}
     </Animated.View>

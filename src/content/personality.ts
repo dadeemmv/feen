@@ -1,110 +1,101 @@
 /**
- * "Che tipo sei con i soldi?" — the money-personality test of onboarding and the four companion
- * mascots it assigns. Two axes, 16Personalities-style (agree ↔ disagree statements):
- *   horizon: present ↔ future      risk: safe ↔ bold
- * Each quadrant is one mascot:
- *               safe          bold
- *   future   Scoiattolo     Gufo
- *   present  Koala          Volpe
+ * "Che tipo sei con i soldi?" — the money compass of onboarding and the four companion characters
+ * it assigns. Two axes, political-compass style, measured with 16Personalities-like agree ↔
+ * disagree statements:
+ *   goal (horizontal): left = money for the dream home, a calm life, the people you love
+ *                      right = money to grow more money, status, the yacht
+ *   risk (vertical):   unrisk ↔ risk
+ * Each quadrant is one character (inspired by investor archetypes, not portraits):
+ *              left              right
+ *   risk     Vera, Visionaria   Max, Squalo
+ *   unrisk   Teo, Filantropo    Bruno, Cassettista
  */
-import type { ContentTone } from './types';
 
-export type MascotId = 'squirrel' | 'owl' | 'fox' | 'koala';
-export type PersonalityAxis = 'horizon' | 'risk';
-export type HorizonPole = 'present' | 'future';
-export type RiskPole = 'safe' | 'bold';
+export type MascotId = 'value' | 'shark' | 'giver' | 'visionary';
+export type PersonalityAxis = 'goal' | 'risk';
+export type GoalPole = 'left' | 'right';
+export type RiskPole = 'unrisk' | 'risk';
 
 export type Mascot = {
   id: MascotId;
-  /** The mascot's own name. */
+  /** The character's own name. */
   name: string;
-  /** "Scoiattolo". */
-  animal: string;
-  /** "Sei uno Scoiattolo" (Italian article included). */
-  youAre: string;
-  /** Personality type label. */
-  type: string;
-  horizon: HorizonPole;
+  /** Archetype title ("Il Cassettista"). */
+  title: string;
+  /** Compass quadrant ("Unrisk Right"). */
+  quadrant: string;
+  goal: GoalPole;
   risk: RiskPole;
   tagline: string;
   description: string;
   strengths: readonly [string, string, string];
   /** What to train ("Da allenare"). */
   watchOut: string;
-  /** The mascot's catchphrase, shown as a speech line. */
+  /** The character's catchphrase, shown as a speech line. */
   motto: string;
-  tone: ContentTone;
 };
 
 export const MASCOTS: Record<MascotId, Mascot> = {
-  squirrel: {
-    id: 'squirrel',
-    name: 'Nocciola',
-    animal: 'Scoiattolo',
-    youAre: 'Sei uno Scoiattolo',
-    type: 'Previdente',
-    horizon: 'future',
-    risk: 'safe',
-    tagline: 'Mette da parte oggi per stare tranquillo domani.',
+  value: {
+    id: 'value',
+    name: 'Bruno',
+    title: 'Il Cassettista',
+    quadrant: 'Unrisk Right',
+    goal: 'right',
+    risk: 'unrisk',
+    tagline: 'Compra aziende solide e le tiene nel cassetto per decenni.',
     description:
-      'Pensi al futuro e non ami rischiare: prima di spendere ti chiedi se ne vale la pena, e avere un fondo per gli imprevisti ti fa dormire sereno. Con Nocciola imparerai a far fruttare quei risparmi senza perdere la calma.',
-    strengths: ['Costanza', 'Fondo emergenze', 'Spese sotto controllo'],
-    watchOut: 'Lasciare tutto fermo sul conto: l’inflazione lo erode piano piano.',
-    motto: 'Un Kiwi alla volta si fa una montagna.',
-    tone: 'butter',
+      'Per te i soldi sono un patrimonio da far crescere con pazienza: strumenti tradizionali, aziende che capisci, niente mode. Come Bruno ragioni sul lungo periodo e lasci lavorare l’interesse composto.',
+    strengths: ['Pazienza', 'Interesse composto', 'Sangue freddo'],
+    watchOut: 'Restare fermo anche quando il mondo cambia davvero.',
+    motto: 'Compro solo quello che capisco. Poi aspetto.',
   },
-  owl: {
-    id: 'owl',
-    name: 'Otto',
-    animal: 'Gufo',
-    youAre: 'Sei un Gufo',
-    type: 'Stratega',
-    horizon: 'future',
-    risk: 'bold',
-    tagline: 'Ha un piano a lungo termine e il coraggio di seguirlo.',
+  shark: {
+    id: 'shark',
+    name: 'Max',
+    title: 'Lo Squalo',
+    quadrant: 'Risk Right',
+    goal: 'right',
+    risk: 'risk',
+    tagline: 'Punta in alto, va veloce e sogna lo yacht.',
     description:
-      'Guardi lontano e accetti un po’ di rischio se i numeri tornano: ti piace capire, confrontare e decidere con la testa. Con Otto passerai dalla teoria a una strategia d’investimento tutta tua.',
-    strengths: ['Visione lunga', 'Analisi', 'Interesse composto'],
-    watchOut: 'Voler ottimizzare tutto e rimandare la prima mossa.',
-    motto: 'Il tempo è il miglior alleato di chi ha un piano.',
-    tone: 'lilac',
+      'Ti piacciono i soldi, l’adrenalina dei mercati e i risultati che si vedono. Hai fame e coraggio: con Max imparerai a usarli senza bruciarti, perché la leva funziona in tutti e due i sensi.',
+    strengths: ['Ambizione', 'Rapidità', 'Grinta'],
+    watchOut: 'Il trading compulsivo e le promesse di guadagni facili.',
+    motto: 'Chi non rischia non beve champagne. Chi rischia male non beve proprio.',
   },
-  fox: {
-    id: 'fox',
-    name: 'Lampo',
-    animal: 'Volpe',
-    youAre: 'Sei una Volpe',
-    type: 'Intraprendente',
-    horizon: 'present',
-    risk: 'bold',
-    tagline: 'Coglie le occasioni al volo e non ha paura di provarci.',
+  giver: {
+    id: 'giver',
+    name: 'Teo',
+    title: 'Il Filantropo',
+    quadrant: 'Unrisk Left',
+    goal: 'left',
+    risk: 'unrisk',
+    tagline: 'Costruisce con calma una vita serena, e ne condivide un pezzo.',
     description:
-      'Ti muovi veloce, le novità ti incuriosiscono e un rischio non ti spaventa: è un’energia preziosa. Con Lampo imparerai a distinguere le occasioni vere da quelle che bruciano i soldi.',
-    strengths: ['Curiosità', 'Decisione', 'Spirito d’iniziativa'],
-    watchOut: 'Le mode del momento e gli acquisti d’impulso.',
-    motto: 'Le occasioni migliori arrivano a chi è preparato.',
-    tone: 'blush',
+      'Per te i soldi servono a stare bene, a proteggere chi ami e a restituire qualcosa. Niente azzardi: con Teo costruirai basi solide, dalla casetta dei sogni a un piano che dura nel tempo.',
+    strengths: ['Visione sociale', 'Prudenza', 'Generosità'],
+    watchOut: 'Essere così prudente da lasciare che l’inflazione si mangi i risparmi.',
+    motto: 'Prima le fondamenta, poi tutto il resto.',
   },
-  koala: {
-    id: 'koala',
-    name: 'Mochi',
-    animal: 'Koala',
-    youAre: 'Sei un Koala',
-    type: 'Zen',
-    horizon: 'present',
-    risk: 'safe',
-    tagline: 'Si gode il presente e tiene lontano lo stress.',
+  visionary: {
+    id: 'visionary',
+    name: 'Vera',
+    title: 'La Visionaria',
+    quadrant: 'Risk Left',
+    goal: 'left',
+    risk: 'risk',
+    tagline: 'Scommette sulle tecnologie che cambieranno il mondo.',
     description:
-      'Per te i soldi servono a vivere bene oggi, senza ansie né azzardi, ed è giusto così. Con Mochi costruirai poche abitudini semplici che lavorano da sole, mentre tu continui a goderti la vita.',
-    strengths: ['Equilibrio', 'Zero ansia', 'Gusto per la vita'],
-    watchOut: 'Rimandare le scelte sui soldi a «un giorno».',
-    motto: 'Poche regole semplici, e i soldi lavorano mentre ti rilassi.',
-    tone: 'mint',
+      'Investi in ciò in cui credi: innovazione, idee nuove, futuro. Accetti gli alti e bassi se la direzione è giusta. Con Vera imparerai a dare forma alle tue convinzioni senza mettere tutte le uova nello stesso razzo.',
+    strengths: ['Convinzione', 'Visione', 'Coraggio'],
+    watchOut: 'Innamorarsi di una storia e dimenticare la diversificazione.',
+    motto: 'Il futuro arriva prima a chi lo sa immaginare.',
   },
 };
 
-/** Display order (lineups, gallery). */
-export const MASCOT_IDS: readonly MascotId[] = ['squirrel', 'owl', 'fox', 'koala'];
+/** Compass reading order: top row (risk) left → right, then bottom row (unrisk). */
+export const MASCOT_IDS: readonly MascotId[] = ['visionary', 'shark', 'giver', 'value'];
 
 export const isMascotId = (value: unknown): value is MascotId =>
   typeof value === 'string' && (MASCOT_IDS as readonly string[]).includes(value);
@@ -112,25 +103,25 @@ export const isMascotId = (value: unknown): value is MascotId =>
 export const getMascot = (id: MascotId) => MASCOTS[id];
 
 export const AXIS_POLES = {
-  horizon: { negative: 'Presente', positive: 'Futuro' },
-  risk: { negative: 'Prudenza', positive: 'Audacia' },
-} as const satisfies Record<PersonalityAxis, { negative: string; positive: string }>;
+  goal: { negative: 'Left', positive: 'Right', negativeHint: 'la casetta dei sogni', positiveHint: 'lo yacht' },
+  risk: { negative: 'Unrisk', positive: 'Risk', negativeHint: 'sicurezza prima di tutto', positiveHint: 'nessun rischio, nessun premio' },
+} as const satisfies Record<PersonalityAxis, { negative: string; positive: string; negativeHint: string; positiveHint: string }>;
 
 export type PersonalityStatement = {
   id: string;
   text: string;
   axis: PersonalityAxis;
-  /** +1: agreeing points to the positive pole (future / bold); −1: to the negative one. */
+  /** +1: agreeing points to the positive pole (right / risk); −1: to the negative one. */
   direction: 1 | -1;
 };
 
 /** Twelve statements, six per axis, half of each keyed the other way; axes alternate. */
 export const PERSONALITY_STATEMENTS: readonly PersonalityStatement[] = [
   {
-    id: 'bonus',
-    text: 'Se ricevo un bonus inaspettato, la prima cosa che faccio è metterne da parte una fetta.',
-    axis: 'horizon',
-    direction: 1,
+    id: 'enough',
+    text: 'Mi basta avere abbastanza per vivere in serenità: diventare ricco non è il mio obiettivo.',
+    axis: 'goal',
+    direction: -1,
   },
   {
     id: 'double',
@@ -139,10 +130,10 @@ export const PERSONALITY_STATEMENTS: readonly PersonalityStatement[] = [
     direction: 1,
   },
   {
-    id: 'dinner',
-    text: 'Meglio una bella cena fuori oggi che risparmiare per qualcosa che forse comprerò tra anni.',
-    axis: 'horizon',
-    direction: -1,
+    id: 'yacht',
+    text: 'Un giorno vorrei potermi permettere una barca, un’auto sportiva o un orologio importante.',
+    axis: 'goal',
+    direction: 1,
   },
   {
     id: 'sure-gain',
@@ -151,10 +142,10 @@ export const PERSONALITY_STATEMENTS: readonly PersonalityStatement[] = [
     direction: -1,
   },
   {
-    id: 'tracking',
-    text: 'So più o meno quanto ho speso questo mese.',
-    axis: 'horizon',
-    direction: 1,
+    id: 'home',
+    text: 'Meglio una casa accogliente con le persone che amo che un attico di lusso tutto per me.',
+    axis: 'goal',
+    direction: -1,
   },
   {
     id: 'new-things',
@@ -163,10 +154,10 @@ export const PERSONALITY_STATEMENTS: readonly PersonalityStatement[] = [
     direction: 1,
   },
   {
-    id: 'planning',
-    text: 'Pianificare le spese mi toglie il gusto delle cose.',
-    axis: 'horizon',
-    direction: -1,
+    id: 'grow',
+    text: 'Più soldi guadagno, più ho voglia di farli crescere ancora.',
+    axis: 'goal',
+    direction: 1,
   },
   {
     id: 'drop',
@@ -175,10 +166,10 @@ export const PERSONALITY_STATEMENTS: readonly PersonalityStatement[] = [
     direction: -1,
   },
   {
-    id: 'ten-years',
-    text: 'Penso spesso a come vorrei vivere tra dieci anni.',
-    axis: 'horizon',
-    direction: 1,
+    id: 'give',
+    text: 'Se avessi molti soldi, una buona parte la darei a cause in cui credo.',
+    axis: 'goal',
+    direction: -1,
   },
   {
     id: 'change',
@@ -187,10 +178,10 @@ export const PERSONALITY_STATEMENTS: readonly PersonalityStatement[] = [
     direction: 1,
   },
   {
-    id: 'impulse',
-    text: 'Se una cosa mi piace davvero la compro subito, anche se non era prevista.',
-    axis: 'horizon',
-    direction: -1,
+    id: 'success',
+    text: 'Il successo, per me, si misura anche con il conto in banca.',
+    axis: 'goal',
+    direction: 1,
   },
   {
     id: 'idle-cash',

@@ -1,8 +1,8 @@
 /**
- * Pure scoring of the money-personality test. Each answer is −3…+3 (disagree → agree); flipped
- * by the statement's direction, summed per axis and mapped to a 0…100 lean towards the positive
- * pole (future, bold). The quadrant picks the mascot; an exact 50 leans to the future and to
- * safety (the Scoiattolo is the "home" quadrant of a first-time saver).
+ * Pure scoring of the money compass. Each answer is −3…+3 (disagree → agree); flipped by the
+ * statement's direction, summed per axis and mapped to a 0…100 position towards the positive pole
+ * (right, risk). The quadrant picks the character; an exact 50 falls to the left and to unrisk
+ * (Teo, the calm "home" quadrant of a first-time saver).
  */
 import {
   MASCOT_IDS,
@@ -38,14 +38,14 @@ export function axisLean(answers: QuizAnswers, axis: PersonalityAxis): number {
   return Math.round(50 + (50 * sum) / (MAX_AGREEMENT * statements.length));
 }
 
-export function mascotFor(future: number, bold: number): MascotId {
-  const horizon = future >= 50 ? 'future' : 'present';
-  const risk = bold > 50 ? 'bold' : 'safe';
-  return MASCOT_IDS.find((id) => MASCOTS[id].horizon === horizon && MASCOTS[id].risk === risk) ?? 'squirrel';
+export function mascotFor(right: number, risk: number): MascotId {
+  const goal = right > 50 ? 'right' : 'left';
+  const riskPole = risk > 50 ? 'risk' : 'unrisk';
+  return MASCOT_IDS.find((id) => MASCOTS[id].goal === goal && MASCOTS[id].risk === riskPole) ?? 'giver';
 }
 
 export function scorePersonality(answers: QuizAnswers, now: number = Date.now()): PersonalityResult {
-  const future = axisLean(answers, 'horizon');
-  const bold = axisLean(answers, 'risk');
-  return { mascot: mascotFor(future, bold), future, bold, takenAt: now };
+  const right = axisLean(answers, 'goal');
+  const risk = axisLean(answers, 'risk');
+  return { mascot: mascotFor(right, risk), right, risk, takenAt: now };
 }

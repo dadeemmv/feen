@@ -3,22 +3,28 @@ import type { ComponentType } from 'react';
 import type { MascotId } from '@/content/personality';
 
 import type { IllustrationProps } from '../lib/art-svg';
-import { FoxMascot } from './fox-mascot';
-import { KoalaMascot } from './koala-mascot';
-import { OwlMascot } from './owl-mascot';
-import { SquirrelMascot } from './squirrel-mascot';
+import type { Framing } from './character-parts';
+import { GiverCharacter } from './giver-character';
+import { SharkCharacter } from './shark-character';
+import { ValueCharacter } from './value-character';
+import { VisionaryCharacter } from './visionary-character';
 
-const MASCOT_ART: Record<MascotId, ComponentType<IllustrationProps>> = {
-  squirrel: SquirrelMascot,
-  owl: OwlMascot,
-  fox: FoxMascot,
-  koala: KoalaMascot,
+type CharacterProps = IllustrationProps & { framing?: Framing };
+
+const CHARACTER_ART: Record<MascotId, ComponentType<CharacterProps>> = {
+  value: ValueCharacter,
+  shark: SharkCharacter,
+  giver: GiverCharacter,
+  visionary: VisionaryCharacter,
 };
 
-export type MascotArtProps = IllustrationProps & { id: MascotId };
+export type MascotArtProps = CharacterProps & { id: MascotId };
 
-/** One of the four companion mascots by id (square 200 × 200 artboard, transparent). */
+/**
+ * One of the four companion characters by id: full figure on a 200 × 320 artboard, or
+ * `framing="bust"` for a square head-and-shoulders crop (avatars, list rows). Transparent.
+ */
 export function MascotArt({ id, ...props }: MascotArtProps) {
-  const Art = MASCOT_ART[id];
+  const Art = CHARACTER_ART[id];
   return <Art {...props} />;
 }
