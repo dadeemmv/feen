@@ -1,0 +1,132 @@
+import type { AssistantKbEntry } from '../extra-types';
+
+/** Putting it into practice: brokers, costs, taxes, orders, scams, and the no-advice guardrail. */
+export const PRACTICE_KB: AssistantKbEntry[] = [
+  {
+    id: 'no-personal-advice',
+    topic: 'Richiesta di consiglio personale',
+    priority: 1,
+    keywords: [
+      'consigli',
+      'cosa compro',
+      'cosa devo comprare',
+      'cosa mi conviene',
+      'convien',
+      'quale azione',
+      'quali azioni',
+      'quale etf',
+      'quali etf',
+      'su cosa investo',
+      'dove investo',
+      'dove investire',
+      'devo vendere',
+      'devo comprare',
+      'miglior broker',
+      'migliore broker',
+      'miglior etf',
+      'migliore etf',
+      'miglior investimento',
+      'migliore investimento',
+    ],
+    answer:
+      'Non posso darti consigli personalizzati su cosa comprare o vendere: dipende dalla tua situazione, dai tuoi obiettivi e da quanto rischio puoi sostenere. 🙏 Posso però aiutarti a ragionare:\n• Hai già un fondo di emergenza?\n• Qual è il tuo orizzonte temporale?\n• Capisci bene il prodotto e i suoi costi?\nPer una scelta su misura puoi rivolgerti a un consulente finanziario abilitato, iscritto all’albo OCF.',
+  },
+  {
+    id: 'broker',
+    topic: 'Broker',
+    chapterId: 'broker',
+    keywords: [
+      'broker',
+      'intermediar',
+      'piattaform',
+      'app per investire',
+      'app di trading',
+      'aprire un conto',
+      'conto titoli',
+      'dossier titoli',
+      'fallisce',
+      'fondo nazionale di garanzia',
+    ],
+    answer:
+      'Il broker è l’intermediario autorizzato che esegue i tuoi ordini in Borsa e custodisce i tuoi titoli. 🏦 Prima di sceglierne uno controlla:\n• Che sia autorizzato e vigilato (CONSOB, Banca d’Italia o un’autorità UE)\n• Le commissioni: per ordine, custodia e cambio valuta\n• Il regime fiscale: amministrato o dichiarativo\n• I prodotti disponibili, come ETF e PAC\nI titoli restano tuoi, separati dal patrimonio del broker. Se un intermediario italiano fallisce e non ti restituisce titoli o soldi, il Fondo Nazionale di Garanzia ti rimborsa fino a 20.000€. Finanz non consiglia broker specifici.',
+  },
+  {
+    id: 'commissioni',
+    topic: 'Commissioni e costi',
+    chapterId: 'scegli-broker',
+    keywords: [
+      'commission',
+      'spread',
+      'bid ',
+      'ask ',
+      'custodia',
+      'costi del broker',
+      'costo per ordine',
+      'cambio valuta',
+    ],
+    answer:
+      'Le commissioni sono i costi che paghi per investire, e contano più di quanto sembri. 💸\n• Per ordine: a ogni acquisto o vendita\n• Di custodia: per tenere i titoli sul conto\n• Di cambio: se compri in una valuta diversa dall’euro\n• Spread: la differenza tra prezzo di acquisto (ask) e di vendita (bid)\nEsempio: 5€ a ordine su un PAC da 100€ al mese costano 60€ l’anno, il 5% di quanto investi.',
+  },
+  {
+    id: 'regime-fiscale',
+    topic: 'Regime amministrato e dichiarativo',
+    chapterId: 'scegli-broker',
+    keywords: [
+      'regime amministrato',
+      'regime dichiarativo',
+      'amministrato',
+      'dichiarativo',
+      'quadro rw',
+      'ivafe',
+      'sostituto d imposta',
+      'dichiarazione dei redditi',
+    ],
+    answer:
+      'Quando investi da solo con un broker, in Italia i regimi fiscali più comuni sono due. 🧾\n• Amministrato: il broker calcola e versa le tasse al posto tuo, è il più semplice\n• Dichiarativo: indichi tu redditi e investimenti esteri nella dichiarazione dei redditi, anche nel quadro RW, e paghi tu le imposte\nI broker italiani di solito offrono l’amministrato, molti esteri il dichiarativo. Con un broker estero in dichiarativo, al posto del bollo paghi l’IVAFE, di norma dello 0,20% annuo. Nel dubbio, un commercialista può aiutarti.',
+  },
+  {
+    id: 'tasse',
+    topic: 'Tasse sugli investimenti',
+    chapterId: 'capital-gain',
+    keywords: ['tass', 'impost', 'aliquot', 'fisco', 'fiscal', 'bollo', '26 ', '12 5'],
+    answer:
+      'Ecco le principali tasse sugli investimenti in Italia, per le persone fisiche: 🧾\n• 26% su capital gain, dividendi e interessi di obbligazioni societarie e conti deposito\n• 12,5% su interessi e plusvalenze dei titoli di Stato italiani e dei Paesi della white list\n• Di norma 33% sulle plusvalenze in crypto, dal 2026\n• Imposta di bollo dello 0,20% annuo sul valore del conto titoli e dei conti deposito\nLe regole fiscali cambiano nel tempo: verifica sempre le norme aggiornate o chiedi a un commercialista.',
+  },
+  {
+    id: 'ordini',
+    topic: 'Ordini e ISIN',
+    chapterId: 'dentro-broker',
+    keywords: [
+      'ordine',
+      'ordini',
+      'limite',
+      'al mercato',
+      'eseguit',
+      'isin',
+      'ticker',
+      'come si compra',
+      'come compro',
+    ],
+    answer:
+      'Per comprare un titolo dal broker, cercalo per nome, ticker o ISIN, il codice unico di 12 caratteri. 📝 Poi scegli il tipo di ordine:\n• Al mercato: eseguito appena possibile, al miglior prezzo disponibile in quel momento\n• Con limite: fissi il prezzo massimo per comprare, o il minimo per vendere\nIl limite ti protegge da sorprese sul prezzo, ma l’ordine potrebbe non essere eseguito. Prima di confermare controlla sempre quantità, prezzo e commissioni.',
+  },
+  {
+    id: 'truffe',
+    topic: 'Truffe finanziarie',
+    chapterId: 'broker',
+    keywords: [
+      'truff',
+      'ponzi',
+      'piramid',
+      'garantit',
+      'raddopp',
+      'abusiv',
+      'phishing',
+      'guadagni facili',
+      'soldi facili',
+      'consob',
+    ],
+    answer:
+      'Riconoscere una truffa finanziaria è più facile di quanto pensi. 🕵️ I segnali tipici:\n• Rendimenti alti promessi come “garantiti”\n• Contatti non richiesti su social, WhatsApp o Telegram\n• Fretta: “l’offerta scade oggi”\n• Pagamenti in crypto o verso conti esteri\nPrima di investire verifica sempre sul sito della CONSOB che l’intermediario sia autorizzato. Se sembra troppo bello per essere vero, probabilmente non lo è.',
+  },
+];
