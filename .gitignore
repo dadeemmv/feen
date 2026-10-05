@@ -44,3 +44,5 @@ example
 
 # agent checkpoints
 .progress/
+
+.vercel
