@@ -1,5 +1,5 @@
 /**
- * Step 2/4 — "Cosa vuoi imparare?": two-column grid of interest cards (icon tile, topic, one-line
+ * Step 3/5 — "Cosa vuoi imparare?": two-column grid of interest cards (icon tile, topic, one-line
  * hint), multi-select, at least one to continue.
  */
 import { StyleSheet, View } from 'react-native';

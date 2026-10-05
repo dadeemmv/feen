@@ -25,5 +25,7 @@ export const createProfileSlice: SliceCreator<ProfileSlice> = (set) => ({
 
   setLanguage: (language) => set({ language }),
 
+  setPersonality: (personality) => set({ personality }),
+
   addInvitedFriend: () => set((s) => ({ invitedFriends: s.invitedFriends + 1 })),
 });

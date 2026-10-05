@@ -79,6 +79,7 @@ export type {
   Experience,
   LessonSession,
   OnboardingAnswers,
+  PersonalityResult,
   Purchase,
   ReminderSlot,
   Settings,

@@ -1,5 +1,5 @@
 /**
- * Step 4/4 — "Qual è il tuo ritmo?": daily goal cards (5 / 10 / 15 min, 10 recommended) and the
+ * Step 5/5 — "Qual è il tuo ritmo?": daily goal cards (5 / 10 / 15 min, 10 recommended) and the
  * "Attiva promemoria" switch with the preferred time (same options as Account → Impostazioni).
  */
 import { StyleSheet } from 'react-native';

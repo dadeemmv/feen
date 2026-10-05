@@ -9,3 +9,4 @@ export * from './stories';
 export * from './shop';
 export * from './challenges';
 export * from './assistant';
+export * from './personality';

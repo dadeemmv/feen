@@ -20,6 +20,9 @@ export function OnboardingLayout() {
       }}>
       <Stack.Screen name="index" options={{ animation: 'fade' }} />
       <Stack.Screen name="name" />
+      <Stack.Screen name="test" />
+      <Stack.Screen name="quiz" />
+      <Stack.Screen name="mascot" options={{ animation: reduceMotion ? 'fade' : 'fade_from_bottom' }} />
       <Stack.Screen name="interests" />
       <Stack.Screen name="level" />
       <Stack.Screen name="pace" />

@@ -50,6 +50,29 @@ const forestDeep = {
   deep6: '#18573C',
 } as const;
 
+/** The four companion mascots (features/mascots): fur gradient pair + light/dark details each. */
+const characters = {
+  squirrelFrom: '#F2AE68',
+  squirrelTo: '#C46A2C',
+  squirrelLight: '#FDEBD3',
+  squirrelDark: '#7E3F17',
+  owlFrom: '#AE9BFF',
+  owlTo: '#6248DE',
+  owlLight: '#F3EFFF',
+  owlDark: '#3F2C9E',
+  foxFrom: '#FFAA55',
+  foxTo: '#EC5B1C',
+  foxLight: '#FFF8F0',
+  foxDark: '#4A2616',
+  koalaFrom: '#C9D3DA',
+  koalaTo: '#7F939F',
+  koalaLight: '#F0F3F5',
+  koalaInner: '#F8DCE2',
+  koalaNose: '#2E3A42',
+  koalaNoseLight: '#4A5862',
+  cheek: '#FF8FA3',
+} as const;
+
 /** Economy "jewellery" colours — each item has a gradient pair plus a highlight. */
 const economy = {
   flameFrom: '#FFB23F',
@@ -88,6 +111,7 @@ export const palette = {
   ...blackA,
   ...whiteA,
   ...economy,
+  ...characters,
   white: '#FFFFFF',
   black: '#000000',
   transparent: 'transparent',

@@ -5,6 +5,7 @@
  */
 import { create } from 'zustand';
 
+import type { AgreementValue } from '@/content/personality';
 import type { Experience, ReminderSlot } from '@/store';
 
 import type { InterestId } from './data/interests';
@@ -12,6 +13,9 @@ import type { InterestId } from './data/interests';
 export type OnboardingDraft = {
   name: string;
   interests: InterestId[];
+  /** Personality test: statement id → agreement (−3…+3), and the statement on screen. */
+  quizAnswers: Record<string, AgreementValue>;
+  quizIndex: number;
   experience: Experience | null;
   goalMinutes: number | null;
   reminders: boolean;
@@ -23,6 +27,8 @@ export type OnboardingDraft = {
 type DraftState = OnboardingDraft & {
   setName: (name: string) => void;
   toggleInterest: (id: InterestId) => void;
+  setQuizAnswer: (statementId: string, value: AgreementValue) => void;
+  setQuizIndex: (index: number) => void;
   setExperience: (experience: Experience) => void;
   setGoalMinutes: (minutes: number) => void;
   setReminders: (value: boolean) => void;
@@ -34,6 +40,8 @@ type DraftState = OnboardingDraft & {
 const createDraft = (): OnboardingDraft => ({
   name: '',
   interests: [],
+  quizAnswers: {},
+  quizIndex: 0,
   experience: null,
   goalMinutes: null,
   reminders: true,
@@ -46,6 +54,8 @@ export const useOnboardingDraft = create<DraftState>()((set) => ({
   setName: (name) => set({ name }),
   toggleInterest: (id) =>
     set((s) => ({ interests: s.interests.includes(id) ? s.interests.filter((i) => i !== id) : [...s.interests, id] })),
+  setQuizAnswer: (statementId, value) => set((s) => ({ quizAnswers: { ...s.quizAnswers, [statementId]: value } })),
+  setQuizIndex: (quizIndex) => set({ quizIndex }),
   setExperience: (experience) => set({ experience }),
   setGoalMinutes: (goalMinutes) => set({ goalMinutes }),
   setReminders: (reminders) => set({ reminders }),

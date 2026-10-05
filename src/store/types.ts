@@ -5,6 +5,7 @@
  */
 import type { StateCreator } from 'zustand';
 
+import type { MascotId } from '@/content/personality';
 import type { DayKey } from '@/lib/dates';
 
 import type { ResolvedChallenge } from './challenges';
@@ -15,6 +16,18 @@ import type { ResolvedMilestone } from './milestones';
 /* ------------------------------------------------------------------------------------------ */
 
 export type Experience = 'beginner' | 'some' | 'expert';
+
+/** Outcome of the money-personality test ("Che tipo sei con i soldi?"). */
+export type PersonalityResult = {
+  /** The companion mascot assigned by the test. */
+  mascot: MascotId;
+  /** Lean towards the future on the present ↔ future axis, 0…100. */
+  future: number;
+  /** Lean towards boldness on the safe ↔ bold axis, 0…100. */
+  bold: number;
+  /** Epoch ms. */
+  takenAt: number;
+};
 export type AppLanguage = 'it' | 'en';
 
 export type ProfileData = {
@@ -25,6 +38,8 @@ export type ProfileData = {
   /** Daily study goal chosen in onboarding. */
   goalMinutes: number;
   experience: Experience;
+  /** Money-personality test result; null until the test is taken. */
+  personality: PersonalityResult | null;
   onboardingDone: boolean;
   referralCode: string;
   /** Friends who redeemed the referral code (0…3 for the "30 giorni di Finanz Pro" promo). */
@@ -32,7 +47,7 @@ export type ProfileData = {
   language: AppLanguage;
 };
 
-export type OnboardingAnswers = Partial<Pick<ProfileData, 'name' | 'interests' | 'goalMinutes' | 'experience' | 'avatar'>>;
+export type OnboardingAnswers = Partial<Pick<ProfileData, 'name' | 'interests' | 'goalMinutes' | 'experience' | 'avatar' | 'personality'>>;
 
 export type ProfileActions = {
   updateProfile: (patch: Partial<Omit<ProfileData, 'referralCode'>>) => void;
@@ -40,6 +55,7 @@ export type ProfileActions = {
   toggleInterest: (interest: string) => void;
   completeOnboarding: (answers?: OnboardingAnswers) => void;
   setLanguage: (language: AppLanguage) => void;
+  setPersonality: (result: PersonalityResult) => void;
   addInvitedFriend: () => void;
 };
 

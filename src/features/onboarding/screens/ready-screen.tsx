@@ -1,6 +1,6 @@
 /**
  * "Tutto pronto": the celebration that closes onboarding. Evergreen screen, confetti burst,
- * the user's avatar popping in, "Ciao <nome>, il tuo percorso è pronto", a recap of the answers
+ * the user's companion mascot (or, without a test result, the avatar) popping in, "Ciao <nome>, il tuo percorso è pronto", a recap of the answers
  * and the first course waiting. "Inizia il percorso" writes the profile and enters the app.
  * A returning user ("Ho già un account") gets "Bentornato" with the saved profile instead.
  */
@@ -8,14 +8,18 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Redirect } from 'expo-router';
-import { BellRing, Clock, Heart } from 'lucide-react-native';
+import { BellRing, Clock, Heart, Sparkles } from 'lucide-react-native';
 
 import { SparkleIcon } from '@/components/icons';
+import { MascotArt } from '@/components/illustrations';
 import { Avatar, Button, Chip, Confetti, iconSize, Screen, Spotlight, Text, VStack } from '@/components/ui';
 import { avatarTone } from '@/features/account/components/avatar-picker';
 import { REMINDER_SLOTS } from '@/features/account/copy';
+import { scorePersonality, isQuizComplete } from '@/features/mascots/lib/score';
+import { mascotMetrics } from '@/features/mascots/metrics';
 import { PopIn } from '@/features/rewards';
-import { useStoreShallow } from '@/store';
+import { getMascot } from '@/content/personality';
+import { selectMascot, useStoreShallow } from '@/store';
 import { duration, spacing } from '@/theme';
 
 import { FirstPathCard } from '../components/first-path-card';
@@ -36,6 +40,7 @@ export function ReadyScreen() {
     interests: s.interests.length,
     reminders: s.settings.notifications,
     reminderSlot: s.reminderSlot,
+    mascot: selectMascot(s),
   }));
   const { rise } = useEntering();
   const [burst, setBurst] = useState(false);
@@ -58,6 +63,8 @@ export function ReadyScreen() {
   const interestCount = returning ? profile.interests : draft.interests.length;
   const reminders = returning ? profile.reminders : draft.reminders;
   const slot = REMINDER_SLOTS.find((s) => s.id === (returning ? profile.reminderSlot : draft.reminderSlot));
+  const draftMascot = isQuizComplete(draft.quizAnswers) ? scorePersonality(draft.quizAnswers).mascot : null;
+  const mascot = returning ? profile.mascot : draftMascot;
 
   return (
     <View style={styles.flex}>
@@ -79,7 +86,11 @@ export function ReadyScreen() {
         <VStack gap="md" align="center" style={styles.hero}>
           <PopIn delay={duration.fast}>
             <View>
-              <Avatar emoji={profile.avatar} tone={avatarTone(profile.avatar)} size="xl" />
+              {mascot ? (
+                <MascotArt id={mascot} width={mascotMetrics.readyArt} accessibilityLabel={getMascot(mascot).animal} />
+              ) : (
+                <Avatar emoji={profile.avatar} tone={avatarTone(profile.avatar)} size="xl" />
+              )}
               <SparkleIcon tone="lime" twin size={iconSize.xl} style={styles.sparkle} />
             </View>
           </PopIn>
@@ -108,6 +119,7 @@ export function ReadyScreen() {
 
         <Animated.View entering={rise(3)} style={styles.chips}>
           <Chip icon={Clock} label={ONBOARDING_COPY.pace.perDay(goal)} size="sm" />
+          {mascot ? <Chip icon={Sparkles} label={copy.companion(getMascot(mascot).name)} size="sm" /> : null}
           {experience ? <Chip icon={experience.icon} label={experience.label} size="sm" /> : null}
           {interestCount > 0 ? <Chip icon={Heart} label={copy.interestsCount(interestCount)} size="sm" /> : null}
           {reminders && slot ? <Chip icon={BellRing} label={copy.reminderAt(slot.time)} size="sm" /> : null}
@@ -124,7 +136,7 @@ export function ReadyScreen() {
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  hero: { paddingTop: spacing.xxl },
+  hero: { paddingTop: spacing.xl },
   sparkle: { position: 'absolute', top: -spacing.xs, right: -spacing.xs },
   heading: { gap: spacing.xs, alignItems: 'center' },
   chips: {

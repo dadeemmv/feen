@@ -1,10 +1,13 @@
 /**
  * Onboarding feature public API (first-run flow). Routes live in `src/app/onboarding/*`.
- *   welcome (/onboarding) → name → interests → level → pace → ready
+ *   welcome (/onboarding) → name → test → quiz → mascot → interests → level → pace → ready
  */
 export { OnboardingLayout } from './onboarding-layout';
 export { WelcomeScreen } from './screens/welcome-screen';
 export { NameStepScreen } from './screens/name-screen';
+export { TestIntroScreen } from './screens/test-intro-screen';
+export { QuizStepScreen } from './screens/quiz-screen';
+export { MascotRevealScreen } from './screens/mascot-reveal-screen';
 export { InterestsStepScreen } from './screens/interests-screen';
 export { LevelStepScreen } from './screens/level-screen';
 export { PaceStepScreen } from './screens/pace-screen';

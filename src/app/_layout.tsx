@@ -90,6 +90,7 @@ function RootStack() {
       <Stack.Screen name="account/index" />
       <Stack.Screen name="account/[section]" />
       <Stack.Screen name="invite" />
+      <Stack.Screen name="mascot" />
       <Stack.Screen name="pro" options={{ presentation: 'modal' }} />
       <Stack.Screen
         name="lesson/[id]"

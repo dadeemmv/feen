@@ -12,6 +12,7 @@ export const createInitialProfile = (): ProfileData => ({
   interests: [],
   goalMinutes: 5,
   experience: 'beginner',
+  personality: null,
   onboardingDone: false,
   referralCode: 'ZGGK2O',
   invitedFriends: 0,

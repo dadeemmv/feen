@@ -1,5 +1,5 @@
 /**
- * Step 3/4 — "Quanto ne sai di finanza?": single choice (Parto da zero / Conosco le basi /
+ * Step 4/5 — "Quanto ne sai di finanza?": single choice (Parto da zero / Conosco le basi /
  * Investo già) with a reassuring note.
  */
 import { StyleSheet } from 'react-native';

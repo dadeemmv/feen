@@ -8,6 +8,7 @@
  * select the raw inputs and call the selector during render.
  */
 import { orderedChapterIds } from '@/content/courses';
+import { isMascotId, type MascotId } from '@/content/personality';
 import type { ShopItem } from '@/content/types';
 import { toDayKey, type DayKey } from '@/lib/dates';
 
@@ -21,6 +22,14 @@ import { getAvailabilityIssue } from './rules/shop';
 import type { BuyFailureReason, RootState } from './types';
 
 type S = RootState;
+
+/* ── Profile ──────────────────────────────────────────────────────────────────────────────── */
+
+/** The companion mascot from the personality test (null until taken, or if the blob is stale). */
+export const selectMascot = (s: Pick<S, 'personality'>): MascotId | null => {
+  const mascot = s.personality?.mascot;
+  return isMascotId(mascot) ? mascot : null;
+};
 
 /* ── Streak ───────────────────────────────────────────────────────────────────────────────── */
 

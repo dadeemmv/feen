@@ -255,3 +255,19 @@ export const illustration = {
   /** Deeper blush for shading pink illustrations (piggy bank). */
   blushDeep: p.pink8,
 } as const;
+
+/** Raw colours of the four companion mascots, for their SVG art only (features/mascots). */
+export const mascotColors = {
+  squirrel: { from: p.squirrelFrom, to: p.squirrelTo, light: p.squirrelLight, dark: p.squirrelDark },
+  owl: { from: p.owlFrom, to: p.owlTo, light: p.owlLight, dark: p.owlDark },
+  fox: { from: p.foxFrom, to: p.foxTo, light: p.foxLight, dark: p.foxDark },
+  koala: {
+    from: p.koalaFrom,
+    to: p.koalaTo,
+    light: p.koalaLight,
+    dark: p.koalaNose,
+    noseLight: p.koalaNoseLight,
+    inner: p.koalaInner,
+  },
+  cheek: p.cheek,
+} as const;

@@ -93,6 +93,17 @@ Le regole del progetto per chi continua (anche con un agente AI) sono in `CLAUDE
   note legali e profilo. Sheet "Utilizza codice" (codici demo `FINANZ100`, `STREAK`) e
   "Valuta app".
 
+**Test di personalità e 4 mascotte (aggiunto il 5 ottobre 2026).**
+- Onboarding: nome → *Che tipo sei con i soldi?* (intro) → 12 affermazioni su scala a 7 cerchi
+  stile 16Personalities → rivelazione della mascotte → interessi → livello → ritmo → tutto pronto.
+- Due assi (presente ↔ futuro, prudenza ↔ audacia), sei affermazioni ciascuno, metà in senso
+  inverso. Quadranti: Scoiattolo *Nocciola* (Previdente), Gufo *Otto* (Stratega), Volpe *Lampo*
+  (Intraprendente), Koala *Mochi* (Zen). A pari merito vince lo Scoiattolo.
+- Dati e testi in `src/content/personality.ts`; punteggio puro in `src/features/mascots/lib/score.ts`;
+  illustrazioni SVG originali in `src/components/illustrations/mascots/` (QA su `/dev/mascots`).
+- Il risultato sta nel profilo (`personality`) e compare in "Tutto pronto", accanto al saluto in
+  Home e in Account → *Il tuo compagno* (`/mascot`), da dove si può rifare il test.
+
 **Implementate ma senza report di chiusura dell'agente:** il lavoro si è interrotto per i limiti
 di utilizzo subito prima del passaggio finale di verifica.
 - **Percorso e Academy.**

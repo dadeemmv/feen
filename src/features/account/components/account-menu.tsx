@@ -9,6 +9,7 @@ import {
   Headset,
   Heart,
   HeartHandshake,
+  PawPrint,
   Settings,
   ShieldCheck,
   ShoppingBag,
@@ -17,8 +18,11 @@ import {
 } from 'lucide-react-native';
 
 import { GemIcon } from '@/components/icons';
+import { MascotArt } from '@/components/illustrations';
+import { getMascot } from '@/content/personality';
+import { mascotMetrics } from '@/features/mascots/metrics';
 import { ListGroup, ListItem, iconSize } from '@/components/ui';
-import { selectIsPro, useStore } from '@/store';
+import { selectIsPro, selectMascot, useStore } from '@/store';
 import { useNow } from '@/store/hooks';
 
 import { ACCOUNT_COPY, MENU_COPY } from '../copy';
@@ -27,6 +31,7 @@ import { openSection } from '../lib/navigation';
 export function AccountMainMenu({ style }: { style?: StyleProp<ViewStyle> }) {
   const now = useNow();
   const isPro = useStore((s) => selectIsPro(s, now));
+  const mascot = useStore(selectMascot);
 
   return (
     <ListGroup title={ACCOUNT_COPY.menuTitle} style={style}>
@@ -36,6 +41,13 @@ export function AccountMainMenu({ style }: { style?: StyleProp<ViewStyle> }) {
         {...MENU_COPY.settings}
         onPress={() => openSection('settings')}
         testID="account-settings"
+      />
+      <ListItem
+        icon={mascot ? <MascotArt id={mascot} width={mascotMetrics.rowArt} /> : PawPrint}
+        iconTone="butter"
+        {...MENU_COPY.mascot}
+        value={mascot ? getMascot(mascot).name : undefined}
+        onPress={() => router.push('/mascot')}
       />
       <ListItem icon={Globe} iconTone="sky" {...MENU_COPY.language} onPress={() => openSection('language')} />
       <ListItem icon={ShoppingBag} iconTone="blush" {...MENU_COPY.purchases} onPress={() => openSection('purchases')} />

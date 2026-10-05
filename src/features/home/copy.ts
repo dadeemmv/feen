@@ -5,6 +5,7 @@ import { formatDays, formatFraction, plural } from '@/lib/format';
 
 export const HOME_COPY = {
   greeting: (name: string) => `Ciao ${name} 👋`,
+  mascotA11y: (name: string, animal: string) => `${animal} ${name}, il tuo compagno. Apri il profilo`,
   /** Contextual line under the greeting, driven by the streak and the course progress. */
   subtitle: ({ streak, courseDone, studiedToday }: { streak: number; courseDone: boolean; studiedToday: boolean }) => {
     if (courseDone) return 'Hai completato il percorso: ripassa quando vuoi!';

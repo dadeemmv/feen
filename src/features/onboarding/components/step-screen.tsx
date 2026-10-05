@@ -29,10 +29,22 @@ export type StepScreenProps = {
   footerNote?: ReactNode;
   /** Runs before moving on (e.g. trimming the name). */
   onNext?: () => void;
+  /** CTA label. Default "Continua". */
+  cta?: string;
   keyboard?: boolean;
 };
 
-export function StepScreen({ step, title, subtitle, children, valid, footerNote, onNext, keyboard }: StepScreenProps) {
+export function StepScreen({
+  step,
+  title,
+  subtitle,
+  children,
+  valid,
+  footerNote,
+  onNext,
+  cta = ONBOARDING_COPY.next,
+  keyboard,
+}: StepScreenProps) {
   const draft = useOnboardingDraft();
   const { rise } = useEntering();
   const allowed = allowedStep(step, draft);
@@ -52,7 +64,7 @@ export function StepScreen({ step, title, subtitle, children, valid, footerNote,
       footer={
         <View style={styles.footer}>
           {footerNote}
-          <Button title={ONBOARDING_COPY.next} fullWidth disabled={!valid} onPress={next} />
+          <Button title={cta} fullWidth disabled={!valid} onPress={next} />
         </View>
       }>
       <Animated.View entering={rise(0)} style={styles.heading}>

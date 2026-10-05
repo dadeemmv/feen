@@ -1,5 +1,5 @@
 /**
- * Step 1/4 — "Come ti chiami?": auto-focused name field (keyboard-aware), validated as you type
+ * Step 1/5 — "Come ti chiami?": auto-focused name field (keyboard-aware), validated as you type
  * (errors only after the first blur / submit), and a friendly greeting once the name is valid.
  */
 import { useState } from 'react';

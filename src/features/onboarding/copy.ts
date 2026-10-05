@@ -1,6 +1,6 @@
 /**
- * Italian copy of the first-run flow (spec §5: welcome → nome → obiettivo → livello → ritmo →
- * tutto pronto).
+ * Italian copy of the first-run flow (spec §5: welcome → nome → test di personalità → obiettivo →
+ * livello → ritmo → tutto pronto). The test's own copy lives in `@/features/mascots/copy`.
  */
 export const ONBOARDING_COPY = {
   back: 'Indietro',
@@ -61,6 +61,7 @@ export const ONBOARDING_COPY = {
     returningSubtitle: 'I tuoi progressi e i tuoi Kiwi ti stanno aspettando.',
     pathOverline: 'Il tuo primo percorso',
     pathMeta: (chapters: number, firstChapter: string) => `${chapters} capitoli · Si parte da ${firstChapter}`,
+    companion: (name: string) => `Con ${name}`,
     interestsCount: (n: number) => (n === 1 ? '1 interesse' : `${n} interessi`),
     reminderAt: (time: string) => `Promemoria alle ${time}`,
     cta: 'Inizia il percorso',
