@@ -69,6 +69,11 @@ export function DevMascotsScreen() {
   return (
     <GalleryPage>
       <KitPage title="Personaggi">
+        <View style={styles.studio} testID="mascot-studio">
+          {MASCOT_IDS.map((id) => (
+            <MascotArt key={id} id={id} height={360} />
+          ))}
+        </View>
         {(['paper', 'evergreen'] as const).map((surface) => (
           <GallerySection key={surface} title={surface === 'paper' ? 'Su carta' : 'Su evergreen'} surface={surface}>
             {MASCOT_IDS.map((id) => (
@@ -88,4 +93,5 @@ export function DevMascotsScreen() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   back: { position: 'absolute', right: layout.screenX, zIndex: zIndex.tabBar },
+  studio: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
 });

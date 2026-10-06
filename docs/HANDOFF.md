@@ -103,8 +103,9 @@ Le regole del progetto per chi continua (anche con un agente AI) sono in `CLAUDE
   Risk Right *Max, lo Squalo*; Unrisk Left *Teo, il Filantropo*; Unrisk Right *Bruno, il
   Cassettista*.
 - Dati e testi in `src/content/personality.ts`; punteggio puro in `src/features/mascots/lib/score.ts`;
-  bussola in `src/features/mascots/components/money-compass.tsx`; personaggi SVG (figura intera
-  200 × 320 o busto con `framing="bust"`) in `src/components/illustrations/mascots/`, QA su
+  bussola in `src/features/mascots/components/money-compass.tsx`; personaggi SVG in stile cartoon
+  (contorno a inchiostro, colori pieni con un'ombra, figura intera 220 × 300 o mezzobusto con
+  `framing="bust"`, kit in `character-parts.tsx`) in `src/components/illustrations/mascots/`, QA su
   `/dev/mascots`.
 - Il risultato sta nel profilo (`personality`: `mascot`, `right`, `risk`) e compare in "Tutto
   pronto", accanto al saluto in Home e in Account → *Il tuo personaggio* (`/mascot`), da dove si

@@ -1,97 +1,139 @@
-import { Circle, Defs, Path } from 'react-native-svg';
+import { Circle, G, Path, Rect } from 'react-native-svg';
 
-import { Linear, twoStops } from '@/components/icons/lib/gradients';
-import { paint, useSvgIds } from '@/components/icons/lib/svg-ids';
-import { gradients, illustration, mascotColors as c } from '@/theme';
+import { illustration, mascotColors as c } from '@/theme';
 
 import { ArtSvg, type IllustrationProps } from '../lib/art-svg';
-import { GlowGradient } from '../parts/basics';
 import {
+  Arm,
   Brows,
   Cheeks,
   Eyes,
-  FloorShadow,
   framingProps,
-  Glasses,
-  Grad,
   Hand,
   Head,
+  Neck,
+  INK,
   Lapels,
   Legs,
-  Limb,
+  Line,
   Mouth,
-  Neck,
   Nose,
-  Shoes,
-  TORSO,
+  Outlined,
+  ShirtAndTie,
+  TORSO_SLIM,
+  TORSO_SHADE,
   type Framing,
 } from './character-parts';
 
+const BLAZER = c.blazerBlue;
+const HAIR = c.hairHoney;
+
 /**
- * Vera — "La Visionaria" (risk · left): the conviction investor in disruptive tech. Shoulder-length
- * honey hair with a side part, round black glasses, gold studs, royal-blue jacket, one hand on the
- * hip and a rocket raised in the other.
+ * Vera — "La Visionaria" (risk · left): the conviction investor in disruptive tech. Honey bob
+ * with a side-swept fringe, black glasses, gold studs, royal-blue blazer; one hand on the hip, the
+ * other pointing at the rocket she just launched.
  */
 export function VisionaryCharacter({ framing = 'full', ...props }: IllustrationProps & { framing?: Framing }) {
-  const ids = useSvgIds('shadow', 'skin', 'suit', 'hair', 'rocket', 'fin');
+  const full = framing === 'full';
   return (
     <ArtSvg {...framingProps(framing)} {...props}>
-      <Defs>
-        <GlowGradient id={ids.shadow} opacity={0.2} />
-        <Grad id={ids.skin} pair={c.skin} />
-        <Grad id={ids.suit} pair={c.suitRoyal} />
-        <Grad id={ids.hair} pair={c.hairHoney} />
-        <Linear id={ids.rocket} stops={twoStops([illustration.white, c.shirtShade])} from={[0, 0]} to={[1, 0]} />
-        <Linear id={ids.fin} stops={twoStops(gradients.accent)} />
-      </Defs>
-      <FloorShadow id={ids.shadow} />
+      {/* rocket, up and away */}
+      {full ? (
+        <>
+          <G transform="translate(184 40) rotate(32)">
+            <Outlined
+              parts={[
+                { d: 'M-5 14Q0 36 5 14Z', fill: c.flame },
+                { d: 'M-8 2L-16 16L-7 14Z', fill: illustration.lime },
+                { d: 'M8 2L16 16L7 14Z', fill: illustration.lime },
+                {
+                  d: 'M0 -26C8 -18 10 -4 8 15H-8C-10 -4 -8 -18 0 -26Z',
+                  fill: c.rocket[0],
+                },
+              ]}
+              shades={[{ d: 'M2 -26C8 -14 10 0 8 16H14V-28Z', fill: c.rocket[1] }]}>
+              <Circle cx={0} cy={-6} r={4.6} fill={illustration.sky} stroke={INK} strokeWidth={2} />
+              <Path d="M-2.5 15Q0 26 2.5 15Z" fill={c.flameCore} />
+            </Outlined>
+          </G>
+        </>
+      ) : null}
+      {full ? (
+        <>
+          <Line d="M150 96Q156 80 166 72M144 90Q148 82 154 78" width={2} color={illustration.mutedLight} />
+        </>
+      ) : null}
 
-      {/* hair falling behind the shoulders */}
-      <Path
-        d="M68 60C66 34 82 23 100 23C120 23 136 34 133 62C135 82 138 98 134 110C124 116 114 112 112 102L88 102C86 112 76 116 66 110C62 98 65 82 68 60Z"
-        fill={paint(ids.hair)}
+      <Legs pair={c.trouser} />
+
+      {/* bob, behind the head */}
+      <Outlined
+        parts={[
+          {
+            d: 'M66 80C62 42 86 20 112 20C140 20 158 42 154 80C156 98 156 112 150 122C140 126 130 122 128 112H92C90 122 80 126 70 122C64 112 64 98 66 80Z',
+            fill: HAIR[0],
+          },
+        ]}
+        shades={[{ d: 'M138 28C154 46 158 88 150 124H164V20Z', fill: HAIR[1] }]}
       />
 
-      {/* trousers + jacket */}
-      <Legs fill={c.trouserDark} />
-      <Shoes />
-      <Neck skinId={ids.skin} />
-      <Path d={TORSO} fill={paint(ids.suit)} />
-      <Path d="M88 101L100 126L112 101Z" fill={c.shirt} />
-      <Lapels fill={c.suitRoyal[1]} />
-      <Circle cx={104} cy={160} r={2.2} fill={c.suitRoyal[1]} />
-      <Circle cx={104} cy={180} r={2.2} fill={c.suitRoyal[1]} />
+      {/* pointing arm and hip arm, behind the blazer */}
+      {full ? (
+        <Arm d="M136 132Q158 118 160 90" sleeve={BLAZER[0]} cuff={{ d: 'M160 95L160 88', fill: c.shirt[0] }} />
+      ) : null}
+      {full ? <Arm d="M84 134Q50 160 70 186" sleeve={BLAZER[1]} /> : null}
 
-      {/* left hand on the hip */}
-      <Limb d="M70 116C56 134 58 152 76 162" stroke={paint(ids.suit)} />
-      <Hand x={78} y={162} skinId={ids.skin} r={7} />
+      <Neck pair={c.skin} />
+      <Outlined parts={[{ d: TORSO_SLIM, fill: BLAZER[0] }]} shades={[{ d: TORSO_SHADE, fill: BLAZER[1] }]} />
+      <ShirtAndTie />
+      <Lapels shade={BLAZER[1]} buttons={c.gold} />
+      {full ? <Hand x={74} y={190} pose="fist" skin={c.skin} rotate={-60} /> : null}
 
-      {/* right arm up with the rocket */}
-      <Limb d="M130 116C142 104 148 92 146 76" stroke={paint(ids.suit)} />
-      <Path d="M138 52L130 64L139 61Z M154 52L162 64L153 61Z" fill={paint(ids.fin)} stroke={paint(ids.fin)} strokeWidth={2} strokeLinejoin="round" />
-      <Path d="M146 10C155 18 158 32 155 58L137 58C134 32 137 18 146 10Z" fill={paint(ids.rocket)} />
-      <Path d="M146 10C150 13 153 18 154.5 23L137.5 23C139 18 142 13 146 10Z" fill={paint(ids.fin)} />
-      <Circle cx={146} cy={36} r={5.5} fill={illustration.sky} stroke={c.shirtShade} strokeWidth={2} />
-      <Circle cx={144.5} cy={34.5} r={1.6} fill={illustration.white} />
-      <Hand x={146} y={66} skinId={ids.skin} />
+      <Head pair={c.skin} />
+      <Circle cx={75} cy={92} r={3.2} fill={c.gold} stroke={INK} strokeWidth={1.6} />
+      <Circle cx={145} cy={92} r={3.2} fill={c.gold} stroke={INK} strokeWidth={1.6} />
+      {/* side-swept fringe */}
+      <Outlined
+        parts={[
+          {
+            d: 'M75 76C72 46 92 29 113 29C134 29 148 44 146 68C139 55 125 47 108 49C96 51 86 60 81 72C79 74 77 75 75 76Z',
+            fill: HAIR[0],
+          },
+        ]}
+        shades={[{ d: 'M128 34C142 42 148 56 146 70H154V28Z', fill: HAIR[1] }]}>
+        <Line d="M88 52Q104 40 128 40M96 40Q110 33 126 34" width={1.8} color={HAIR[1]} />
+      </Outlined>
 
-      {/* head */}
-      <Head skinId={ids.skin} />
-      <Circle cx={71} cy={76} r={2.4} fill={c.glassesGold} />
-      <Circle cx={129} cy={76} r={2.4} fill={c.glassesGold} />
-      <Path
-        d="M70 60C69 38 84 27 102 27C119 27 133 39 132 60C126 46 114 39 99 41C88 46 78 53 70 60Z"
-        fill={paint(ids.hair)}
+      <Brows color={HAIR[1]} y={61} tilt={2} width={3.4} />
+      <Eyes y={76} bare look="up" />
+      <Rect
+        x={86}
+        y={68}
+        width={22}
+        height={18}
+        rx={8}
+        stroke={c.frameBlack}
+        strokeWidth={3.4}
+        fill={c.shirt[0]}
+        fillOpacity={0.1}
       />
-      <Path d="M129 48C135 66 135 86 130 102" stroke={paint(ids.hair)} strokeWidth={8} strokeLinecap="round" fill="none" />
-      <Path d="M71 50C66 66 66 86 70 100" stroke={paint(ids.hair)} strokeWidth={7} strokeLinecap="round" fill="none" />
-      <Path d="M88 35Q104 30 120 38" stroke={c.hairHoney[1]} strokeOpacity={0.6} strokeWidth={1.6} strokeLinecap="round" fill="none" />
-      <Brows color={c.hairHoney[1]} width={2.4} lift={[1, 1]} />
-      <Eyes />
-      <Glasses style="round" color={c.glassesBlack} />
-      <Nose />
-      <Cheeks />
-      <Mouth style="smile" />
+      <Rect
+        x={112}
+        y={68}
+        width={22}
+        height={18}
+        rx={8}
+        stroke={c.frameBlack}
+        strokeWidth={3.4}
+        fill={c.shirt[0]}
+        fillOpacity={0.1}
+      />
+      <Line d="M108 75H112M86 74L78 72M134 74L142 72" width={3} />
+      <Nose pair={c.skin} />
+      <Cheeks y={95} />
+      <Mouth style="open" />
+
+      {full ? <Hand x={161} y={80} pose="point" skin={c.skin} rotate={24} /> : null}
     </ArtSvg>
   );
 }
