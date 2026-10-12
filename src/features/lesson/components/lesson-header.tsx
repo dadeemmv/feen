@@ -1,13 +1,12 @@
 /**
- * Lesson header (redlines "Lesson player"): close ✕, report ⚑ and share on the left, lives and
- * coins chips on the right (store-connected; the lives chip bumps and shakes when a life goes),
- * then the animated evergreen progress bar. A "Ripasso" tag marks practice replays.
+ * Lesson header: close ✕, the ink progress bar and report ⚑ on one row. No coins and no share:
+ * bricks are counted at the end, in the village, and a lesson is not something to advertise.
+ * "Di nuovo" marks a lesson that is being done again.
  */
 import { StyleSheet, View } from 'react-native';
-import { Flag, Share, X } from 'lucide-react-native';
+import { Flag, X } from 'lucide-react-native';
 
-import { ConnectedStatusHeader } from '@/components/navigation/connected-status-header';
-import { IconButton, ProgressBar, Tag } from '@/components/ui';
+import { IconButton, ProgressBar, Text } from '@/components/ui';
 import { layout, spacing } from '@/theme';
 
 import { COPY } from '../copy';
@@ -17,50 +16,30 @@ export type LessonHeaderProps = {
   practice: boolean;
   onClose: () => void;
   onReport: () => void;
-  onShare: () => void;
-  onLivesPress: () => void;
-  onCoinsPress: () => void;
 };
 
-const STATS: 'coins'[] = ['coins'];
-
-export function LessonHeader({ progress, practice, onClose, onReport, onShare, onLivesPress, onCoinsPress }: LessonHeaderProps) {
+export function LessonHeader({ progress, practice, onClose, onReport }: LessonHeaderProps) {
   return (
-    <View>
-      <ConnectedStatusHeader
-        stats={STATS}
-        showAvatar={false}
-        onLivesPress={onLivesPress}
-        onCoinsPress={onCoinsPress}
-        left={
-          <>
-            <IconButton icon={X} variant="plain" accessibilityLabel={COPY.a11y.close} onPress={onClose} testID="lesson-close" />
-            <IconButton icon={Flag} variant="plain" accessibilityLabel={COPY.a11y.report} onPress={onReport} />
-            <IconButton icon={Share} variant="plain" accessibilityLabel={COPY.a11y.share} onPress={onShare} />
-          </>
-        }
-      />
-      <View style={styles.progressRow}>
-        <ProgressBar
-          value={progress}
-          tone="brand"
-          size="md"
-          accessibilityLabel={COPY.a11y.progress}
-          style={styles.bar}
-        />
-        {practice ? <Tag label={COPY.practiceTag} emoji="🔁" tone="lilac" size="sm" /> : null}
-      </View>
+    <View style={styles.row}>
+      <IconButton icon={X} variant="plain" accessibilityLabel={COPY.a11y.close} onPress={onClose} testID="lesson-close" />
+      <ProgressBar value={progress} tone="brand" size="md" accessibilityLabel={COPY.a11y.progress} style={styles.bar} />
+      {practice ? (
+        <Text variant="overline" color="textSecondary">
+          {COPY.practiceTag}
+        </Text>
+      ) : null}
+      <IconButton icon={Flag} variant="plain" accessibilityLabel={COPY.a11y.report} onPress={onReport} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  progressRow: {
+  row: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.xs,
-    paddingHorizontal: layout.screenX,
-    paddingTop: spacing.xxs,
+    paddingHorizontal: layout.screenX - spacing.sm,
+    paddingTop: spacing.xs,
     paddingBottom: spacing.xs,
   },
   bar: { flex: 1 },

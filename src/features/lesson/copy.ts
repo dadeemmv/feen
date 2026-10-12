@@ -1,17 +1,18 @@
 /**
- * Italian copy of the lesson player (docs/PRODUCT_SPEC.md §3.10). Strings from the reference video
- * are kept verbatim except for two typos fixed on purpose: "perché" (not "perchè") and
- * "una lezione" (not "un lezione").
+ * Italian copy of the lesson player. The partner (the student's socia) is the voice: she says
+ * whether an answer is right and why, and she is the one you ask. "Ripasso" is reserved for the
+ * review a resident brings a week after a building is finished, so in-lesson recall questions are
+ * "Ricordi?" and a replayed lesson is done "di nuovo".
  */
 import type { StepTag } from '@/content/types';
-import type { Tone } from '@/components/ui';
 import { formatNumber } from '@/lib/format';
 
-export const TAGS: Record<StepTag, { label: string; emoji: string; tone: Tone }> = {
-  indovina: { label: 'Indovina', emoji: '🎩', tone: 'butter' },
-  'mettiti-alla-prova': { label: 'Mettiti alla prova', emoji: '🎩', tone: 'butter' },
-  scenario: { label: 'Scenario', emoji: '🧭', tone: 'sky' },
-  ripasso: { label: 'Ripasso', emoji: '🧠', tone: 'lilac' },
+/** Small grey label on top of a graded step (no emoji: the gallery stays black and white). */
+export const TAGS: Record<StepTag, { label: string }> = {
+  indovina: { label: 'Indovina' },
+  'mettiti-alla-prova': { label: 'Mettiti alla prova' },
+  scenario: { label: 'Scenario' },
+  ripasso: { label: 'Ricordi?' },
 };
 
 export const COPY = {
@@ -22,32 +23,27 @@ export const COPY = {
     progress: 'Avanzamento lezione',
     fab: 'Chiedi all’assistente di spiegarti questo passaggio',
     fabExpanded: 'Spiegami il perché della risposta',
+    ask: (partner: string) => `Chiedi a ${partner} di spiegarti questo passaggio`,
   },
   cta: {
     continue: 'Continua',
     refill: 'Ricarica le vite',
   },
-  practiceTag: 'Ripasso',
+  practiceTag: 'Di nuovo',
   fabPill: 'Spiegami il perché',
-  resumed: 'Bentornato! Riprendi da dove eri rimasto',
-  practiceStart: 'Ripasso: metà XP, nessun mattone',
+  resumed: 'Si riparte da dove avevi lasciato',
+  practiceStart: 'Lezione già fatta: la rifai per allenarti',
 
   feedback: {
-    correctTitle: 'Risposta corretta',
-    /** First entry = the video's line; the others rotate so praise never feels canned. */
-    praise: [
-      'Complimenti, risposta esatta! Continua così!',
-      'Esatto! Stai andando alla grande.',
-      'Perfetto, hai centrato il punto!',
-      'Ottimo lavoro, proprio così!',
-      'Bravo! Un passo in più verso i tuoi obiettivi.',
-    ],
+    correctTitle: 'Giusto',
+    /** The partner's line when a step has no explanation; they rotate so it never feels canned. */
+    praise: ['Proprio così.', 'Esatto, hai centrato il punto.', 'Così si fa.', 'Giusto, e non era scontato.', 'Sì. Te lo ricorderai.'],
     firstTry: 'Al primo colpo',
-    combo: (n: number) => `${n} risposte giuste di fila`,
-    afterMistake: 'Ce l’hai fatta!',
-    wrongTitle: 'Risposta errata',
-    wrongMessage: 'Ops, la tua risposta non è quella giusta.',
-    close: 'Chiudi',
+    combo: (n: number) => `${n} giuste di fila`,
+    afterMistake: 'Ce l’hai fatta',
+    wrongTitle: 'Non proprio',
+    wrongMessage: 'Riprova: sbagliare qui non costa niente.',
+    close: 'Riprova',
     lifeLost: (left: number) => (left === 0 ? 'Hai perso l’ultima vita' : `Hai perso una vita · ne restano ${left}`),
     noExtraLife: 'Per questa domanda non perdi altre vite',
     practice: 'Ripasso: sbagliare qui non costa niente',
@@ -127,12 +123,24 @@ export const COPY = {
   completion: {
     titleFirst: 'Capitolo completato!',
     titleReplay: 'Lezione completata!',
+    /** "Pozzo costruito." · "Il Granaio cresce." · "Lezione rifatta.": one italic word each. */
+    builtWord: 'costruito.',
+    growWord: 'cresce.',
+    replayStart: 'Lezione ',
+    replayWord: 'rifatta.',
+    partnerBuilt: 'Un edificio in più nel borgo, e una cosa in più che sai fare.',
+    partnerGrow: (left: number) =>
+      left === 1 ? 'Ancora una lezione e l’edificio è finito.' : `Ancora ${left} lezioni e l’edificio è finito.`,
+    partnerReplay: 'Rifarla serve: è così che le cose restano.',
     overline: (level: number | undefined) => (level ? `Livello ${level} · completato` : 'Completato'),
     xp: 'XP',
     kiwi: 'Mattoni',
+    residentsLabel: 'Abitanti',
+    firstTryLabel: 'Al primo colpo',
+    firstTryValue: (right: number, total: number) => `${right}/${total}`,
     accuracy: 'Precisione',
-    perfect: 'Perfetto! Nessun errore 🎯',
-    replayNote: 'Ripasso: metà XP, nessun mattone',
+    perfect: 'Nessun errore',
+    replayNote: 'Lezione già fatta: niente mattoni questa volta',
     streakNewTitle: (_days: number) => 'Giorno rispettato: arriva un abitante',
     streakFirst: 'Il primo abitante del borgo. Ne arriva uno per ogni giorno del patto.',
     streakGrow: 'Un abitante in più nel borgo. Un giorno saltato non manda via nessuno.',
@@ -140,14 +148,15 @@ export const COPY = {
     streakKept: 'L’abitante di oggi è già arrivato.',
     residents: (n: number) => (n === 1 ? '1 abitante nel borgo' : `${n} abitanti nel borgo`),
     built: (name: string) => `${name}: costruito!`,
-    builtBody: 'Tutte le lezioni di questo edificio sono fatte. Restano qui per ripassare.',
+    builtBody: 'Tutte le lezioni di questo edificio sono fatte. Restano qui, puoi rifarle quando vuoi.',
     nextOverline: 'Prossima lezione',
     nextOverlineDone: 'Prossima lezione',
     nextMinutes: (minutes: number) => `Circa ${minutes} minuti`,
+    nextIn: (building: string) => `Prossima lezione ${building}`,
     courseDoneTitle: 'Percorso completato! 🏆',
     courseDoneMessage: 'Hai finito tutti i capitoli. Condividi il tuo traguardo dal percorso!',
     milestone: (title: string) => `Traguardo sbloccato: ${title}. Riscattalo in Home!`,
-    cta: 'Continua',
+    cta: 'Torna al borgo',
     review: 'Rivedi le risposte',
     reviewTitle: 'Le tue risposte',
     reviewFirstTry: 'Giusta al primo colpo',
@@ -157,13 +166,13 @@ export const COPY = {
 
   error: {
     title: 'Lezione non trovata',
-    message: 'Questa lezione non esiste o non è più disponibile. Torna al percorso e scegline un’altra.',
-    back: 'Torna al percorso',
+    message: 'Questa lezione non esiste o non è più disponibile. Torna al borgo e scegline un’altra.',
+    back: 'Torna al borgo',
   },
   locked: {
     title: 'Capitolo bloccato',
     message: 'Completa i capitoli precedenti per sbloccare questa lezione.',
-    back: 'Vai al percorso',
+    back: 'Vai al borgo',
     devOpen: 'Apri comunque (dev)',
   },
 } as const;

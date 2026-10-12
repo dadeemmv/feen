@@ -7,6 +7,7 @@
 import { useEffect, useRef } from 'react';
 import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { SvgXml } from 'react-native-svg';
+import { useIsFocused } from 'expo-router';
 
 import { MascotArt } from '@/components/illustrations';
 import { useSvgIds } from '@/components/icons/lib/svg-ids';
@@ -16,7 +17,7 @@ import { BUILDING_IDS, BUILDINGS, type BuildingId } from '@/content/village';
 import { galleryColors, radius, spacing } from '@/theme';
 
 import { VILLAGE_COPY } from '../copy';
-import { buildingAnchor, partnerAnchor, TW, VILLAGE_VIEWBOX, villageSvg } from '../lib/iso';
+import { buildingAnchor, LAYOUT, P, partnerAnchor, TW, VILLAGE_VIEWBOX, villageSvg } from '../lib/iso';
 import type { Village } from '../lib/model';
 
 /** Width of the island on screen (the board's phone rule). */
@@ -25,8 +26,12 @@ const SCALE = MAP_WIDTH / VILLAGE_VIEWBOX[2];
 const MAP_HEIGHT = VILLAGE_VIEWBOX[3] * SCALE;
 const HIT = TW * SCALE * 0.95;
 const MEDALLION = 34;
-const PIN_WIDTH = 150;
+/** The pin box is wider than any label; the pill inside sizes to its text. */
+const PIN_BOX = 200;
 const PIN_HEIGHT = 26;
+const PIN_TIP = 6;
+/** Height of the pin's tip above the ground of its tile, in viewBox units (the board's value). */
+const PIN_LIFT = 34;
 
 const toScreen = (x: number, y: number) => ({
   left: (x - VILLAGE_VIEWBOX[0]) * SCALE,
@@ -39,8 +44,8 @@ export type VillageMapProps = {
   partnerName?: string;
   onBuilding: (id: BuildingId) => void;
   onPartner: () => void;
-  /** Lessons done / total of today's site, for the pin. */
-  sitePin?: { done: number; total: number };
+  /** Lessons done / total of today's site, for the pin; `open` = already a site, not a lot. */
+  sitePin?: { done: number; total: number; open: boolean };
 };
 
 export function VillageMap({ village, partner, partnerName, onBuilding, onPartner, sitePin }: VillageMapProps) {
@@ -49,17 +54,21 @@ export function VillageMap({ village, partner, partnerName, onBuilding, onPartne
   const { width } = useWindowDimensions();
   const viewport = Math.min(width, MAP_WIDTH);
 
-  // The camera starts on today's site.
+  // The camera starts on today's site, and finds it again when you come back from a lesson
+  // (a hidden screen cannot scroll, so it waits for the focus).
   const site = village.current;
+  const focused = useIsFocused();
   useEffect(() => {
-    if (!site) return;
+    if (!site || !focused) return;
     const { left } = toScreen(buildingAnchor(site).x, 0);
     const x = Math.max(0, Math.min(MAP_WIDTH - viewport, left - viewport / 2));
     const frame = requestAnimationFrame(() => scroll.current?.scrollTo({ x, animated: false }));
     return () => cancelAnimationFrame(frame);
-  }, [site, viewport]);
+  }, [site, viewport, focused]);
 
   const current = village.current;
+  // The pin stands on the tile like the board's: just above the site, never on the roofs behind.
+  const pinAt = current ? P(LAYOUT[current].i + 0.5, LAYOUT[current].j + 0.5, PIN_LIFT) : null;
 
   return (
     <ScrollView
@@ -88,19 +97,19 @@ export function VillageMap({ village, partner, partnerName, onBuilding, onPartne
           );
         })}
 
-        {current && sitePin ? (
+        {pinAt && sitePin ? (
           <View
             pointerEvents="none"
             style={[
-              styles.pin,
-              {
-                left: toScreen(buildingAnchor(current).x, 0).left - PIN_WIDTH / 2,
-                top: toScreen(0, buildingAnchor(current).y - 40).top - PIN_HEIGHT,
-              },
+              styles.pinBox,
+              { left: toScreen(pinAt[0], 0).left - PIN_BOX / 2, top: toScreen(0, pinAt[1]).top - PIN_HEIGHT - PIN_TIP },
             ]}>
-            <Text variant="labelSm" style={styles.pinText}>
-              {VILLAGE_COPY.pin(sitePin.done, sitePin.total)}
-            </Text>
+            <View style={styles.pin}>
+              <Text variant="labelSm" style={styles.pinText}>
+                {sitePin.open ? VILLAGE_COPY.pin(sitePin.done, sitePin.total) : VILLAGE_COPY.pinNext}
+              </Text>
+            </View>
+            <View style={styles.pinTip} />
           </View>
         ) : null}
 
@@ -126,15 +135,25 @@ export function VillageMap({ village, partner, partnerName, onBuilding, onPartne
 
 const styles = StyleSheet.create({
   hit: { position: 'absolute', width: HIT, height: HIT, borderRadius: radius.md },
+  pinBox: { position: 'absolute', width: PIN_BOX, alignItems: 'center' },
   pin: {
-    position: 'absolute',
-    width: PIN_WIDTH,
     height: PIN_HEIGHT,
     borderRadius: radius.pill,
     backgroundColor: galleryColors.ink,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: spacing.sm,
+  },
+  // A small ink triangle under the pill, pointing at the site.
+  pinTip: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: PIN_TIP,
+    borderRightWidth: PIN_TIP,
+    borderTopWidth: PIN_TIP,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: galleryColors.ink,
   },
   pinText: { color: galleryColors.sprout },
   medallion: {

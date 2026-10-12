@@ -7,7 +7,7 @@ import { create } from 'zustand';
 
 import type { ChoiceValue } from '@/content/personality';
 import { DOSE_OPTIONS, PACT_DAYS, WHEN_OPTIONS, WHY_OPTIONS } from '@/features/pact/data';
-import type { Experience, ReminderSlot } from '@/store';
+import type { Experience, PactSignature, ReminderSlot } from '@/store';
 
 import type { InterestId } from './data/interests';
 
@@ -28,7 +28,7 @@ export type OnboardingDraft = {
   pactMinutes: number;
   pactDays: number;
   pactWhen: string;
-  signature: { kind: 'drawn' | 'typed'; name: string } | null;
+  signature: PactSignature | null;
   signedAt: number | null;
   villageName: string;
 };

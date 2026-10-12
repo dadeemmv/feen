@@ -22,7 +22,6 @@ import {
   computeChapterReward,
   getStoreState,
   selectIsChapterCompleted,
-  selectLives,
   type ChapterReward,
   type CompletionSummary,
 } from '@/store';
@@ -119,10 +118,9 @@ export function useLessonController(chapter: Chapter, lesson: Lesson, notify: No
       switch (effect.type) {
         case 'FEEDBACK': {
           if (effect.outcome === 'correct') {
-            setCorrect(buildCorrectFeedback(next.results));
+            setCorrect(buildCorrectFeedback(next.results, steps[next.index]?.explanation));
           } else if (effect.outcome === 'wrong') {
-            const lives = selectLives(getStoreState(), now);
-            setWrong(buildWrongFeedback({ practice, unlimited: lives.unlimited, lostLife, livesLeft: lives.lives }));
+            setWrong(buildWrongFeedback());
           } else {
             haptics.warning();
             // After the lives chip has bumped and shaken (the toast would cover it).

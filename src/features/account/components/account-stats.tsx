@@ -1,17 +1,18 @@
 /**
- * Three mini stats under the profile card (residents · lessons completed · bricks). Each tile is
- * a shortcut: the pact, the lessons list, the village.
+ * Three mini stats under the profile card (residents · buildings built · bricks), all counted in
+ * the village. Each tile is a shortcut: the pact, the lessons list, the village.
  */
 import type { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 
-import { Users } from 'lucide-react-native';
+import { Landmark, Users } from 'lucide-react-native';
 
-import { CheckBadgeIcon, BrickIcon } from '@/components/icons';
+import { BrickIcon } from '@/components/icons';
 import { HStack, PressableScale, StatTile, iconSize } from '@/components/ui';
+import { BUILDING_IDS } from '@/content/village';
 import { formatCoins } from '@/lib/format';
-import { countResidents, selectLessonsCompleted, useStore, useStoreShallow } from '@/store';
+import { countResidents, isBuilt, useStore, useStoreShallow } from '@/store';
 
 import { ACCOUNT_COPY } from '../copy';
 
@@ -24,18 +25,19 @@ function StatShortcut({ label, onPress, children }: { label: string; onPress: ()
 }
 
 export function AccountStats() {
-  const streak = countResidents(useStoreShallow((s) => ({ activeDays: s.activeDays, pact: s.pact })));
-  const lessons = useStore((s) => selectLessonsCompleted(s));
-  const coins = useStore((s) => s.coins);
+  const s = useStoreShallow((st) => ({ activeDays: st.activeDays, pact: st.pact, chapterRecords: st.chapterRecords }));
+  const residents = countResidents(s);
+  const built = BUILDING_IDS.filter((id) => isBuilt(id, s)).length;
+  const coins = useStore((st) => st.coins);
   const copy = ACCOUNT_COPY.stats;
 
   return (
     <HStack gap="xs" align="stretch">
-      <StatShortcut label={`${streak} ${copy.streak}`} onPress={() => router.navigate('/pact')}>
-        <StatTile icon={Users} value={streak} label={copy.streak} />
+      <StatShortcut label={`${residents} ${copy.streak}`} onPress={() => router.navigate('/pact')}>
+        <StatTile icon={Users} value={residents} label={copy.streak} />
       </StatShortcut>
-      <StatShortcut label={`${lessons} ${copy.lessons}`} onPress={() => router.navigate('/lessons')}>
-        <StatTile icon={<CheckBadgeIcon size={iconSize.lg} muted={lessons === 0} />} value={lessons} label={copy.lessons} />
+      <StatShortcut label={`${built} ${copy.built}`} onPress={() => router.navigate('/lessons')}>
+        <StatTile icon={Landmark} value={built} label={copy.built} />
       </StatShortcut>
       <StatShortcut label={`${formatCoins(coins)} ${copy.coins}`} onPress={() => router.navigate('/')}>
         <StatTile icon={<BrickIcon size={iconSize.lg} />} value={formatCoins(coins)} label={copy.coins} />

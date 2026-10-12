@@ -6,9 +6,10 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
-import { AssistantOrb } from '@/components/illustrations';
+import { AssistantOrb, MascotArt } from '@/components/illustrations';
 import { Text, TypingDots, avatarSize, useReduceMotion } from '@/components/ui';
 import { useTypewriter } from '@/features/assistant/engine';
+import { selectMascot, useStore } from '@/store';
 import { duration, easing, radius, spacing, useTheme } from '@/theme';
 
 import type { ExplainMessage } from './use-explain-chat';
@@ -61,13 +62,19 @@ export function TypingBubble() {
 }
 
 /**
- * The pearl fills ~62 % of the orb artwork: drawn one avatar step larger and centred in an
- * `xs` box, it reads at avatar size. Fixed box: the row never squeezes it.
+ * Who is talking: the student's partner (her bust at `xs`), or the assistant's pearl before the
+ * test (the pearl fills ~62 % of the orb artwork: drawn one avatar step larger and centred in an
+ * `xs` box, it reads at avatar size). Fixed box: the row never squeezes it.
  */
 function OrbAvatar() {
+  const mascot = useStore(selectMascot);
   return (
     <View aria-hidden style={styles.avatar}>
-      <AssistantOrb width={avatarSize.sm} height={avatarSize.sm} halo={false} />
+      {mascot ? (
+        <MascotArt id={mascot} framing="bust" width={avatarSize.xs} />
+      ) : (
+        <AssistantOrb width={avatarSize.sm} height={avatarSize.sm} halo={false} />
+      )}
     </View>
   );
 }

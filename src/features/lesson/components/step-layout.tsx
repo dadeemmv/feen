@@ -1,21 +1,22 @@
 /**
  * Shared step layouts:
- * - `GradedStepCard`: the white rounded card of graded steps (tag pill centred on top, art,
- *   prompt, answers). It fills the available height and scrolls on short screens; its bottom
- *   padding leaves room for the AI button that floats over the card.
+ * - `GradedStepCard`: the grey rounded card of graded steps (label centred on top, art, prompt,
+ *   answers). It fills the available height and scrolls on short screens.
  * - `StepScroll`: full-bleed scroll container for info / definition steps.
  * - `StepTagPill`, `StepArt`, `StepPrompt`: the building blocks.
+ * Gallery rule: the lesson is black and white; emoji art is not drawn (colour lives in the
+ * village), only the custom SVG illustrations are.
  */
 import { createContext, use, type ReactNode } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { Illustration, illustrationSize } from '@/components/illustrations';
-import { Tag, Text, hairline } from '@/components/ui';
+import { Text } from '@/components/ui';
 import type { IllustrationKey, StepTag } from '@/content/types';
-import { elevation, layout, radius, spacing, useTheme } from '@/theme';
+import { layout, radius, spacing, useTheme } from '@/theme';
 
 import { TAGS } from '../copy';
-import { EMOJI_LINE_HEIGHT, lessonMetrics } from '../metrics';
+import { lessonMetrics } from '../metrics';
 
 /** Short windows (iPhone SE): set by the graded card, read by its prompt. */
 const CompactContext = createContext(false);
@@ -53,15 +54,7 @@ export function GradedStepCard({ tag, art, prompt, children, bottomInset, compac
   return (
     <StepScroll bottomInset={bottomInset} padded={false}>
       <View
-        style={[
-          styles.card,
-          compact && styles.cardCompact,
-          {
-            backgroundColor: theme.colors.surface,
-            borderColor: theme.colors.borderSubtle,
-            paddingBottom: bottomInset,
-          },
-        ]}>
+        style={[styles.card, compact && styles.cardCompact, { backgroundColor: theme.colors.surface, paddingBottom: bottomInset }]}>
         <CompactContext value={compact}>
           {tag ? <StepTagPill tag={tag} /> : null}
           {art}
@@ -74,8 +67,11 @@ export function GradedStepCard({ tag, art, prompt, children, bottomInset, compac
 }
 
 export function StepTagPill({ tag }: { tag: StepTag }) {
-  const config = TAGS[tag];
-  return <Tag label={config.label} emoji={config.emoji} tone={config.tone} style={styles.tag} />;
+  return (
+    <Text variant="overline" color="textSecondary" align="center">
+      {TAGS[tag].label}
+    </Text>
+  );
 }
 
 export function StepPrompt({ children }: { children: string }) {
@@ -89,37 +85,22 @@ export function StepPrompt({ children }: { children: string }) {
 
 type ArtProps = {
   illustration?: IllustrationKey;
-  emoji?: string;
   compact: boolean;
-  /** Rounded tinted frame behind the art (true / false statement image). */
+  /** Rounded white frame behind the art (true / false statement image). */
   framed?: boolean;
 };
 
-export function StepArt({ illustration, emoji, compact, framed = false }: ArtProps) {
+export function StepArt({ illustration, compact, framed = false }: ArtProps) {
   const theme = useTheme();
   const height = compact ? lessonMetrics.artHeight.compact : lessonMetrics.artHeight.regular;
+  if (!illustration) return null;
 
-  if (illustration) {
-    const [w, h] = illustrationSize(illustration);
-    return (
-      <View
-        aria-hidden
-        style={[styles.art, framed && [styles.frame, { backgroundColor: theme.colors.surfaceRaised, borderColor: theme.colors.borderSubtle }]]}>
-        <Illustration name={illustration} width={Math.round((height * w) / h)} height={height} />
-      </View>
-    );
-  }
-  if (emoji) {
-    const size = compact ? lessonMetrics.emojiArt - spacing.md : lessonMetrics.emojiArt;
-    return (
-      <View aria-hidden style={styles.art}>
-        <View style={[styles.emojiHalo, compact && styles.emojiHaloCompact, { backgroundColor: theme.colors.tintButter }]}>
-          <Text style={{ fontSize: size, lineHeight: Math.round(size * EMOJI_LINE_HEIGHT) }}>{emoji}</Text>
-        </View>
-      </View>
-    );
-  }
-  return null;
+  const [w, h] = illustrationSize(illustration);
+  return (
+    <View aria-hidden style={[styles.art, framed && [styles.frame, { backgroundColor: theme.colors.surfaceRaised }]]}>
+      <Illustration name={illustration} width={Math.round((height * w) / h)} height={height} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -130,14 +111,11 @@ const styles = StyleSheet.create({
   card: {
     flexGrow: 1,
     borderRadius: radius.xxl,
-    borderWidth: hairline,
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.lg,
     gap: spacing.md,
-    boxShadow: elevation.sm,
   },
   cardCompact: { paddingHorizontal: spacing.md, paddingTop: spacing.md, gap: spacing.xs },
-  tag: { alignSelf: 'center' },
   prompt: { paddingHorizontal: spacing.xxs },
   answers: { gap: spacing.sm, marginTop: spacing.xxs },
   answersCompact: { gap: spacing.xs },
@@ -145,15 +123,7 @@ const styles = StyleSheet.create({
   frame: {
     alignSelf: 'stretch',
     borderRadius: radius.xl,
-    borderWidth: hairline,
     paddingVertical: spacing.sm,
     overflow: 'hidden',
   },
-  emojiHalo: {
-    borderRadius: radius.pill,
-    padding: spacing.lg,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  emojiHaloCompact: { padding: spacing.sm },
 });

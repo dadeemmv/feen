@@ -1,10 +1,9 @@
 /**
- * Lesson player (spec §3.10, redlines "Lesson player"): header (✕ / ⚑ / share, lives + coins,
- * progress), the current step rendered through the registry and sliding in horizontally, the AI
- * sparkle button, the single "Continua" footer, and every lesson-internal overlay (answer
- * feedback, exit confirmation, report, "Spiegami il perché", local toasts). Passing the last
- * step swaps the player for the completion celebration (overlays stay mounted, so the last
- * feedback dialog can still animate out).
+ * Lesson player: header (✕ · progress · ⚑), the current step rendered through the registry and
+ * sliding in horizontally, the footer with the partner beside "Continua", and every
+ * lesson-internal overlay (answer feedback, exit confirmation, report, "Spiegami il perché",
+ * local toasts). Passing the last step swaps the player for the completion screen (overlays stay
+ * mounted, so the last feedback dialog can still animate out). No lives, no coins on screen.
  *
  * Logic lives in the pure machine (`machine.ts`) and the controller hook; this file only wires.
  */
@@ -13,14 +12,11 @@ import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
 import { Screen, ToastHost } from '@/components/ui';
-import { isGradedStep, type Chapter, type Lesson } from '@/content/types';
-import { formatCountdown } from '@/lib/dates';
-import { useStore } from '@/store';
-import { useLives, useNow } from '@/store/hooks';
-import { openSheet } from '@/store/ui';
+import { getMascot } from '@/content/personality';
+import type { Chapter, Lesson } from '@/content/types';
+import { selectMascot, useStore } from '@/store';
 import { duration, spacing } from '@/theme';
 
-import { AiFab } from './components/ai-fab';
 import { ExitDialog } from './components/exit-dialog';
 import { FeedbackDialogs } from './components/feedback-dialogs';
 import { LessonFooter } from './components/lesson-footer';
@@ -30,18 +26,13 @@ import { StepStage } from './components/step-stage';
 import { CompletionScreen } from './completion/completion-screen';
 import { COPY } from './copy';
 import { ExplainSheet } from './explain-sheet';
-import { hasMistakeOnCurrentStep } from './machine';
 import { lessonMetrics } from './metrics';
 import { StepView } from './steps';
-import { isAnswering } from './steps/types';
 import { useLessonController } from './use-lesson-controller';
 import { goBackToPath, useLessonNotice, useLessonOverlays } from './use-lesson-overlays';
 
-/** Room step content keeps at its bottom so it never ends under the AI button. */
-const fabClearance = (compact: boolean) =>
-  lessonMetrics.fabBottom[compact ? 'compact' : 'regular'] + lessonMetrics.fabSize + spacing.xs - spacing.md;
-/** Lives refill every 2 h: a 30 s tick keeps the "next life in" countdown honest. */
-const LIVES_TICK_MS = 30_000;
+/** Breathing room under the last element of a step (nothing floats over the content any more). */
+const STEP_BOTTOM = spacing.md;
 
 export type LessonPlayerProps = { chapter: Chapter; lesson: Lesson };
 
@@ -51,15 +42,10 @@ export function LessonPlayer({ chapter, lesson }: LessonPlayerProps) {
   const { notice, notify, hide } = useLessonNotice(null);
   const controller = useLessonController(chapter, lesson, notify);
   const overlays = useLessonOverlays(chapter, controller, notify);
-  const now = useNow(LIVES_TICK_MS);
-  const lives = useLives(now);
-  const coins = useStore((s) => s.coins);
+  const mascotId = useStore(selectMascot);
+  const partner = mascotId ? getMascot(mascotId) : null;
 
   const { state, step, practice, completion } = controller;
-  const answering = isAnswering(state.phase);
-  const graded = step !== undefined && isGradedStep(step);
-  const outOfLives = !practice && !lives.unlimited && lives.lives === 0 && graded && answering;
-  const countdown = lives.nextRefillAt === null ? null : formatCountdown(Math.max(0, lives.nextRefillAt - now));
 
   // One welcome line: where we resumed from, or that this is a replay without lives at stake.
   const greet = useEffectEvent(() => {
@@ -95,9 +81,6 @@ export function LessonPlayer({ chapter, lesson }: LessonPlayerProps) {
               practice={practice}
               onClose={overlays.exit.request}
               onReport={overlays.report.show}
-              onShare={overlays.share}
-              onLivesPress={() => openSheet('lives')}
-              onCoinsPress={() => notify(COPY.coinsInfo(coins))}
             />
           }>
           <View style={styles.body}>
@@ -111,22 +94,17 @@ export function LessonPlayer({ chapter, lesson }: LessonPlayerProps) {
                   wrongSignal={state.attempts}
                   onSelect={controller.select}
                   onMatchMiss={controller.matchMiss}
-                  bottomInset={fabClearance(compact)}
+                  bottomInset={STEP_BOTTOM}
                   compact={compact}
                 />
               </StepStage>
             ) : null}
-            <AiFab
-              expanded={hasMistakeOnCurrentStep(state) && answering}
-              onPress={overlays.explain.show}
-              style={[styles.fab, { bottom: lessonMetrics.fabBottom[compact ? 'compact' : 'regular'] }]}
-            />
           </View>
           <LessonFooter
             enabled={controller.primary.enabled}
             onPress={controller.primaryPress}
-            outOfLives={outOfLives ? { countdown } : undefined}
-            onRefill={() => openSheet('out-of-lives')}
+            partner={partner}
+            onAsk={overlays.explain.show}
           />
         </Screen>
       )}
@@ -162,5 +140,4 @@ export function LessonPlayer({ chapter, lesson }: LessonPlayerProps) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   body: { flex: 1 },
-  fab: { position: 'absolute', right: spacing.md + spacing.sm },
 });

@@ -30,6 +30,20 @@ export type PersonalityResult = {
   takenAt: number;
 };
 
+/**
+ * The student's signature: drawn with the finger (its strokes as one SVG path, in the coordinates
+ * of the pad it was drawn on, so it can be redrawn on the pact) or the name written in the
+ * signature ink. Older drawn signatures have no path: the name stands in for them.
+ */
+export type PactSignature = {
+  kind: 'drawn' | 'typed';
+  name: string;
+  /** Drawn only: every stroke as `M x y L x y …`. */
+  path?: string;
+  /** Drawn only: width and height of the pad, the path's viewBox. */
+  box?: [number, number];
+};
+
 /** The pact signed after the test (concept board §03): five articles, countersigned by the partner. */
 export type Pact = {
   /** Progressive number ("Patto n. 0001"): a new pact at each renewal. */
@@ -45,7 +59,7 @@ export type Pact = {
   /** Art. 3 · the habit it hooks onto ("Quando salgo sul bus per andare a scuola"). */
   when: string;
   /** Drawn with the finger, or the name written in the signature ink. */
-  signature: { kind: 'drawn' | 'typed'; name: string };
+  signature: PactSignature;
 };
 
 export type PactInput = Omit<Pact, 'number' | 'signedAt'>;

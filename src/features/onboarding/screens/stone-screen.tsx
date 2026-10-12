@@ -1,7 +1,7 @@
 /**
  * "Prima pietra posata." (concept board, screen 4): the sprout becomes a surface, like Bending
  * Spoons' lime section, only in reward moments. The Town Hall stands and keeps the pact; the
- * partner says where they will wait tomorrow. Then the village gets its name.
+ * partner says where the first lesson is waiting. Then the village gets its name.
  */
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -30,7 +30,7 @@ export function StoneScreen() {
   if (allowed !== 'stone') return <Redirect href={STEP_HREF[allowed]} />;
 
   const mascot = getMascot(draftPersonality(draft).mascot);
-  const tomorrow = getBuilding(firstSiteOf(mascot.startBuildings) ?? 'pozzo').at;
+  const firstSite = getBuilding(firstSiteOf(mascot.startBuildings) ?? 'pozzo').at;
   const copy = ONBOARDING_COPY.stone;
 
   return (
@@ -53,7 +53,7 @@ export function StoneScreen() {
             </Text>
           </Text>
           <Text variant="bodyLg" color="onReward" align="center">
-            {copy.body(mascot.partner.name, tomorrow)}
+            {copy.body(mascot.partner.name, firstSite)}
           </Text>
         </Animated.View>
       </VStack>

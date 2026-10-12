@@ -1,6 +1,7 @@
 /**
  * The village's name (concept board, screen 4): you choose it after the first stone, as in FIFA
- * City; the partner suggests three. "Entra nel borgo" writes everything and enters the village.
+ * City; the partner suggests three (her bust beside them, the chips wrapping in their own column).
+ * "Entra nel borgo" writes everything and enters the village.
  */
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -62,11 +63,13 @@ export function VillageNameScreen() {
             {copy.subtitle(mascot.partner.name)}
           </Text>
         </VStack>
-        <HStack gap="xs" align="center" style={styles.ideas}>
+        <HStack gap="sm" align="center">
           <MascotArt id={mascot.id} framing="bust" width={avatarSize.md} />
-          {ideas.map((idea) => (
-            <Chip key={idea} label={idea} selected={value === idea} onPress={() => setValue(idea)} />
-          ))}
+          <HStack gap="xs" style={styles.ideas}>
+            {ideas.map((idea) => (
+              <Chip key={idea} label={idea} selected={value === idea} onPress={() => setValue(idea)} />
+            ))}
+          </HStack>
         </HStack>
         <TextField
           label={copy.label}
@@ -87,5 +90,5 @@ export function VillageNameScreen() {
 const styles = StyleSheet.create({
   header: { height: layout.headerHeight, flexDirection: 'row', alignItems: 'center', paddingHorizontal: layout.screenX },
   body: { paddingTop: spacing.md },
-  ideas: { flexWrap: 'wrap' },
+  ideas: { flex: 1, flexWrap: 'wrap' },
 });

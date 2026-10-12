@@ -1,7 +1,9 @@
 /**
- * Pure builders for the answer feedback dialog content (praise rotation, streak-of-answers combo,
- * the "lives" line after a mistake). Kept out of React so the dialog content can be frozen at
- * the moment of grading and stay stable while the dialog animates out.
+ * Pure builders for the answer feedback dialog content: the partner's line (the step's own
+ * explanation when it has one, so a right answer also says why; a rotating short line
+ * otherwise) and the streak-of-answers combo. A mistake costs nothing, so the wrong dialog has no
+ * lives line. Kept out of React so the dialog content can be frozen at the moment of grading and
+ * stay stable while the dialog animates out.
  */
 import type { StepResult } from './machine';
 import { COPY } from './copy';
@@ -11,8 +13,7 @@ export type FeedbackChip = { kind: FeedbackChipKind; label: string };
 
 export type CorrectFeedback = { kind: 'correct'; message: string; chips: FeedbackChip[] };
 
-export type LifeNoteTone = 'danger' | 'neutral';
-export type WrongFeedback = { kind: 'wrong'; lifeNote: { text: string; tone: LifeNoteTone } };
+export type WrongFeedback = { kind: 'wrong' };
 
 export type FeedbackContent = CorrectFeedback | WrongFeedback;
 
@@ -32,7 +33,7 @@ export function pickPraise(correctSoFar: number): string {
 /** Minimum combo worth celebrating. */
 const COMBO_MIN = 2;
 
-export function buildCorrectFeedback(results: readonly StepResult[]): CorrectFeedback {
+export function buildCorrectFeedback(results: readonly StepResult[], explanation?: string): CorrectFeedback {
   const latest = results[results.length - 1];
   const chips: FeedbackChip[] = [];
   if (latest?.firstTryCorrect) {
@@ -45,20 +46,7 @@ export function buildCorrectFeedback(results: readonly StepResult[]): CorrectFee
   } else if (latest) {
     chips.push({ kind: 'recovered', label: COPY.feedback.afterMistake });
   }
-  return { kind: 'correct', message: pickPraise(results.length), chips };
+  return { kind: 'correct', message: explanation ?? pickPraise(results.length), chips };
 }
 
-export type WrongContext = {
-  practice: boolean;
-  unlimited: boolean;
-  /** A life was taken by this mistake. */
-  lostLife: boolean;
-  livesLeft: number;
-};
-
-export function buildWrongFeedback({ practice, unlimited, lostLife, livesLeft }: WrongContext): WrongFeedback {
-  if (practice) return { kind: 'wrong', lifeNote: { text: COPY.feedback.practice, tone: 'neutral' } };
-  if (unlimited) return { kind: 'wrong', lifeNote: { text: COPY.feedback.unlimited, tone: 'neutral' } };
-  if (lostLife) return { kind: 'wrong', lifeNote: { text: COPY.feedback.lifeLost(livesLeft), tone: 'danger' } };
-  return { kind: 'wrong', lifeNote: { text: COPY.feedback.noExtraLife, tone: 'neutral' } };
-}
+export const buildWrongFeedback = (): WrongFeedback => ({ kind: 'wrong' });

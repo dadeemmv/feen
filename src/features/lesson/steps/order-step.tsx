@@ -78,7 +78,8 @@ export function OrderStep({ step, answer, phase, onSelect, bottomInset, compact 
               key={item.id}
               layout={layout}
               entering={reduceMotion ? undefined : FadeIn.duration(duration.fast)}
-              exiting={reduceMotion ? undefined : FadeOut.duration(duration.press)}>
+              exiting={reduceMotion ? undefined : FadeOut.duration(duration.press)}
+              style={styles.bankItem}>
               <OptionTile
                 label={item.label}
                 status="idle"
@@ -188,4 +189,6 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     marginTop: spacing.xs,
   },
+  // A long phrase wraps inside its pill instead of running out of the card.
+  bankItem: { maxWidth: '100%' },
 });

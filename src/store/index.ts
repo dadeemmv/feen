@@ -83,6 +83,7 @@ export type {
   OpenSiteResult,
   Pact,
   PactInput,
+  PactSignature,
   PersonalityResult,
   Purchase,
   ReminderSlot,

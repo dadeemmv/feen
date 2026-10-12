@@ -19,23 +19,23 @@ export const EXPERIENCE_OPTIONS: readonly ExperienceOption[] = [
   {
     id: 'beginner',
     label: 'Parto da zero',
-    description: 'Non so bene cosa sia l’inflazione, e va benissimo così.',
+    description: 'Non ho mai fatto due conti sui miei soldi, e va benissimo così.',
     icon: Sprout,
-    tone: 'mint',
+    tone: 'neutral',
   },
   {
     id: 'some',
-    label: 'Conosco le basi',
-    description: 'So cos’è un conto deposito e ho sentito parlare di ETF.',
+    label: 'Qualcosa so',
+    description: 'Metto da parte un po’ di soldi e so più o meno quanto spendo.',
     icon: BookOpen,
-    tone: 'sky',
+    tone: 'neutral',
   },
   {
     id: 'expert',
-    label: 'Investo già',
-    description: 'Ho un broker e voglio capire meglio cosa sto facendo.',
+    label: 'Me la cavo già',
+    description: 'Ho un conto o una prepagata e voglio capire anche come si investe.',
     icon: TrendingUp,
-    tone: 'lilac',
+    tone: 'neutral',
   },
 ];
 

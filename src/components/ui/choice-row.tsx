@@ -84,7 +84,8 @@ export function ChoiceRow({
           rowTransition,
           {
             backgroundColor: selected ? selectedBg : c.surface,
-            borderColor: selected ? selectedBorder : c.border,
+            // No-Line Rule: no hairline at rest, the ink ring only marks the choice.
+            borderColor: selected ? selectedBorder : 'transparent',
           },
           disabled && styles.disabled,
         ]}>

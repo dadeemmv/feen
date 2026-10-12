@@ -14,9 +14,10 @@ import { getMascot } from '@/content/personality';
 import { useEntering } from '@/features/onboarding/lib/entering';
 import { addDaysToKey, toDayKey } from '@/lib/dates';
 import { countResidents, pactDay, selectMascot, useStore, useStoreShallow } from '@/store';
-import { fonts, spacing, useTheme } from '@/theme';
+import { fonts, spacing } from '@/theme';
 
 import { PactPaper } from './components/pact-paper';
+import { SignatureMark } from './components/signature-mark';
 import { PACT_COPY } from './copy';
 import { PARACHUTE } from './data';
 
@@ -30,13 +31,12 @@ export const PACT_SCREEN_COPY = {
   missedTitle: 'Ieri non c’eri. Riprendiamo.',
   missedBody: 'Nessun problema, il patto lo prevede. Il borgo è com’era: nessun abitante se n’è andato.',
   article5: 'Art. 5 · il paracadute',
-  today: 'Oggi hai già fatto la tua parte. A domani.',
+  today: 'Oggi hai già fatto la tua parte: l’abitante di oggi è arrivato.',
 } as const;
 
 export function PactScreen() {
   const [now] = useState(() => Date.now());
   const { rise } = useEntering();
-  const { colors } = useTheme();
   const s = useStoreShallow((st) => ({ pact: st.pact, activeDays: st.activeDays, name: st.name }));
   const mascotId = useStore(selectMascot);
   const copy = PACT_SCREEN_COPY;
@@ -113,9 +113,7 @@ export function PactScreen() {
           terms={{ why: pact.why, minutes: pact.minutes, days: pact.days, when: pact.when }}
           number={pact.number}
           date={pact.signedAt}>
-          <View style={[styles.signature, { borderBottomColor: colors.borderStrong }]}>
-            <Text style={[styles.signed, { color: colors.signInk }]}>{pact.signature.name}</Text>
-          </View>
+          <SignatureMark signature={pact.signature} />
           <HStack justify="space-between" align="center">
             <Text variant="labelSm" color="textSecondary">
               {PACT_COPY.countersign(mascot.partner.name)}
@@ -136,7 +134,5 @@ const styles = StyleSheet.create({
   italic: { fontFamily: fonts.serif.italic, letterSpacing: 0 },
   missed: { gap: spacing.md },
   paper: { marginTop: spacing.lg, marginBottom: spacing.xxl },
-  signature: { borderBottomWidth: StyleSheet.hairlineWidth, paddingBottom: spacing.xs },
-  signed: { fontFamily: fonts.serif.italic, fontSize: 30, lineHeight: 36 },
   seal: { transform: [{ rotate: '-8deg' }] },
 });

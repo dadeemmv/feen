@@ -1,6 +1,6 @@
 /**
- * Step 4/5 — "Quanto ne sai di finanza?": single choice (Parto da zero / Conosco le basi /
- * Investo già) with a reassuring note.
+ * "Quanto ne sai di soldi?": single choice (Parto da zero / Qualcosa so / Me la cavo già) with a
+ * reassuring note.
  */
 import { StyleSheet } from 'react-native';
 import { Info } from 'lucide-react-native';

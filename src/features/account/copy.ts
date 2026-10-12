@@ -10,6 +10,7 @@ export const ACCOUNT_COPY = {
   stats: {
     streak: 'Abitanti',
     lessons: 'Lezioni completate',
+    built: 'Edifici costruiti',
     coins: 'Mattoni',
   },
   referral: {
@@ -50,7 +51,7 @@ export const SETTINGS_COPY = {
   sound: { title: 'Suoni', subtitle: 'Effetti sonori nelle lezioni' },
   reduceMotion: { title: 'Riduci animazioni', subtitle: 'Transizioni più semplici' },
   reminders: 'Promemoria',
-  notifications: { title: 'Notifiche promemoria', subtitle: 'Non perdere la tua serie' },
+  notifications: { title: 'Promemoria', subtitle: 'Uno al giorno, con la voce della tua socia' },
   reminderTime: 'Quando vuoi il promemoria?',
   demoNote: 'Versione demo: i promemoria vengono salvati ma non inviano notifiche reali.',
   saved: 'Impostazione salvata',

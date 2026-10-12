@@ -1,55 +1,71 @@
 /**
- * Lesson footer (redlines "Footer: hairline top border, padding md, CTA lg full width"): the one
- * primary button of the player — pale and disabled until an answer is complete, then CHECK on
- * graded steps and NEXT on info / definition steps. The out-of-lives notice sits above it.
+ * Lesson footer: the partner beside the one primary button. Tapping her bust asks her about the
+ * step ("Spiegami il perché"); she sits in the footer, so she never covers an answer. The button
+ * is pale and disabled until an answer is complete, then CHECK on graded steps and NEXT on info /
+ * definition steps. White like the screen, no top line (No-Line Rule).
  */
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Button, hairline } from '@/components/ui';
-import { spacing, useTheme } from '@/theme';
+import { MascotArt } from '@/components/illustrations';
+import { Button, PressableScale, controlHeight } from '@/components/ui';
+import type { Mascot } from '@/content/personality';
+import { radius, spacing, useTheme } from '@/theme';
 
 import { COPY } from '../copy';
-import { OutOfLivesBanner } from './out-of-lives-banner';
 
 export type LessonFooterProps = {
   enabled: boolean;
   onPress: () => void;
-  /** Show the out-of-lives notice with this countdown ("2h 26min" or null). `undefined` hides it. */
-  outOfLives?: { countdown: string | null };
-  onRefill: () => void;
+  /** The student's partner, who answers "Spiegami il perché". */
+  partner: Mascot | null;
+  onAsk: () => void;
 };
 
-export function LessonFooter({ enabled, onPress, outOfLives, onRefill }: LessonFooterProps) {
+const ASK = controlHeight.lg;
+
+export function LessonFooter({ enabled, onPress, partner, onAsk }: LessonFooterProps) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   return (
     <View
       style={[
         styles.footer,
-        {
-          backgroundColor: theme.colors.surface,
-          borderTopColor: theme.colors.borderSubtle,
-          paddingBottom: Math.max(insets.bottom, spacing.md),
-        },
+        { backgroundColor: theme.colors.background, paddingBottom: Math.max(insets.bottom, spacing.md) },
       ]}>
-      {outOfLives ? <OutOfLivesBanner countdown={outOfLives.countdown} onRefill={onRefill} /> : null}
-      <Button
-        title={COPY.cta.continue}
-        disabled={!enabled}
-        fullWidth
-        haptic={enabled ? 'light' : false}
-        onPress={onPress}
-        testID="lesson-continue"
-      />
+      {partner ? (
+        <PressableScale
+          onPress={onAsk}
+          haptic="light"
+          accessibilityRole="button"
+          accessibilityLabel={COPY.a11y.ask(partner.partner.name)}
+          style={styles.ask}
+          testID="lesson-ask">
+          <MascotArt id={partner.id} framing="bust" width={ASK} />
+        </PressableScale>
+      ) : null}
+      <View style={styles.cta}>
+        <Button
+          title={COPY.cta.continue}
+          disabled={!enabled}
+          fullWidth
+          haptic={enabled ? 'light' : false}
+          onPress={onPress}
+          testID="lesson-continue"
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   footer: {
-    borderTopWidth: hairline,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
     paddingHorizontal: spacing.md,
-    paddingTop: spacing.md,
+    paddingTop: spacing.sm,
   },
+  ask: { width: ASK, height: ASK, borderRadius: radius.pill },
+  cta: { flex: 1 },
 });

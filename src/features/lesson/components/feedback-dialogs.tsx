@@ -1,14 +1,17 @@
 /**
- * Answer feedback (strips s_10/s_11/s_16): bottom-anchored dialogs with the badge overlapping the
- * top edge. Correct → green ✓, rotating praise and a reward hint ("Al primo colpo", "3 risposte
- * giuste di fila"), CTA "Continua". Wrong → red ✕, "Ops, la tua risposta non è quella giusta.",
- * what happened to the lives, red CTA "Chiudi" and a shortcut to "Spiegami il perché".
+ * Answer feedback: bottom-anchored dialogs with the badge overlapping the top edge, in the voice
+ * of the partner. Correct → ✓ "Giusto", the partner says why (the step's explanation) and a small
+ * chip ("Al primo colpo", "3 giuste di fila"), CTA "Continua". Wrong → ✕ "Non proprio", a mistake
+ * costs nothing, CTA "Riprova" and a shortcut to "Spiegami il perché".
  * Content is frozen by the controller at grading time, so it never changes while animating out.
  */
 import { StyleSheet, View } from 'react-native';
 
-import { BoltIcon, FlameIcon, HeartIcon, SparkleIcon } from '@/components/icons';
-import { Chip, Dialog, Text, iconSize } from '@/components/ui';
+import { BoltIcon, FlameIcon, SparkleIcon } from '@/components/icons';
+import { MascotArt } from '@/components/illustrations';
+import { Chip, Dialog, HStack, Text, avatarSize, iconSize } from '@/components/ui';
+import { getMascot } from '@/content/personality';
+import { selectMascot, useStore } from '@/store';
 import { spacing } from '@/theme';
 
 import { COPY } from '../copy';
@@ -37,11 +40,31 @@ const chipIcon = (kind: FeedbackChipKind) =>
     <SparkleIcon size={CHIP_ICON} tone="gold" twin={false} />
   );
 
+/** The partner's line: her bust and name, then what she says. */
+function PartnerLine({ text }: { text: string }) {
+  const mascotId = useStore(selectMascot);
+  const mascot = mascotId ? getMascot(mascotId) : null;
+  return (
+    <View style={styles.partner}>
+      {mascot ? (
+        <HStack gap="xs" align="center" justify="center">
+          <MascotArt id={mascot.id} framing="bust" width={avatarSize.sm} />
+          <Text variant="labelMd" color="textSecondary">
+            {mascot.partner.name}
+          </Text>
+        </HStack>
+      ) : null}
+      <Text variant="bodyLg" align="center">
+        {text}
+      </Text>
+    </View>
+  );
+}
+
 export function FeedbackDialogs({
   correctVisible,
   wrongVisible,
   correct,
-  wrong,
   onContinue,
   onRetry,
   onExplain,
@@ -55,11 +78,7 @@ export function FeedbackDialogs({
         tone="success"
         badge="success"
         title={COPY.feedback.correctTitle}
-        message={
-          <Text variant="bodyLg" color="textSecondary" align="center">
-            {correct?.message ?? COPY.feedback.praise[0]}
-          </Text>
-        }
+        message={<PartnerLine text={correct?.message ?? COPY.feedback.praise[0]} />}
         primaryAction={{ label: COPY.cta.continue, onPress: onContinue }}>
         {correct && correct.chips.length > 0 ? (
           <View style={styles.chips}>
@@ -88,28 +107,15 @@ export function FeedbackDialogs({
             {COPY.feedback.wrongMessage}
           </Text>
         }
-        primaryAction={{ label: COPY.feedback.close, onPress: onRetry }}
-        secondaryAction={{
-          label: `${COPY.fabPill} ✨`,
-          onPress: onExplain,
-          variant: 'ghost',
-        }}>
-        {wrong ? (
-          <View style={styles.chips}>
-            <Chip
-              label={wrong.lifeNote.text}
-              icon={<HeartIcon size={CHIP_ICON} muted={wrong.lifeNote.tone === 'neutral'} />}
-              tone={wrong.lifeNote.tone === 'danger' ? 'danger' : 'neutral'}
-              size="sm"
-            />
-          </View>
-        ) : null}
-      </Dialog>
+        primaryAction={{ label: COPY.feedback.close, onPress: onRetry, variant: 'primary' }}
+        secondaryAction={{ label: COPY.fabPill, onPress: onExplain, variant: 'ghost' }}
+      />
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  partner: { gap: spacing.sm, alignItems: 'center' },
   chips: {
     flexDirection: 'row',
     flexWrap: 'wrap',

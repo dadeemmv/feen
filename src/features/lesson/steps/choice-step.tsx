@@ -1,5 +1,5 @@
 /**
- * Multiple choice ("🎩 INDOVINA"): tag, art, prompt, one OptionTile per option. Options keep the
+ * Multiple choice ("Indovina"): label, art, prompt, one OptionTile per option. Options keep the
  * content order (the content spreads the correct answer across positions on purpose).
  */
 import type { ChoiceStep as ChoiceStepData } from '@/content/types';
@@ -24,7 +24,7 @@ export function ChoiceStep({
   return (
     <GradedStepCard
       tag={step.tag}
-      art={<StepArt illustration={step.illustration} emoji={step.emoji} compact={compact} />}
+      art={<StepArt illustration={step.illustration} compact={compact} />}
       prompt={<StepPrompt>{step.prompt}</StepPrompt>}
       bottomInset={bottomInset}
       compact={compact}>

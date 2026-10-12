@@ -15,6 +15,7 @@ import { getChapter } from '@/content/courses';
 import { getMascot } from '@/content/personality';
 import { BUILDINGS } from '@/content/village';
 import { useEntering } from '@/features/onboarding/lib/entering';
+import { toDayKey } from '@/lib/dates';
 import { chaptersDone, nextChapterOf, selectMascot, useStore } from '@/store';
 import { fonts, layout, spacing } from '@/theme';
 
@@ -29,6 +30,7 @@ export function VillageScreen() {
   const village = useVillage(now);
   const name = useStore((s) => s.name);
   const records = useStore((s) => s.chapterRecords);
+  const doneToday = useStore((s) => s.activeDays.includes(toDayKey(now)));
   const mascotId = useStore(selectMascot);
   const { rise } = useEntering();
   const mascot = mascotId ? getMascot(mascotId) : null;
@@ -66,7 +68,9 @@ export function VillageScreen() {
           partnerName={mascot?.partner.name}
           onBuilding={openBuilding}
           onPartner={() => router.push('/pact')}
-          sitePin={site && siteTotal > 0 ? { done: siteDone, total: siteTotal } : undefined}
+          sitePin={
+            site && siteTotal > 0 ? { done: siteDone, total: siteTotal, open: village.states[site.id] === 'cantiere' } : undefined
+          }
         />
       </Animated.View>
 
@@ -76,7 +80,11 @@ export function VillageScreen() {
             <MascotArt id={mascot.id} framing="bust" width={avatarSize.md} />
             <Text variant="bodyMd" style={styles.flex}>
               <Text variant="labelMd">{`${mascot.partner.name} · `}</Text>
-              {site ? VILLAGE_COPY.partnerSays(site.at) : VILLAGE_COPY.partnerIdle}
+              {site
+                ? doneToday
+                  ? VILLAGE_COPY.partnerDone(site.at)
+                  : VILLAGE_COPY.partnerSays(site.at)
+                : VILLAGE_COPY.partnerIdle}
             </Text>
           </HStack>
         </Animated.View>

@@ -14,9 +14,13 @@ export const VILLAGE_COPY = {
   pactDaysValue: (day: number, days: number) => `${day}/${days}`,
 
   partnerSays: (building: string) => `Oggi tocca ${building}!`,
+  /** Today's lesson is done: no push, just where to find the partner if you feel like more. */
+  partnerDone: (building: string) => `Per oggi hai fatto la tua parte. Se ti va, ci vediamo ${building}.`,
   partnerIdle: 'Scegli tu da dove partire: nessun lucchetto.',
   partnerA11y: (name: string) => `${name}: apri il patto`,
   pin: (done: number, total: number) => `In costruzione · ${done}/${total}`,
+  /** The suggested project, not opened yet: still a lot on the ground. */
+  pinNext: 'Prossimo cantiere',
   mapLabel: (name: string | null) => `${name ? `Borgo ${name}` : 'Il borgo'}: undici edifici, ognuno dice a che punto è`,
   mapHint: 'Tocca un edificio per vedere a che punto è.',
 
@@ -25,7 +29,7 @@ export const VILLAGE_COPY = {
   minutes: (n: number) => `${n} min`,
   bricksReward: (n: number) => `+${n}`,
   build: 'Costruisci',
-  review: 'Ripassa',
+  review: 'Rifai',
 
   state: {
     progetto: 'Progetto, si apre quando vuoi',
@@ -55,11 +59,11 @@ export const VILLAGE_COPY = {
     soon: 'Le lezioni di questo edificio sono in arrivo.',
     open: 'Apri il cantiere',
     continue: (title: string) => `Continua: ${title}`,
-    practise: 'Ripassa una lezione',
+    practise: 'Rifai una lezione',
     done: 'Fatta',
     next: 'Prossima',
     issue: {
-      built: 'Costruito: le lezioni restano qui per ripassare.',
+      built: 'Costruito: le lezioni restano qui, puoi rifarle quando vuoi.',
       'needs-building': (name: string) => `Si apre dopo il ${name}: prima l’acqua, poi la vista.`,
       'too-many': 'Hai già due cantieri aperti: finiscine uno prima di aprirne un altro.',
       'no-lessons': 'Le lezioni di questo edificio sono in arrivo.',

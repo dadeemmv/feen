@@ -1,8 +1,9 @@
 /**
  * The signature: a white box with a baseline where you sign with your finger, or — "Preferisco
  * scrivere il nome" — your name written in serif italic in the signature ink. A tap or a dot is
- * not enough: a drawn signature needs a minimum of real ink. `need` lights the box with the red
- * thread for a moment (the hold was pressed before signing).
+ * not enough: a drawn signature needs a minimum of real ink. A drawn signature is kept as its
+ * strokes (one SVG path in the pad's coordinates), so the pact shows the same signature later.
+ * `need` lights the box with the red thread for a moment (the hold was pressed before signing).
  */
 import { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
@@ -10,6 +11,7 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Svg, { Path } from 'react-native-svg';
 
 import { borderWidth, PressableScale, Text } from '@/components/ui';
+import type { PactSignature } from '@/store';
 import { fonts, radius, spacing, useTheme } from '@/theme';
 
 import { PACT_COPY } from '../copy';
@@ -18,7 +20,7 @@ import { PACT_COPY } from '../copy';
 const MIN_INK = 40;
 const PAD_HEIGHT = 120;
 
-export type Signature = { kind: 'drawn' | 'typed'; name: string };
+export type Signature = PactSignature;
 
 export type SignaturePadProps = {
   /** The student's name, used for a drawn signature and as the typed default. */
@@ -34,19 +36,23 @@ export type SignaturePadProps = {
 const toPath = (stroke: readonly [number, number][]) =>
   stroke.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
 
+/** Every stroke in one path, for the pact to redraw. */
+export const signaturePath = (strokes: readonly (readonly [number, number][])[]) => strokes.map(toPath).join(' ');
+
 export function SignaturePad({ name, onChange, need = false, locked = false }: SignaturePadProps) {
   const { colors } = useTheme();
   const [typed, setTyped] = useState(false);
   const [text, setText] = useState('');
   const [strokes, setStrokes] = useState<[number, number][][]>([]);
   const [ink, setInk] = useState(0);
+  const [box, setBox] = useState<[number, number] | undefined>(undefined);
 
   useEffect(() => {
     if (typed) onChange(text.trim().length > 1 ? { kind: 'typed', name: text.trim() } : null);
-    else onChange(ink >= MIN_INK ? { kind: 'drawn', name } : null);
+    else onChange(ink >= MIN_INK ? { kind: 'drawn', name, path: signaturePath(strokes), box } : null);
     // `onChange` is the caller's setter; the signature depends on the mode, the text and the ink.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [typed, text, ink, name]);
+  }, [typed, text, ink, strokes, box, name]);
 
   const pan = Gesture.Pan()
     .runOnJS(true)
@@ -74,6 +80,7 @@ export function SignaturePad({ name, onChange, need = false, locked = false }: S
     <View style={styles.root}>
       <View
         style={[styles.box, { backgroundColor: colors.surfaceRaised, borderColor: ringColor }]}
+        onLayout={(e) => setBox([Math.round(e.nativeEvent.layout.width), Math.round(e.nativeEvent.layout.height)])}
         accessible={!typed}
         accessibilityLabel={PACT_COPY.signA11y}>
         {typed ? (

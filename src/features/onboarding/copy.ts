@@ -20,7 +20,7 @@ export const ONBOARDING_COPY = {
 
   name: {
     title: 'Come ti chiami?',
-    subtitle: 'Useremo il tuo nome per rendere il percorso più tuo.',
+    subtitle: 'Lo scriveremo sul patto e sull’ingresso del tuo borgo.',
     label: 'Il tuo nome',
     placeholder: 'Es. Giulia',
     greeting: (name: string) => `Piacere di conoscerti, ${name}! 👋`,
@@ -47,14 +47,14 @@ export const ONBOARDING_COPY = {
     titleStart: 'Prima pietra ',
     titleWord: 'posata.',
     body: (partner: string, building: string) =>
-      `Il Municipio è in piedi e custodisce il patto. Domani ${partner} ti aspetta ${building}.`,
+      `Il Municipio è in piedi e custodisce il patto. ${partner} ti aspetta ${building}: la prima lezione dura pochi minuti.`,
     cta: 'Dai un nome al borgo',
     artLabel: 'Il Municipio, costruito',
   },
 
   village: {
     title: 'Come si chiama il tuo borgo?',
-    subtitle: (partner: string) => `Lo scegli tu, come in FIFA City. ${partner} te ne propone tre.`,
+    subtitle: (partner: string) => `Lo scegli tu: ${partner} te ne propone tre, ma puoi scriverne uno tuo.`,
     label: 'Nome del borgo',
     placeholder: 'Es. Ginestra',
     preview: (name: string) => `Borgo ${name}`,

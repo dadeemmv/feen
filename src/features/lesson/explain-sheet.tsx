@@ -1,5 +1,5 @@
 /**
- * "Spiegami il perché" — the AI tutor sheet of the lesson player (spec §3.10, strips s_14/s_15).
+ * "Spiegami il perché" — the partner explains (the tutor sheet of the lesson player, spec §3.10).
  * Opens with the learner's request bubble ("Spiegami perché ho sbagliato" after a mistake,
  * "Spiegami meglio questo passaggio" otherwise), shows the typing dots for ~1.2 s, then the
  * answer types itself out. The composer asks follow-up questions to the assistant engine.
@@ -11,10 +11,12 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Send } from 'lucide-react-native';
 
-import { AssistantOrb } from '@/components/illustrations';
+import { AssistantOrb, MascotArt } from '@/components/illustrations';
 import { Chip, IconButton, Sheet, Text, TextField, avatarSize, hairline, useReduceMotion } from '@/components/ui';
 import { ASSISTANT_DISCLAIMER, ASSISTANT_INPUT_PLACEHOLDER } from '@/content/assistant';
+import { getMascot } from '@/content/personality';
 import { isWeb } from '@/lib/platform';
+import { selectMascot, useStore } from '@/store';
 import { duration, spacing, useTheme } from '@/theme';
 
 import { COPY } from './copy';
@@ -52,6 +54,9 @@ export function ExplainSheet({ visible, topic, onClose }: ExplainSheetProps) {
   const { height: windowHeight } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const keyboard = useKeyboardHeight();
+  // The partner answers: her bust and name instead of a generic assistant.
+  const mascotId = useStore(selectMascot);
+  const partner = mascotId ? getMascot(mascotId) : null;
 
   const onOpen = useEffectEvent(() => {
     if (topic) chat.open(topic);
@@ -105,9 +110,9 @@ export function ExplainSheet({ visible, topic, onClose }: ExplainSheetProps) {
       footer={composer}
       accessibilityLabel={COPY.a11y.fabExpanded}>
       <View style={styles.header}>
-        <AssistantOrb width={avatarSize.sm} />
+        {partner ? <MascotArt id={partner.id} framing="bust" width={avatarSize.sm} /> : <AssistantOrb width={avatarSize.sm} />}
         <View style={styles.headerText}>
-          <Text variant="titleSm">{COPY.explain.assistantName}</Text>
+          <Text variant="titleSm">{partner?.partner.name ?? COPY.explain.assistantName}</Text>
           <Text variant="labelSm" color="textTertiary">
             {COPY.explain.context}
           </Text>
