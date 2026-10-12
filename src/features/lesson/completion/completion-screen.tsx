@@ -2,8 +2,9 @@
  * Lesson completion: the progress shows in the world, not in points. The lesson's building pops
  * in at the top (its site with the walls a bit higher, or finished), the partner says one line,
  * then bricks, residents and the answers right at the first try. When the lesson finishes its
- * building the screen turns sprout, like the first stone: "Pozzo costruito." with confetti; any
- * other lesson stays on black: "Lezione fatta.". Rewards were committed once by the controller
+ * building the screen turns lilac (the achievement colour), like the first stone: "Pozzo
+ * costruito." with confetti; any other lesson stays on indigo: "Lezione fatta.", with the italic
+ * word in sun. Rewards were committed once by the controller
  * when the last step was passed; "Torna al borgo" goes back to the village, "Rivedi le risposte"
  * opens the answers review.
  */
@@ -88,8 +89,10 @@ export function CompletionScreen({
     : builtNow
       ? COPY.completion.partnerBuilt
       : COPY.completion.partnerGrow(Math.max(1, total - done));
-  // On sprout the tiles turn white, as on the first stone; on black they are night tiles.
+  // On lilac the tiles turn white, as on the first stone; on indigo they are deep indigo tiles.
   const tileStyle = builtNow ? { backgroundColor: theme.colors.surfaceRaised } : undefined;
+  // Grey text drops under 4.5:1 on lilac, so the secondary lines there stay in ink.
+  const subtleText = builtNow ? 'text' : 'textSecondary';
   const step = COMPLETION.revealMs;
 
   const footer = (
@@ -124,7 +127,7 @@ export function CompletionScreen({
 
         <Reveal delay={step} style={styles.titles}>
           {building ? (
-            <Text variant="overline" color="textSecondary" align="center">
+            <Text variant="overline" color={subtleText} align="center">
               {`${building.name} · ${building.topic}`}
             </Text>
           ) : null}
@@ -132,11 +135,12 @@ export function CompletionScreen({
             {titleStart}
             <Text
               variant={compact ? 'displayMd' : 'displayLg'}
-              style={[styles.italic, !builtNow && { color: theme.colors.reward }]}>
+              color={builtNow ? 'text' : 'accentText'}
+              style={styles.italic}>
               {titleWord}
             </Text>
           </Text>
-          <Text variant="titleMd" color="textSecondary" align="center">
+          <Text variant="titleMd" color={subtleText} align="center">
             {chapter.title}
           </Text>
         </Reveal>
@@ -197,7 +201,7 @@ export function CompletionScreen({
   );
 }
 
-/** The next lesson of the same building. Reads the theme inside the screen (night tiles on black). */
+/** The next lesson of the same building. Reads the theme inside the screen (deep indigo tiles on indigo). */
 function NextLessonCard({ chapter, at }: { chapter: Chapter; at: string }) {
   const theme = useTheme();
   return (

@@ -1,6 +1,6 @@
 /**
  * OutOfLivesSheet — 0 hearts (global overlay 'out-of-lives', spec §5): empty hearts, the live
- * countdown to the next life, instant refills with Kiwi and the Finanz Pro upsell. Opened by the
+ * countdown to the next life, instant refills with Kiwi and the Feen Pro upsell. Opened by the
  * lesson player when the user tries to answer with no lives left (or opens a lesson at 0).
  *
  * When it is shown over a lesson, the secondary action leaves the lesson (progress is saved);

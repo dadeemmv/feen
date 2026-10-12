@@ -1,5 +1,5 @@
 /**
- * Referral promo on Account: "30 giorni di Finanz Pro" brand card with the wax-sealed envelopes,
+ * Referral promo on Account: "30 giorni di Feen Pro" brand card with the wax-sealed envelopes,
  * the invited-friends progress and the "Condividilo ad un amico" CTA (→ Invite a friend).
  */
 import { StyleSheet } from 'react-native';

@@ -1,13 +1,13 @@
 {
   "fill" : {
-    "automatic-gradient" : "extended-srgb:0.05882,0.22745,0.15686,1.00000"
+    "automatic-gradient" : "extended-srgb:0.42353,0.36078,0.90588,1.00000"
   },
   "groups" : [
     {
       "layers" : [
         {
-          "image-name" : "finanz-mark.png",
-          "name" : "finanz-mark"
+          "image-name" : "feen-mark.png",
+          "name" : "feen-mark"
         }
       ],
       "shadow" : {

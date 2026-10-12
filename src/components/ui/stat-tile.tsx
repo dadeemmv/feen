@@ -1,7 +1,7 @@
 /**
  * StatTile — icon + big value + small label, laid out 2–3 per row (Account stats, lesson
- * completion "XP · Precisione · Kiwi", streak records). On brand surfaces it becomes a raised
- * evergreen tile automatically.
+ * completion "Mattoni · Al primo colpo", streak records). On indigo surfaces it becomes a deep
+ * indigo tile automatically.
  */
 import type { ReactNode } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';

@@ -2,7 +2,7 @@
  * Shop tab (docs/PRODUCT_SPEC.md §3.7, SCREEN_SPECS "Shop").
  *
  * Status header · "Shop" + countdown to the daily reset · product cards (daily reward, shield,
- * extra life, unlimited hour) · Finanz Pro banner. The daily reward is claimed with one tap and
+ * extra life, unlimited hour) · Feen Pro banner. The daily reward is claimed with one tap and
  * celebrated in a dialog; paid items open the purchase sheet (price → balance → balance after).
  */
 import { useState, type ReactNode } from 'react';

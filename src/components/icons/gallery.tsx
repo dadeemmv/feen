@@ -8,8 +8,8 @@ import type { ComponentType } from 'react';
 
 import { BoltIcon } from './bolt-icon';
 import { CheckBadgeIcon, CrossBadgeIcon } from './badge-icons';
-import { FinanzLogo } from './finanz-logo';
-import { FinanzWordmark } from './finanz-wordmark';
+import { FeenLogo } from './feen-logo';
+import { FeenWordmark } from './feen-wordmark';
 import { FlameIcon } from './flame-icon';
 import { GemIcon } from './gem-icon';
 import { GiftIcon } from './gift-icon';
@@ -30,7 +30,7 @@ const LockGold = (props: IconProps) => <LockIcon {...props} variant="gold" />;
 const SparkleLime = (props: IconProps) => <SparkleIcon {...props} tone="lime" />;
 const SparkleGold = (props: IconProps) => <SparkleIcon {...props} tone="gold" />;
 const SparkleBrand = (props: IconProps) => <SparkleIcon {...props} tone="brand" />;
-const LogoBrand = (props: IconProps) => <FinanzLogo {...props} tone="brand" />;
+const LogoPaper = (props: IconProps) => <FeenLogo {...props} tone="paper" />;
 
 const ENTRIES: readonly Entry[] = [
   { label: 'Flame', Icon: FlameIcon },
@@ -50,8 +50,8 @@ const ENTRIES: readonly Entry[] = [
   { label: 'Bolt', Icon: BoltIcon },
   { label: 'CheckBadge', Icon: CheckBadgeIcon },
   { label: 'CrossBadge', Icon: CrossBadgeIcon },
-  { label: 'FinanzLogo', Icon: FinanzLogo, skipMuted: true },
-  { label: 'FinanzLogo brand', Icon: LogoBrand, skipMuted: true },
+  { label: 'FeenLogo', Icon: FeenLogo, skipMuted: true },
+  { label: 'FeenLogo paper', Icon: LogoPaper, skipMuted: true },
 ];
 
 const SURFACE_TITLE: Record<GallerySurface, string> = { paper: 'Su carta', evergreen: 'Su evergreen' };
@@ -91,11 +91,11 @@ export function IconGallery({ sizes = [48, 20], scrollable }: IconGalleryProps) 
       {GALLERY_SURFACES.map((surface) => (
         <GallerySection key={surface} title={`Wordmark — ${SURFACE_TITLE[surface].toLowerCase()}`} surface={surface}>
           <GalleryCell label="withMark">
-            <FinanzWordmark height={36} withMark tone={surface === 'paper' ? 'ink' : 'white'} />
+            <FeenWordmark height={36} withMark tone={surface === 'paper' ? 'ink' : 'white'} />
           </GalleryCell>
-          <GalleryCell label={surface === 'paper' ? 'ink' : 'lime'}>
-            <FinanzWordmark height={28} tone={surface === 'paper' ? 'ink' : 'lime'} />
-            <FinanzWordmark height={16} tone={surface === 'paper' ? 'ink' : 'lime'} />
+          <GalleryCell label={surface === 'paper' ? 'brand' : 'white'}>
+            <FeenWordmark height={28} tone={surface === 'paper' ? 'brand' : 'white'} />
+            <FeenWordmark height={16} tone={surface === 'paper' ? 'brand' : 'white'} />
           </GalleryCell>
         </GallerySection>
       ))}

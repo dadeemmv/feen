@@ -9,9 +9,9 @@ export const LIVES_COPY = {
   partialTitle: (lives: number) => `Ti ${lives === 1 ? 'resta' : 'restano'} ${formatLives(lives)}`,
   unlimitedTitle: 'Vite illimitate attive',
   unlimitedMessage: (time: string) => `Puoi sbagliare senza perdere vite ancora per ${time}.`,
-  proMessage: (date: string) => `Con Finanz Pro le vite sono illimitate fino al ${date}.`,
+  proMessage: (date: string) => `Con Feen Pro le vite sono illimitate fino al ${date}.`,
 
-  proCard: { tag: 'Pro', title: 'Vite illimitate', subtitle: 'Con Finanz Pro' },
+  proCard: { tag: 'Pro', title: 'Vite illimitate', subtitle: 'Con Feen Pro' },
   statusFull: { title: 'Piena!', subtitle: 'Le tue vite sono al massimo' },
   statusPartial: (lives: number, max: number) => ({ title: `${lives}/${max}`, subtitle: 'Vite disponibili' }),
   statusEmpty: { title: 'Vuota', subtitle: 'Nessuna vita rimasta' },
@@ -31,13 +31,13 @@ export const LIVES_COPY = {
   ctaPro: 'Ottieni vite illimitate',
   ctaNoThanks: 'No, grazie',
   ctaContinue: 'Continua a imparare',
-  ctaTryPro: 'Prova Finanz Pro',
+  ctaTryPro: 'Prova Feen Pro',
   ctaWait: 'Aspetto la ricarica',
   ctaLeaveLesson: 'Esci dalla lezione',
   ctaResume: 'Continua la lezione',
 
   outTitle: 'Hai finito le vite',
-  outMessage: 'Aspetta la ricarica automatica, oppure torna subito in gioco con i Kiwi o con Finanz Pro.',
+  outMessage: 'Aspetta la ricarica automatica, oppure torna subito in gioco con i Kiwi o con Feen Pro.',
   backTitle: 'Sei di nuovo in gioco!',
   backMessage: (lives: number) => `Ora hai ${formatLives(lives)}. Continua da dove eri rimasto.`,
 

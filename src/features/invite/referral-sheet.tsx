@@ -1,5 +1,5 @@
 /**
- * ReferralSheet — "30 giorni di Finanz Pro" promo (spec §3.1). Home opens it on launch (local
+ * ReferralSheet — "30 giorni di Feen Pro" promo (spec §3.1). Home opens it on launch (local
  * state); it is also the `referral` global overlay, so any screen can `openSheet('referral')`.
  *
  * Brand card with the wax-sealed envelopes and the invited-friends tracker, lime CTA

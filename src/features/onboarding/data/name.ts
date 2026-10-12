@@ -26,12 +26,12 @@ export const NAME_ISSUE_MESSAGES: Record<NameIssue, string> = {
   chars: 'Usa solo lettere, spazi e apostrofi',
 };
 
-const DEMO_EMAIL_DOMAIN = 'finanz.app';
+const DEMO_EMAIL_DOMAIN = 'feen.app';
 const DEMO_EMAIL_FALLBACK = 'utente';
 
 /**
  * Demo account e-mail for a new profile, derived from the chosen name (the demo has no real
- * sign-up): "Anna Maria" → "anna.maria@finanz.app", accents dropped.
+ * sign-up): "Anna Maria" → "anna.maria@feen.app", accents dropped.
  */
 export function demoEmailFor(name: string): string {
   const local = cleanName(name)

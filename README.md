@@ -1,6 +1,6 @@
-# Finanz
+# Feen
 
-**Impara la finanza come si impara una lingua.** Finanz è un'app mobile di educazione finanziaria
+**Impara la finanza come si impara una lingua.** Feen è un'app mobile di educazione finanziaria
 in stile Duolingo: percorsi a livelli, lezioni da 5 minuti con quiz, vite, streak, monete
 ("Kiwi"), shop, stories e un coach AI.
 

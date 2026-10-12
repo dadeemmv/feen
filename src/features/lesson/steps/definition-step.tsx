@@ -1,7 +1,8 @@
 /**
- * Definition card ("Il colpevole"): full bleed, displaySm title, titleSm lead, then a grey
- * definition box: the label "Definizione", the term, the definition. No accent bar and no tint
- * (No-Line Rule, Gallery Rule). Always answerable (Continua → next step).
+ * Definition card ("Il colpevole"): full bleed, displaySm title, titleSm lead, then the
+ * definition box in the insight tint (cyan, the palette's colour for information): the label
+ * "Definizione", the term, the definition. No accent bar (No-Line Rule). Always answerable
+ * (Continua → next step).
  */
 import { StyleSheet } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
@@ -25,8 +26,8 @@ export function DefinitionStep({ step, bottomInset }: StepViewProps<DefinitionSt
       <StepTitle title={step.title} lead={step.lead} />
       <Animated.View
         entering={reduceMotion ? undefined : FadeInDown.delay(STAGGER.baseMs).duration(duration.slow).easing(easing.enter)}
-        style={[styles.box, { backgroundColor: theme.colors.surface }]}>
-        <Text variant="overline" color="textSecondary">
+        style={[styles.box, { backgroundColor: theme.colors.infoBg }]}>
+        <Text variant="overline" color="infoText">
           {COPY.steps.definitionOverline}
         </Text>
         <Text variant="titleLg">{step.term}</Text>

@@ -71,7 +71,7 @@ export const COPY = {
   },
 
   share: {
-    title: 'Finanz',
+    title: 'Feen',
     message: (chapterTitle: string) =>
       `Sto imparando “${chapterTitle}”: ogni lezione è un mattone del mio borgo. Provala anche tu!`,
     copied: 'Messaggio copiato: incollalo dove vuoi',
@@ -102,7 +102,7 @@ export const COPY = {
   },
 
   explain: {
-    assistantName: 'Assistente Finanz',
+    assistantName: 'Assistente Feen',
     context: 'Ti rispondo su questo passaggio',
     hintOpener: 'Ecco un indizio per ragionarci 💡',
     hintClosing: 'Prova a rispondere: dopo ti spiego tutto nel dettaglio.',

@@ -8,7 +8,7 @@
 
 /**
  * What a milestone grants when unlocked.
- * `amount` means: shields for `shield`, kiwi coins for `coins`, days of Finanz Pro for `pro`.
+ * `amount` means: shields for `shield`, kiwi coins for `coins`, days of Feen Pro for `pro`.
  */
 export type MilestoneReward = {
   kind: 'shield' | 'coins' | 'pro';
@@ -42,7 +42,7 @@ export type MarathonChallenge = {
   lockedLabel: string;
 };
 
-// ─── Finanz Pro ──────────────────────────────────────────────────────────────────────────────
+// ─── Feen Pro ──────────────────────────────────────────────────────────────────────────────
 
 /** Semantic icon key: the UI maps it to an economy icon or a Lucide glyph. */
 export type ProBenefitIcon = 'lives' | 'assistant' | 'no-ads' | 'shield' | 'early-access';

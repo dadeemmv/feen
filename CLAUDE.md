@@ -1,10 +1,11 @@
 @AGENTS.md
 
-# Finanz — project conventions
+# Feen — project conventions
 
 Duolingo-style personal-finance learning app. Italian UI copy. Product spec: `docs/PRODUCT_SPEC.md`.
 Architecture & design-system decisions: `docs/ARCHITECTURE.md`. Design system: `docs/design/DESIGN.md`
-(gallery black and white; supersedes the colours and fonts of `docs/DESIGN_DIRECTION.md`).
+(Harmony palette: white canvas, indigo brand, vivid colours for rewards and states; supersedes the
+colours and fonts of `docs/DESIGN_DIRECTION.md`).
 
 ## Stack facts (verified in node_modules — do not guess)
 - Expo SDK 57, React Native 0.86, React 19.2, TypeScript 6, **React Compiler enabled** (no manual

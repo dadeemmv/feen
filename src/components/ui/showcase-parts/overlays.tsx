@@ -109,8 +109,8 @@ export function OverlayShowcase() {
               Hai 3 vite. Si ricaricano di una ogni 2 ore.
             </Text>
           </View>
-          <ChoiceRow label="Finanz Free" description="3 vite" selected={plan === 'free'} onPress={() => setPlan('free')} />
-          <ChoiceRow label="Finanz Pro" description="Vite illimitate" selected={plan === 'pro'} onPress={() => setPlan('pro')} tone="brand" />
+          <ChoiceRow label="Feen Free" description="3 vite" selected={plan === 'free'} onPress={() => setPlan('free')} />
+          <ChoiceRow label="Feen Pro" description="Vite illimitate" selected={plan === 'pro'} onPress={() => setPlan('pro')} tone="brand" />
           <Button title="Continua" fullWidth onPress={() => setSheet(null)} />
         </View>
       </Sheet>

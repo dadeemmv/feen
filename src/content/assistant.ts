@@ -8,7 +8,7 @@ import type { AssistantKbEntry, AssistantReply } from './extra-types';
 
 export { ASSISTANT_KB };
 
-export const ASSISTANT_NAME = 'Assistente Finanz';
+export const ASSISTANT_NAME = 'Assistente Feen';
 
 export const ASSISTANT_GREETING =
   'Ciao! 🦊 Sono il tuo assistente finanziario personale. Sono qui per aiutarti a capire risparmio, investimenti e tutto ciò che incontri nel percorso: chiedimi pure!';

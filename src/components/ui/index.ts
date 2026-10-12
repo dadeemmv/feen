@@ -1,5 +1,5 @@
 /**
- * Finanz design-system primitives. Screens import from here only:
+ * Feen design-system primitives. Screens import from here only:
  *   import { Button, Card, Screen, Text } from '@/components/ui';
  * Documentation with props and examples: docs/COMPONENTS.md.
  * (`collapsible.tsx` is an Expo-template leftover used by the template's explore route: not part

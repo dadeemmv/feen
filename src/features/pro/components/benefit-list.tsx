@@ -1,5 +1,5 @@
 /**
- * BenefitList — what Finanz Pro unlocks (`PRO_PLAN.benefits`): one row per benefit with a glass
+ * BenefitList — what Feen Pro unlocks (`PRO_PLAN.benefits`): one row per benefit with a glass
  * icon tile (economy SVG icons for lives / shields, the lime AI sparkle, Lucide for the rest),
  * title and one-line description. `checked` adds a lime check on each row (member / success).
  * Rendered on evergreen: it expects the brand colour mode.

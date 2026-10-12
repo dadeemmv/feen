@@ -66,9 +66,9 @@ export const COURSE_COPY = {
   goalProgress: (done: number, total: number) => `${formatFraction(done, total)} capitoli`,
   goalShare: 'Condividi con gli amici',
   goalShareLockedHint: 'Disponibile quando completi il percorso',
-  goalShareTitle: 'Traguardo raggiunto su Finanz',
+  goalShareTitle: 'Traguardo raggiunto su Feen',
   goalShareMessage: (courseTitle: string) =>
-    `Ho completato il percorso “${courseTitle}” su Finanz! 🏆 Impara anche tu a gestire i tuoi soldi, un capitolo alla volta.`,
+    `Ho completato il percorso “${courseTitle}” su Feen! 🏆 Impara anche tu a gestire i tuoi soldi, un capitolo alla volta.`,
   goalShared: 'Grazie per aver condiviso il tuo traguardo!',
 
   // Unavailable states

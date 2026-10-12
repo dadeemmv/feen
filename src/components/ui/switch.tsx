@@ -1,7 +1,7 @@
 /**
  * Switch — custom toggle (settings: Vibrazione, Suoni, Riduci animazioni, Notifiche) that looks
  * identical on iOS, Android and web. Thumb slides with spring.snappy, track colour glides with a
- * CSS transition. On = evergreen on light surfaces, lime on brand surfaces.
+ * CSS transition. On = indigo on light surfaces, white on indigo surfaces.
  * Pair it with a ListItem: `<ListItem title="Vibrazione" trailing={<Switch … />} />`.
  */
 import { useEffect } from 'react';

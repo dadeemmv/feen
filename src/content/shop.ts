@@ -1,5 +1,5 @@
 /**
- * Economy content: Shop catalogue (spec §3.7), Home unlock milestones (§3.3), Finanz Pro copy and
+ * Economy content: Shop catalogue (spec §3.7), Home unlock milestones (§3.3), Feen Pro copy and
  * the referral promo (§3.1). Prices are in kiwi coins unless stated otherwise.
  */
 import type { Milestone, ProPlan, ReferralPromo } from './extra-types';
@@ -79,8 +79,8 @@ export const MILESTONES: Milestone[] = [
     id: 'milestone-15-lessons',
     threshold: 15,
     reward: { kind: 'pro', amount: 7 },
-    title: '7 giorni di Finanz Pro',
-    description: 'Hai completato 15 lezioni: una settimana di Finanz Pro, con vite illimitate.',
+    title: '7 giorni di Feen Pro',
+    description: 'Hai completato 15 lezioni: una settimana di Feen Pro, con vite illimitate.',
   },
 ];
 
@@ -89,10 +89,10 @@ export function milestoneLockedLabel(threshold: number): string {
   return `Sblocca dopo ${threshold} ${threshold === 1 ? 'lezione' : 'lezioni'}`;
 }
 
-// ─── Finanz Pro (demo: no real payments) ─────────────────────────────────────────────────────
+// ─── Feen Pro (demo: no real payments) ─────────────────────────────────────────────────────
 
 export const PRO_PLAN: ProPlan = {
-  name: 'Finanz Pro',
+  name: 'Feen Pro',
   tagline: 'Impara senza limiti, al tuo ritmo.',
   benefits: [
     {
@@ -139,14 +139,14 @@ export const PRO_PLAN: ProPlan = {
     },
   ],
   defaultPriceId: 'yearly',
-  cta: 'Attiva Finanz Pro',
+  cta: 'Attiva Feen Pro',
   demoNotice: 'Versione demo: nessun pagamento reale, l’attivazione è simulata.',
   legal:
     'Questa è una dimostrazione: non viene sottoscritto alcun abbonamento e non è richiesto alcun metodo di pagamento.',
 };
 
 export const REFERRAL_PROMO: ReferralPromo = {
-  title: '30 giorni di Finanz Pro',
+  title: '30 giorni di Feen Pro',
   subtitle: 'Invita 3 amici e riscattalo gratis!',
   cta: 'Condividilo ad un amico',
   friendsRequired: 3,

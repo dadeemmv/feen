@@ -1,7 +1,7 @@
 /**
  * Info card ("La rivelazione", "Erosione"): full bleed, the displaySm title, a titleSm lead, then
- * grey rows that fade up one after the other. No emoji and no tints: the gallery is black and
- * white. Always answerable: the footer "Continua" goes straight to the next step.
+ * grey rows that fade up one after the other. No emoji and no tints: colour is kept for states
+ * and rewards. Always answerable: the footer "Continua" goes straight to the next step.
  */
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';

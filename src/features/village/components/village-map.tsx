@@ -190,12 +190,12 @@ const styles = StyleSheet.create({
   pin: {
     height: PIN_HEIGHT,
     borderRadius: radius.pill,
-    backgroundColor: galleryColors.ink,
+    backgroundColor: galleryColors.indigo,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: spacing.sm,
   },
-  // A small ink triangle under the pill, pointing at the site.
+  // A small indigo triangle under the pill, pointing at the site.
   pinTip: {
     width: 0,
     height: 0,
@@ -204,9 +204,9 @@ const styles = StyleSheet.create({
     borderTopWidth: PIN_TIP,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderTopColor: galleryColors.ink,
+    borderTopColor: galleryColors.indigo,
   },
-  pinText: { color: galleryColors.sprout },
+  pinText: { color: galleryColors.paper },
   medallion: {
     position: 'absolute',
     width: MEDALLION,

@@ -1,6 +1,6 @@
 /**
  * Referral progress: "0/3 amici invitati" with one slot per friend, and the reward they unlock
- * ("30 giorni di Finanz Pro"). Honest by design: it only reflects `profile.invitedFriends`.
+ * ("30 giorni di Feen Pro"). Honest by design: it only reflects `profile.invitedFriends`.
  */
 import { StyleSheet, View } from 'react-native';
 

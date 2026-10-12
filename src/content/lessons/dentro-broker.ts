@@ -161,7 +161,7 @@ export const dentroBrokerLesson: Lesson = {
         },
         {
           emoji: 'ℹ️',
-          text: 'Finanz ti aiuta a capire, non ti dice cosa comprare: le scelte finali restano tue.',
+          text: 'Feen ti aiuta a capire, non ti dice cosa comprare: le scelte finali restano tue.',
           tone: 'butter',
         },
       ],

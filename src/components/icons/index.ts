@@ -1,11 +1,11 @@
 /**
- * Finanz economy icons — the product's custom SVG "jewellery" (2-stop gradients + soft
+ * Feen economy icons — the product's custom SVG "jewellery" (2-stop gradients + soft
  * highlight on a 48 grid). UI/navigation glyphs come from lucide-react-native instead.
  */
 export { BoltIcon } from './bolt-icon';
 export { CheckBadgeIcon, CrossBadgeIcon } from './badge-icons';
-export { FinanzLogo, FzMonogram, type FinanzLogoProps, type FinanzLogoTone } from './finanz-logo';
-export { FinanzWordmark, type FinanzWordmarkProps, type FinanzWordmarkTone } from './finanz-wordmark';
+export { FeenLogo, FeMonogram, type FeenLogoProps, type FeenLogoTone } from './feen-logo';
+export { FeenWordmark, type FeenWordmarkProps, type FeenWordmarkTone } from './feen-wordmark';
 export { FlameIcon } from './flame-icon';
 export { GemIcon } from './gem-icon';
 export { GiftIcon } from './gift-icon';

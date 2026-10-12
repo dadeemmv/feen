@@ -26,7 +26,7 @@ export function TypographyShowcase() {
             {variant}
           </Text>
           <Text variant={variant} numberOfLines={1} style={styles.flex}>
-            {variant === 'numeric' ? '1.250 🥝' : variant === 'displayXl' ? '12' : variant.startsWith('display') ? 'Finanz 12' : 'Il tuo percorso'}
+            {variant === 'numeric' ? '1.250 🥝' : variant === 'displayXl' ? '12' : variant.startsWith('display') ? 'Feen 12' : 'Il tuo percorso'}
           </Text>
         </View>
       ))}

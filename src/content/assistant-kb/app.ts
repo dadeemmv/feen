@@ -1,13 +1,13 @@
 import type { AssistantKbEntry } from '../extra-types';
 
-/** Questions about Finanz itself, plus small talk (low priority: topics always win). */
+/** Questions about Feen itself, plus small talk (low priority: topics always win). */
 export const APP_KB: AssistantKbEntry[] = [
   {
     id: 'finanz-pro',
-    topic: 'Finanz Pro',
-    keywords: ['finanz pro', 'abbonament', 'premium', 'vite illimitate'],
+    topic: 'Feen Pro',
+    keywords: ['feen pro', 'abbonament', 'premium', 'vite illimitate'],
     answer:
-      'Finanz Pro ti dà vite illimitate, spiegazioni AI senza limiti e nessuna pubblicità. 💎 Puoi anche ottenerlo gratis per 30 giorni invitando 3 amici con il tuo codice. In questa versione demo l’attivazione è simulata: non viene addebitato nulla.',
+      'Feen Pro ti dà vite illimitate, spiegazioni AI senza limiti e nessuna pubblicità. 💎 Puoi anche ottenerlo gratis per 30 giorni invitando 3 amici con il tuo codice. In questa versione demo l’attivazione è simulata: non viene addebitato nulla.',
   },
   {
     id: 'app-economy',
@@ -24,15 +24,15 @@ export const APP_KB: AssistantKbEntry[] = [
       'shop',
     ],
     answer:
-      'Ecco come funziona Finanz: 🥝\n• Vite: ne hai 3 e ne perdi una quando sbagli, poi si ricaricano col tempo\n• Kiwi: la moneta dell’app, li guadagni studiando e li spendi nello Shop\n• Streak: i giorni di fila in cui completi almeno una lezione\n• Scudi: proteggono la streak se salti un giorno\nCon Finanz Pro le vite sono illimitate.',
+      'Ecco come funziona Feen: 🥝\n• Vite: ne hai 3 e ne perdi una quando sbagli, poi si ricaricano col tempo\n• Kiwi: la moneta dell’app, li guadagni studiando e li spendi nello Shop\n• Streak: i giorni di fila in cui completi almeno una lezione\n• Scudi: proteggono la streak se salti un giorno\nCon Feen Pro le vite sono illimitate.',
   },
   {
     id: 'about-assistant',
     topic: 'Chi è l’assistente',
     priority: -1,
-    keywords: ['chi sei', 'cosa sei', 'cosa sai fare', 'cosa puoi fare', 'assistente', 'finanz '],
+    keywords: ['chi sei', 'cosa sei', 'cosa sai fare', 'cosa puoi fare', 'assistente', 'feen '],
     answer:
-      'Sono l’assistente di Finanz 🦊: ti aiuto a capire risparmio, investimenti e i concetti del percorso. Rispondo con una base di conoscenze curata e funziono anche offline. Le mie risposte hanno scopo educativo: non sono consulenza finanziaria personalizzata. Prova a chiedermi, per esempio, cos’è un ETF o come funziona l’interesse composto.',
+      'Sono l’assistente di Feen 🦊: ti aiuto a capire risparmio, investimenti e i concetti del percorso. Rispondo con una base di conoscenze curata e funziono anche offline. Le mie risposte hanno scopo educativo: non sono consulenza finanziaria personalizzata. Prova a chiedermi, per esempio, cos’è un ETF o come funziona l’interesse composto.',
   },
   {
     id: 'greeting',

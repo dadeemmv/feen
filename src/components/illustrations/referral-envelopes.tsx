@@ -1,6 +1,6 @@
 import { Circle, Defs, Ellipse, G, Path, Rect } from 'react-native-svg';
 
-import { FzMonogram } from '@/components/icons/finanz-logo';
+import { FeMonogram } from '@/components/icons/feen-logo';
 import { scallopPath } from '@/components/icons/lib/geometry';
 import { Linear, twoStops } from '@/components/icons/lib/gradients';
 import { paint, useSvgIds } from '@/components/icons/lib/svg-ids';
@@ -39,16 +39,16 @@ function Envelope({ ids, x, y, rotate }: { ids: EnvelopeIds; x: number; y: numbe
       <Path d={SEAL_EDGE} transform="translate(0.8 1.6)" fill={illustration.ink} fillOpacity={0.22} />
       <Path d={SEAL_EDGE} fill={paint(ids.wax)} />
       <Circle cx={SEAL.x} cy={SEAL.y} r={SEAL.r * 0.7} fill="none" stroke={illustration.ink} strokeOpacity={0.18} strokeWidth={1.2} />
-      <FzMonogram color={illustration.ink} strokeWidth={5.5} transform={`translate(0.4 0.7) ${MONO_T}`} />
+      <FeMonogram color={illustration.ink} transform={`translate(0.4 0.7) ${MONO_T}`} />
       <G opacity={0.5}>
-        <FzMonogram color={illustration.white} strokeWidth={5.5} transform={MONO_T} />
+        <FeMonogram color={illustration.white} transform={MONO_T} />
       </G>
       <Ellipse cx={SEAL.x - 5} cy={SEAL.y - 7} rx={4} ry={2} fill={illustration.white} fillOpacity={0.45} transform={`rotate(-25 ${SEAL.x - 5} ${SEAL.y - 7})`} />
     </G>
   );
 }
 
-/** Three tilted envelopes sealed with red "FZ" wax — "30 giorni di Finanz Pro" referral promo. */
+/** Three tilted envelopes sealed with red "FZ" wax — "30 giorni di Feen Pro" referral promo. */
 export function ReferralEnvelopes(props: IllustrationProps) {
   const ids = useSvgIds('paper', 'flap', 'wax');
   return (

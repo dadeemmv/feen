@@ -49,7 +49,7 @@ export const BUILDINGS: Record<BuildingId, Building> = {
     topic: 'Tasse e Stato',
     description: 'Tasse, ISEE, bonus e documenti. Qui si custodiscono i patti firmati.',
     chapterIds: [],
-    tone: 'cobalt',
+    tone: 'indigo',
   },
   banco: {
     id: 'banco',
@@ -58,7 +58,7 @@ export const BUILDINGS: Record<BuildingId, Building> = {
     topic: 'Conto e pagamenti',
     description: 'Conto corrente, carte, bonifici, IBAN. La parola banca viene dal banco dei cambiavalute.',
     chapterIds: [],
-    tone: 'mint',
+    tone: 'green',
   },
   bottega: {
     id: 'bottega',
@@ -76,7 +76,7 @@ export const BUILDINGS: Record<BuildingId, Building> = {
     topic: 'Spese e budget',
     description: 'Bisogni e desideri, abbonamenti, trucchi del marketing. Dove i soldi escono.',
     chapterIds: ['spese-invisibili'],
-    tone: 'honey',
+    tone: 'sun',
   },
   granaio: {
     id: 'granaio',
@@ -95,7 +95,7 @@ export const BUILDINGS: Record<BuildingId, Building> = {
     topic: 'Fondo emergenze',
     description: 'Imprevisti e liquidità. Quando arriva la siccità, l’acqua c’è.',
     chapterIds: ['fondo-emergenze'],
-    tone: 'lagoon',
+    tone: 'cyan',
   },
   frutteto: {
     id: 'frutteto',
@@ -126,7 +126,7 @@ export const BUILDINGS: Record<BuildingId, Building> = {
       'scegli-broker',
       'dentro-broker',
     ],
-    tone: 'cobalt',
+    tone: 'indigo',
     requires: 'pozzo',
   },
   mura: {

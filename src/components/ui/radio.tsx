@@ -21,7 +21,7 @@ export type RadioProps = {
   selected: boolean;
   /** sm 20 · md 24. Default `md`. */
   size?: keyof typeof radioSize;
-  /** Fill of the selected disc. Default `accent` (lime + evergreen check). */
+  /** Fill of the selected disc. Default `accent` (indigo + white check). */
   tone?: RadioTone;
   /** `circle` (single choice, default) or `square` (checkbox, multi choice). */
   shape?: 'circle' | 'square';

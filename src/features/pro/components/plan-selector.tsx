@@ -1,5 +1,5 @@
 /**
- * PlanSelector — the two Finanz Pro plans (`PRO_PLAN.prices`) as a radio group of cards:
+ * PlanSelector — the two Feen Pro plans (`PRO_PLAN.prices`) as a radio group of cards:
  * yearly first with the "Più conveniente · -40%" ribbon and its per-month equivalent, then
  * monthly. The selected card gets a 2 pt lime border, a lifted lime-tinted face and a filled
  * radio. Rendered on evergreen (brand colour mode).

@@ -21,7 +21,7 @@ const FACETS: readonly (readonly [string, 'light' | 'dark', number])[] = [
   ['29.5,18.5 42.5,18.5 24,41.5', 'dark', 0.16],
 ];
 
-/** Finanz Pro: violet brilliant-cut gem. */
+/** Feen Pro: violet brilliant-cut gem. */
 export function GemIcon({ muted, ...rest }: IconProps) {
   const ids = useSvgIds('body');
   const shade = muted ? illustration.mutedDeep : illustration.ink;

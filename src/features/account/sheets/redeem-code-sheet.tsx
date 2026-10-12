@@ -1,6 +1,6 @@
 /**
  * RedeemCodeSheet ("Utilizza codice"): upper-case code field → "Riscatta". Valid demo codes
- * (FINANZ100 → +100 Kiwi, STREAK → +1 shield) switch the sheet to a reward view; anything else
+ * (FEEN100 → +100 Kiwi, STREAK → +1 shield) switch the sheet to a reward view; anything else
  * shakes the field with "Codice non valido". Each code works once.
  *
  * `{ visible, onClose }` matches `GlobalOverlayProps`, so it can be registered as 'redeem'.

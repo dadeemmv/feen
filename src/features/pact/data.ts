@@ -5,7 +5,7 @@
  *   Art. 3 · when (an if-then plan hooked onto something you already do — Gollwitzer)
  *   Art. 4 · the partner's clause (their blind spot, learned the hard way)
  *   Art. 5 · the parachute (a skipped day is not a defeat)
- * The words in sprout can be tapped to change them. Examples are written for 14–19 year olds.
+ * The underlined words can be tapped to change them. Examples are written for 14–19 year olds.
  */
 import type { ReminderSlot } from '@/store';
 
@@ -30,7 +30,7 @@ export const WHEN_OPTIONS: readonly { text: string; slot: ReminderSlot }[] = [
 
 export const PARACHUTE = 'Se salto un giorno non mollo: riparto il giorno dopo, senza sensi di colpa.';
 
-/** Cycle to the next option (tapping a sprout word). */
+/** Cycle to the next option (tapping an underlined word). */
 export const nextIndex = (index: number, length: number) => (index + 1) % length;
 
 /** "n. 0001". */

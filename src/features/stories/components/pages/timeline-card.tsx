@@ -1,12 +1,12 @@
 /**
  * One step of the "CHI SIAMO??" timeline: a white card (radius lg, padding md) with centred
  * `bodyLg` text where the emphasis words are extra-bold, and an optional emoji sticker (or the
- * Finanz logo tile for `STORY_BRAND_MARK`) overlapping one corner, landing with a little pop.
+ * Feen logo tile for `STORY_BRAND_MARK`) overlapping one corner, landing with a little pop.
  */
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import { FinanzLogo } from '@/components/icons';
+import { FeenLogo } from '@/components/icons';
 import { Text } from '@/components/ui';
 import { STORY_BRAND_MARK } from '@/content/stories';
 import { ColorModeProvider, elevation, radius, spacing, useTheme } from '@/theme';
@@ -74,7 +74,7 @@ function EmojiSticker({ emoji, corner, delay }: { emoji: string; corner: Sticker
   return (
     <Animated.View style={[styles.sticker, CORNER_STYLE[corner], popStyle]} aria-hidden>
       {emoji === STORY_BRAND_MARK ? (
-        <FinanzLogo size={SIZE} />
+        <FeenLogo size={SIZE} />
       ) : (
         <Text variant="displayMd" style={styles.emoji}>
           {emoji}

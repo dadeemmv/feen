@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 
-import { FinanzLogo } from '@/components/icons';
+import { FeenLogo } from '@/components/icons';
 import { Dialog, HStack, iconSize, PressableScale, Text, VStack } from '@/components/ui';
 import { haptics } from '@/lib/haptics';
 import { spacing } from '@/theme';
@@ -51,7 +51,7 @@ export function LogoutSection() {
 
       <VStack gap="xxs" align="center">
         <HStack gap="xs">
-          <FinanzLogo size={iconSize.md} />
+          <FeenLogo size={iconSize.md} />
           <Text variant="labelSm" color="textTertiary">
             {ACCOUNT_COPY.version(APP_VERSION)}
           </Text>

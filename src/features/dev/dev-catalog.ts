@@ -29,7 +29,7 @@ export const DEV_ROUTES: DevRouteLink[] = [
   { title: 'Impostazioni', subtitle: '/account/settings', href: { pathname: '/account/[section]', params: { section: 'settings' } }, emoji: '⚙️' },
   { title: 'Invita un amico', subtitle: '/invite', href: '/invite', emoji: '💌' },
   { title: 'Il tuo personaggio', subtitle: '/mascot', href: '/mascot', emoji: '🧭' },
-  { title: 'Finanz Pro', subtitle: '/pro', href: '/pro', emoji: '💜' },
+  { title: 'Feen Pro', subtitle: '/pro', href: '/pro', emoji: '💜' },
   { title: 'Storia Academy', subtitle: '/story/academy', href: { pathname: '/story/[id]', params: { id: 'academy' } }, emoji: '📖' },
   { title: 'Storia App', subtitle: '/story/app', href: { pathname: '/story/[id]', params: { id: 'app' } }, emoji: '📱' },
   { title: 'Onboarding', subtitle: '/onboarding', href: '/onboarding', emoji: '👋' },

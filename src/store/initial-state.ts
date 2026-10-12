@@ -7,7 +7,7 @@ import type { EconomyData, MetaData, PersistedData, ProfileData, ProgressData } 
 
 export const createInitialProfile = (): ProfileData => ({
   name: 'Alberto',
-  email: 'alberto.rossi@finanz.app',
+  email: 'alberto.rossi@feen.app',
   avatar: '🤠',
   interests: [],
   goalMinutes: 5,

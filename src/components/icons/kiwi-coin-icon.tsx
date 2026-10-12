@@ -5,7 +5,7 @@ import { IconSvg, type IconProps } from './lib/icon-svg';
 import { useSvgIds } from './lib/svg-ids';
 
 /**
- * The Finanz currency: a gold-rimmed coin with a kiwi-slice face. Seeds are simplified below
+ * The Feen currency: a gold-rimmed coin with a kiwi-slice face. Seeds are simplified below
  * 24 px so it still reads as a kiwi inside 16 px chips.
  */
 export function KiwiCoinIcon({ muted, size = 24, ...rest }: IconProps) {

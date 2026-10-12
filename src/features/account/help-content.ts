@@ -41,9 +41,9 @@ export const FAQ: readonly HelpEntry[] = [
   },
   {
     id: 'advice',
-    title: 'Finanz mi dà consigli di investimento?',
+    title: 'Feen mi dà consigli di investimento?',
     paragraphs: [
-      'No. Finanz è un’app educativa: spiega concetti e strumenti, ma non offre consulenza finanziaria personalizzata.',
+      'No. Feen è un’app educativa: spiega concetti e strumenti, ma non offre consulenza finanziaria personalizzata.',
       'Per decisioni importanti parlane con un adulto di fiducia o con un consulente abilitato.',
     ],
   },
@@ -54,7 +54,7 @@ export const LEGAL_DOCUMENTS: readonly HelpEntry[] = [
     id: 'terms',
     title: 'Termini di servizio',
     paragraphs: [
-      'Testo di esempio. Utilizzando Finanz accetti di usare l’app per scopi personali ed educativi. I contenuti hanno finalità informative e non costituiscono consulenza finanziaria.',
+      'Testo di esempio. Utilizzando Feen accetti di usare l’app per scopi personali ed educativi. I contenuti hanno finalità informative e non costituiscono consulenza finanziaria.',
       'Testo di esempio. Mattoni, abitanti ed edifici sono elementi di gioco senza valore economico e non possono essere convertiti in denaro.',
     ],
   },

@@ -1,6 +1,7 @@
 /**
- * Button — pill CTA. Variants map to the art direction: primary = lime face + evergreen label
- * (the single action colour), brand = evergreen, secondary/outline/ghost, danger.
+ * Button — pill CTA. Variants map to the art direction: primary = indigo face + white label
+ * (the single action colour; white face + indigo label on indigo surfaces), brand = indigo,
+ * secondary/outline/ghost, danger (deep rose).
  * Colour changes (pressed darken, disabled ⇄ enabled) glide with Reanimated CSS transitions,
  * so the lesson "Continua" warms up smoothly once an answer is selected.
  */
@@ -60,7 +61,8 @@ const useButtonColors = createThemedVariants((t) => {
     secondary: { bg: c.surface, bgPressed: c.fill, label: c.text, border: c.border },
     outline: { bg: TRANSPARENT, bgPressed: c.fill, label: c.text, border: c.borderStrong },
     ghost: { bg: TRANSPARENT, bgPressed: c.fill, label: c.text, border: TRANSPARENT },
-    danger: { bg: c.dangerSolid, bgPressed: c.dangerSolidPressed, label: c.onBrand, border: c.dangerSolid },
+    // Deep rose: white labels keep AA (the vivid `dangerSolid` is for discs and borders).
+    danger: { bg: c.dangerText, bgPressed: c.dangerSolidPressed, label: c.onBrand, border: c.dangerText },
   };
   const paleAccent = onBrandSurface ? c.fill : c.accentBg;
   const paleBrand = onBrandSurface ? c.fill : c.brandBg;

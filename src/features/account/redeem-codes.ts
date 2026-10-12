@@ -9,7 +9,7 @@ export type RedeemReward = { kind: 'coins'; amount: number } | { kind: 'shield';
 type PromoCode = { reward: RedeemReward; title: string; message: string };
 
 const PROMO_CODES: Record<string, PromoCode> = {
-  FINANZ100: {
+  FEEN100: {
     reward: { kind: 'coins', amount: 100 },
     title: '+100 Kiwi!',
     message: 'Sono già nel tuo saldo: spendili nello Shop quando vuoi.',

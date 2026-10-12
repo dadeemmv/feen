@@ -9,7 +9,7 @@ export const PACT_COPY = {
   art2Minutes: (minutes: number) => `${minutes} minuti`,
   art3: (when: string) => `${when}, apro il borgo.`,
   art4Title: (partner: string) => `La clausola di ${partner}`,
-  changeHint: 'Le parole in verde si toccano e cambiano.',
+  changeHint: 'Le parole sottolineate si toccano e cambiano.',
   changeA11y: (value: string) => `${value}. Tocca per cambiare`,
 
   signHere: 'Firma qui col dito',

@@ -6,14 +6,14 @@ import { formatNumber, plural } from '@/lib/format';
 export const STORY_COPY = {
   close: 'Chiudi storia',
   share: 'Condividi storia',
-  shareTitle: 'Finanz',
+  shareTitle: 'Feen',
   shareCopied: 'Messaggio copiato: incollalo dove vuoi',
   /** Share text per group id (fallback: `default`). */
   shareMessage: {
     academy:
-      'Nell’Academy di Finanz trovi percorsi, quiz e lezioni da 5 minuti per imparare a gestire i tuoi soldi 📚 Provala con me!',
-    app: 'Finanz è l’app che ti aiuta a risparmiare, investire e imparare. Perché la finanza non deve essere un privilegio 💖',
-    default: 'Scopri Finanz: impara a gestire i tuoi soldi, una lezione da 5 minuti alla volta 🥝',
+      'Nell’Academy di Feen trovi percorsi, quiz e lezioni da 5 minuti per imparare a gestire i tuoi soldi 📚 Provala con me!',
+    app: 'Feen è l’app che ti aiuta a risparmiare, investire e imparare. Perché la finanza non deve essere un privilegio 💖',
+    default: 'Scopri Feen: impara a gestire i tuoi soldi, una lezione da 5 minuti alla volta 🥝',
   } as Record<string, string>,
 
   pageA11y: (group: string, page: number, total: number) => `Storia ${group}, pagina ${page} di ${total}`,

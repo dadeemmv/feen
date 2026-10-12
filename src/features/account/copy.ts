@@ -26,7 +26,7 @@ export const ACCOUNT_COPY = {
     confirm: 'Esci e cancella',
     cancel: 'Annulla',
   },
-  version: (version: string) => `Finanz ${version} · versione demo`,
+  version: (version: string) => `Feen ${version} · versione demo`,
   madeIn: 'Fatto in Italia',
 } as const;
 
@@ -35,7 +35,7 @@ export const MENU_COPY = {
   mascot: { title: 'Il tuo personaggio', subtitle: 'Il test, gli assi e chi ti accompagna' },
   language: { title: 'Lingua e Paese', subtitle: 'Cambia lingua e Paese del tuo account' },
   purchases: { title: 'I tuoi acquisti', subtitle: 'Visualizza i tuoi acquisti' },
-  pro: { title: 'Finanz PRO', subtitle: 'Dettagli abbonamento' },
+  pro: { title: 'Feen PRO', subtitle: 'Dettagli abbonamento' },
   invite: { title: 'Invita un amico', subtitle: 'Genera codice' },
   interests: { title: 'I tuoi interessi', subtitle: 'Cambia i tuoi interessi' },
   redeem: { title: 'Utilizza codice', subtitle: 'Inserisci il codice' },
@@ -45,7 +45,7 @@ export const MENU_COPY = {
 } as const;
 
 export const SETTINGS_COPY = {
-  subtitle: 'Personalizza la tua esperienza su Finanz.',
+  subtitle: 'Personalizza la tua esperienza su Feen.',
   general: 'Generale',
   haptics: { title: 'Vibrazione', subtitle: 'Feedback tattile a ogni tocco' },
   sound: { title: 'Suoni', subtitle: 'Effetti sonori nelle lezioni' },
@@ -99,8 +99,8 @@ export const SUPPORT_COPY = {
   contactTitle: 'Serve ancora aiuto?',
   contactMessage: 'Il nostro team risponde entro 24 ore, dal lunedì al venerdì.',
   write: 'Scrivici',
-  email: 'supporto@finanz.app',
-  mailSubject: 'Richiesta di supporto Finanz',
+  email: 'supporto@feen.app',
+  mailSubject: 'Richiesta di supporto Feen',
   mailFallback: 'Indirizzo email copiato negli appunti',
 } as const;
 
@@ -113,7 +113,7 @@ export const LEGAL_COPY = {
 
 export const PROFILE_COPY = {
   title: 'Il tuo profilo',
-  subtitle: 'Scegli come ti vedono gli altri in Finanz.',
+  subtitle: 'Scegli come ti vedono gli altri in Feen.',
   name: 'Nome',
   namePlaceholder: 'Il tuo nome',
   email: 'Email',
@@ -127,8 +127,8 @@ export const REDEEM_COPY = {
   title: 'Utilizza codice',
   message: 'Hai un codice promozionale? Inseriscilo qui per ricevere subito il tuo premio.',
   label: 'Codice',
-  placeholder: 'ES. FINANZ100',
-  demoHint: 'Versione demo: prova FINANZ100 o STREAK',
+  placeholder: 'ES. FEEN100',
+  demoHint: 'Versione demo: prova FEEN100 o STREAK',
   cta: 'Riscatta',
   invalid: 'Codice non valido',
   alreadyUsed: 'Hai già usato questo codice',
@@ -142,7 +142,7 @@ export const RATE_COPY = {
   labels: ['Pessima', 'Così così', 'Carina', 'Molto bella', 'Fantastica!'] as const,
   starLabel: (n: number) => (n === 1 ? '1 stella' : `${n} stelle`),
   thanksTitle: 'Grazie! 💚',
-  thanksMessage: 'Una recensione sullo store aiuta tantissimo altre persone a scoprire Finanz.',
+  thanksMessage: 'Una recensione sullo store aiuta tantissimo altre persone a scoprire Feen.',
   review: 'Lascia una recensione',
   reviewToast: 'Grazie per il tuo supporto!',
   later: 'Magari più tardi',

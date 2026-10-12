@@ -15,7 +15,7 @@ export const copy = {
   newChat: 'Nuova chat',
   newChatHint: 'Inizia una conversazione da zero',
 
-  assistantName: 'Coach Finanz',
+  assistantName: 'Coach Feen',
   typing: 'Il Coach sta scrivendo',
   suggestionsLabel: 'Domande suggerite',
   suggestionsTitle: 'Prova a chiedermi',

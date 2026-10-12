@@ -48,7 +48,7 @@ export const PRACTICE_KB: AssistantKbEntry[] = [
       'fondo nazionale di garanzia',
     ],
     answer:
-      'Il broker è l’intermediario autorizzato che esegue i tuoi ordini in Borsa e custodisce i tuoi titoli. 🏦 Prima di sceglierne uno controlla:\n• Che sia autorizzato e vigilato (CONSOB, Banca d’Italia o un’autorità UE)\n• Le commissioni: per ordine, custodia e cambio valuta\n• Il regime fiscale: amministrato o dichiarativo\n• I prodotti disponibili, come ETF e PAC\nI titoli restano tuoi, separati dal patrimonio del broker. Se un intermediario italiano fallisce e non ti restituisce titoli o soldi, il Fondo Nazionale di Garanzia ti rimborsa fino a 20.000€. Finanz non consiglia broker specifici.',
+      'Il broker è l’intermediario autorizzato che esegue i tuoi ordini in Borsa e custodisce i tuoi titoli. 🏦 Prima di sceglierne uno controlla:\n• Che sia autorizzato e vigilato (CONSOB, Banca d’Italia o un’autorità UE)\n• Le commissioni: per ordine, custodia e cambio valuta\n• Il regime fiscale: amministrato o dichiarativo\n• I prodotti disponibili, come ETF e PAC\nI titoli restano tuoi, separati dal patrimonio del broker. Se un intermediario italiano fallisce e non ti restituisce titoli o soldi, il Fondo Nazionale di Garanzia ti rimborsa fino a 20.000€. Feen non consiglia broker specifici.',
   },
   {
     id: 'commissioni',

@@ -1,5 +1,5 @@
 /**
- * "Prima pietra posata." (concept board, screen 4): the sprout becomes a surface, like Bending
+ * "Prima pietra posata." (concept board, screen 4): the lilac becomes a surface, like Bending
  * Spoons' lime section, only in reward moments. The Town Hall stands and keeps the pact; the
  * partner says where the first lesson is waiting. Then the village gets its name.
  */

@@ -1,6 +1,6 @@
 /**
  * ProgressBar — rounded track with an animated fill (withTiming duration.progress, easing.enter).
- * Tones: brand (evergreen, lesson progress), accent (lime), streak (flame gradient),
+ * Tones: brand (indigo, lesson progress), accent (indigo), streak (flame gradient),
  * lives (heart gradient), success. md/lg get a glossy top highlight.
  */
 import { useEffect, useState } from 'react';

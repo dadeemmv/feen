@@ -81,7 +81,7 @@ export type ProfileData = {
   villageName: string | null;
   onboardingDone: boolean;
   referralCode: string;
-  /** Friends who redeemed the referral code (0…3 for the "30 giorni di Finanz Pro" promo). */
+  /** Friends who redeemed the referral code (0…3 for the "30 giorni di Feen Pro" promo). */
   invitedFriends: number;
   language: AppLanguage;
 };
@@ -127,7 +127,7 @@ export type EconomyData = {
   lastLifeAt: number | null;
   /** Unlimited lives until (epoch ms). */
   unlimitedUntil: number | null;
-  /** Finanz Pro active until (epoch ms). */
+  /** Feen Pro active until (epoch ms). */
   proUntil: number | null;
   /** Streak shields owned (not yet consumed). */
   shields: number;

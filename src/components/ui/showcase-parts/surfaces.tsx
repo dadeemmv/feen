@@ -47,7 +47,7 @@ export function CardShowcase() {
         <Text variant="overline" color="accentText">
           Spotlight
         </Text>
-        <Text variant="titleLg">30 giorni di Finanz Pro</Text>
+        <Text variant="titleLg">30 giorni di Feen Pro</Text>
         <Text variant="bodyMd" color="textSecondary">
           Invita 3 amici e riscattalo gratis!
         </Text>
@@ -88,7 +88,7 @@ export function ListShowcase() {
         <ListItem
           icon={<GemIcon size={iconSize.md} />}
           iconTone="lilac"
-          title="Finanz Pro"
+          title="Feen Pro"
           trailing={<Badge count={1} ring={false} />}
           onPress={() => {}}
         />

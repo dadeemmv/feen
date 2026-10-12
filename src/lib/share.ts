@@ -1,7 +1,7 @@
 /**
  * Share a text (and optional link) everywhere.
  *
- *   const outcome = await shareText(`Usa il mio codice ${code} su Finanz!`, INVITE_URL);
+ *   const outcome = await shareText(`Usa il mio codice ${code} su Feen!`, INVITE_URL);
  *
  * - iOS / Android: React Native `Share.share` (the system sheet). expo-sharing only shares
  *   local FILES, so it is not used for text on native.

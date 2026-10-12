@@ -5,8 +5,8 @@
  * Structure follows Radix Colors (radix-ui/colors): every hue is a 12-step scale where
  * 1–2 = app backgrounds, 3–5 = component backgrounds (normal/hover/pressed), 6–8 = borders,
  * 9–10 = solid fills, 11 = low-contrast text, 12 = high-contrast text.
- * Radix advises adding brand scales next to its own instead of editing them, so the Finanz
- * evergreen lives in the custom `forest` scale below.
+ * Radix advises adding brand colours next to its scales instead of editing them, so the Feen
+ * palette lives in `gallery` below.
  */
 import {
   amber,
@@ -24,66 +24,64 @@ import {
   whiteA,
 } from '@radix-ui/colors';
 
-/** Custom brand scale (Radix step semantics) centred on the Finanz evergreen. */
-const forest = {
-  forest1: '#FAFDFB',
-  forest2: '#F2F8F4',
-  forest3: '#E3F1E8',
-  forest4: '#D2E8DA',
-  forest5: '#BEDDCA',
-  forest6: '#A5CEB5',
-  forest7: '#84BA9A',
-  forest8: '#579D77',
-  forest9: '#145C3C',
-  forest10: '#0F4D32',
-  forest11: '#1C6A46',
-  forest12: '#0B2E20',
-} as const;
-
 /**
- * Gallery palette (docs/design/DESIGN.md, "Il plastico in galleria"): pure black and white for
- * the structure, one sprout green for rewards, a red thread for the pact, and four character
- * families (base · tint · deep text on the tint) that live only in the world.
+ * Feen palette (docs/design/DESIGN.md, Harmony): a white canvas, indigo as the brand signature,
+ * vivid colours for rewards and states, cool greys on the Harmony background. Each colour has a
+ * tint (backgrounds) and a deep tone (text on the tint, AA). The four animals take the palette's
+ * hues, except the Volpe, who keeps her coral; building materials stay natural.
  */
 export const gallery = {
-  ink: '#000000',
-  ink2: '#444444',
-  muted: '#6B6B6B',
-  faint: '#A3A3A3',
+  // Neutrals (cool, like the Harmony background)
+  ink: '#111827',
+  ink2: '#374151',
+  muted: '#646B78',
+  faint: '#9CA3AF',
   paper: '#FFFFFF',
-  surface: '#F4F4F4',
-  surfaceSunken: '#EBEBEB',
-  line: 'rgba(0, 0, 0, 0.08)',
-  lineStrong: 'rgba(0, 0, 0, 0.2)',
-  veil: 'rgba(0, 0, 0, 0.055)',
-  veilHover: 'rgba(0, 0, 0, 0.08)',
-  veilPressed: 'rgba(0, 0, 0, 0.11)',
-  inkPressed: '#262626',
-  paperPressed: '#E6E6E6',
-  night: '#000000',
-  night2: '#161616',
-  night3: '#222222',
-  disabled: '#E8E8E8',
-  contract: '#F6F1E6',
-  sprout: '#CFF56A',
-  sprout2: '#B8E04F',
-  sproutDeep: '#3F5A00',
-  thread: '#D42B26',
-  honey: '#FFB627',
-  honeyTint: '#FFF0CC',
-  honeyDeep: '#7A4A00',
-  cobalt: '#3B5BFF',
-  cobaltTint: '#DDE3FF',
-  cobaltDeep: '#16247A',
-  lagoon: '#1FBFB0',
-  lagoonTint: '#D2F4F0',
-  lagoonDeep: '#0A554E',
+  surface: '#F8F9FB',
+  surfaceSunken: '#EEF0F4',
+  line: 'rgba(17, 24, 39, 0.08)',
+  lineStrong: 'rgba(17, 24, 39, 0.2)',
+  veil: 'rgba(17, 24, 39, 0.055)',
+  veilHover: 'rgba(17, 24, 39, 0.08)',
+  veilPressed: 'rgba(17, 24, 39, 0.11)',
+  disabled: '#ECEEF2',
+  // Brand: indigo. `indigoText` is the indigo for small text (AA on white and on the tint);
+  // `indigoNight*` are the cards on indigo surfaces; `paperPressed` is a white pill pressed on indigo.
+  indigo: '#6C5CE7',
+  indigoPressed: '#5F51CB',
+  indigoTint: '#EAE8FC',
+  indigoTintHover: '#E2DEFA',
+  indigoTintPressed: '#D9D5F9',
+  indigoText: '#5848D2',
+  indigoDeep: '#4338CA',
+  indigoLight: '#B6AEF3',
+  indigoInk: '#372F7B',
+  indigoNight: '#5B4DC2',
+  indigoNight2: '#5146B0',
+  paperPressed: '#ECEAFB',
+  // Rewards and states (Harmony "uso dei colori"): sun = mattoni and the days of the pact,
+  // green = right / positive, rose = wrong / loss, cyan = insight, lilac = achievements.
+  sun: '#FFCC4D',
+  sunTint: '#FFF6DF',
+  sunDeep: '#855D00',
+  green: '#22C55E',
+  greenTint: '#E0F7E8',
+  greenLight: '#BDEECF',
+  greenDeep: '#166534',
+  rose: '#FF6B8B',
+  roseTint: '#FFEAEF',
+  roseDeep: '#BE123C',
+  roseDeepPressed: '#9C0F31',
+  cyan: '#00D1FF',
+  cyanTint: '#DBF9FF',
+  cyanDeep: '#00708A',
+  lilac: '#B794F6',
+  lilacTint: '#F5F0FE',
+  lilacDeep: '#6D28D9',
+  // The world: the Volpe's coral and the natural materials of the buildings.
   coral: '#FF5B3A',
   coralTint: '#FFE0D8',
   coralDeep: '#8A2310',
-  mint: '#2E9E6B',
-  mintTint: '#DCF2E5',
-  mintDeep: '#1E5C40',
   leaf: '#6CC04A',
   leafTint: '#E3F4CC',
   leafDeep: '#3A6B1F',
@@ -94,20 +92,10 @@ export const gallery = {
   stone: '#9C9384',
   stoneTint: '#ECE9E3',
   stoneDeep: '#4A443A',
-  ok: '#E9F9D0',
-  okLine: '#7DB321',
-  no: '#FFE6E1',
-  sign: '#1B2A8A',
-} as const;
-
-/** Deep tones used only for inverted "brand" surfaces (hero cards, streak header, sheets). */
-const forestDeep = {
-  deep1: '#061A11',
-  deep2: '#082317',
-  deep3: '#0B2E20',
-  deep4: '#0F3A28',
-  deep5: '#134731',
-  deep6: '#18573C',
+  // The pact: warm paper, the red thread, the signature in brand indigo.
+  contract: '#F6F1E6',
+  thread: '#D42B26',
+  sign: '#4338CA',
 } as const;
 
 /**
@@ -189,8 +177,6 @@ const economy = {
 export const palette = {
   ...olive,
   ...lime,
-  ...forest,
-  ...forestDeep,
   ...green,
   ...red,
   ...orange,

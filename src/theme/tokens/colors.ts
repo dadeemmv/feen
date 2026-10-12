@@ -4,7 +4,7 @@
  *
  * Two colour modes (Rainbow's contextual colour-mode pattern):
  * - `light`: the default app canvas.
- * - `brand`: inverted black surfaces (hero card, streak header, invite card, App stories).
+ * - `brand`: inverted indigo surfaces (welcome, "Lezione fatta.", toasts, hero cards).
  *   A `<ColorModeProvider mode="brand">` makes every Text/Icon inside pick these values.
  */
 import { gallery as g, palette as p } from './palette';
@@ -29,7 +29,7 @@ export type SemanticColors = {
   textTertiary: string;
   textDisabled: string;
   textInverse: string;
-  // Accent (ink) — the single action colour
+  // Accent (indigo) — the single action colour
   accentBg: string;
   accentBgHover: string;
   accentBgActive: string;
@@ -38,7 +38,7 @@ export type SemanticColors = {
   accentSolidPressed: string;
   onAccent: string;
   accentText: string;
-  // Brand (night)
+  // Brand (indigo surfaces)
   brandBg: string;
   brandBorder: string;
   brandSolid: string;
@@ -85,7 +85,7 @@ export type SemanticColors = {
   tintButterText: string;
   tintLilac: string;
   tintLilacText: string;
-  // Gallery materials: the pact's paper, its red thread and signature ink, the reward surface
+  // Materials: the pact's paper, its red thread and signature ink, the reward surface
   contract: string;
   thread: string;
   signInk: string;
@@ -103,7 +103,7 @@ export const lightColors = {
   fill: g.veil,
   fillHover: g.veilHover,
   fillPressed: g.veilPressed,
-  scrim: 'rgba(0, 0, 0, 0.48)',
+  scrim: 'rgba(17, 24, 39, 0.48)',
 
   // No-Line Rule: container hairlines (cards, tiles, list groups) disappear; dividers use `border`.
   borderSubtle: 'transparent',
@@ -116,81 +116,87 @@ export const lightColors = {
   textDisabled: g.faint,
   textInverse: g.paper,
 
-  // The action colour is ink: black pills on white, white pills on black (brand mode below).
-  accentBg: g.disabled,
-  accentBgHover: g.veilHover,
-  accentBgActive: g.veilPressed,
-  accentBorder: g.ink,
-  accentSolid: g.ink,
-  accentSolidPressed: g.inkPressed,
+  // The action colour is indigo: indigo pills on white, white pills on indigo (brand mode below).
+  accentBg: g.indigoTint,
+  accentBgHover: g.indigoTintHover,
+  accentBgActive: g.indigoTintPressed,
+  accentBorder: g.indigo,
+  accentSolid: g.indigo,
+  accentSolidPressed: g.indigoPressed,
   onAccent: g.paper,
-  accentText: g.ink,
+  accentText: g.indigoText,
 
-  brandBg: g.surface,
-  brandBorder: g.lineStrong,
-  brandSolid: g.ink,
-  brandSolidPressed: g.inkPressed,
+  brandBg: g.indigoTint,
+  brandBorder: g.indigo,
+  brandSolid: g.indigo,
+  brandSolidPressed: g.indigoPressed,
   onBrand: g.paper,
-  brandText: g.ink,
-  brandSurface: g.night,
-  brandSurfaceRaised: g.night2,
+  brandText: g.indigoText,
+  brandSurface: g.indigo,
+  brandSurfaceRaised: g.indigoNight,
 
-  successBg: g.ok,
-  successBorder: g.okLine,
-  successSolid: g.okLine,
-  successText: g.sproutDeep,
-  dangerBg: g.no,
-  dangerBorder: g.coral,
-  // coral with white labels is ~3:1 → the deep coral keeps AA for the "Chiudi" CTA.
-  dangerSolid: g.coralDeep,
-  dangerSolidPressed: '#6E1B0C',
-  dangerText: g.coralDeep,
-  warningBg: g.honeyTint,
-  warningSolid: g.honey,
-  warningText: g.honeyDeep,
-  infoBg: g.cobaltTint,
-  infoSolid: g.cobalt,
-  infoText: g.cobaltDeep,
+  successBg: g.greenTint,
+  successBorder: g.green,
+  successSolid: g.green,
+  successText: g.greenDeep,
+  dangerBg: g.roseTint,
+  dangerBorder: g.rose,
+  // Vivid rose for discs and borders, like the vivid green of `successSolid`. White labels on rose
+  // are ~2.7:1, so the danger button fills with `dangerText` (deep rose) and presses darker.
+  dangerSolid: g.rose,
+  dangerSolidPressed: g.roseDeepPressed,
+  dangerText: g.roseDeep,
+  warningBg: g.sunTint,
+  warningSolid: g.sun,
+  warningText: g.sunDeep,
+  infoBg: g.cyanTint,
+  infoSolid: g.cyan,
+  infoText: g.cyanDeep,
 
-  streak: p.orange9,
-  streakBg: p.orange3,
-  lives: p.heartTo,
-  livesBg: p.red3,
-  coin: p.amber11,
-  coinBg: p.amber3,
-  shield: p.shieldTo,
-  shieldBg: p.sky3,
-  pro: p.violet9,
-  proBg: p.violet3,
+  // Economy: sun for mattoni and days (Harmony "Streak / XP"), lilac for achievements.
+  streak: g.sunDeep,
+  streakBg: g.sunTint,
+  lives: g.roseDeep,
+  livesBg: g.roseTint,
+  coin: g.sunDeep,
+  coinBg: g.sunTint,
+  shield: g.cyanDeep,
+  shieldBg: g.cyanTint,
+  pro: g.lilacDeep,
+  proBg: g.lilacTint,
 
-  // Lesson tints come from the character families (tint + deep text on it).
-  tintMint: g.lagoonTint,
-  tintMintText: g.lagoonDeep,
-  tintSky: g.cobaltTint,
-  tintSkyText: g.cobaltDeep,
-  tintBlush: g.coralTint,
-  tintBlushText: g.coralDeep,
-  tintButter: g.honeyTint,
-  tintButterText: g.honeyDeep,
-  tintLilac: g.stoneTint,
-  tintLilacText: g.stoneDeep,
+  // Lesson tints: the palette's tints, with the deep tone for text on them.
+  tintMint: g.greenTint,
+  tintMintText: g.greenDeep,
+  tintSky: g.cyanTint,
+  tintSkyText: g.cyanDeep,
+  tintBlush: g.roseTint,
+  tintBlushText: g.roseDeep,
+  tintButter: g.sunTint,
+  tintButterText: g.sunDeep,
+  tintLilac: g.lilacTint,
+  tintLilacText: g.lilacDeep,
 
   contract: g.contract,
   thread: g.thread,
   signInk: g.sign,
-  reward: g.sprout,
+  // Reward moments (first stone, a building finished, the pact signed): lilac, the achievement colour.
+  reward: g.lilac,
   onReward: g.ink,
 
   shadow: g.ink,
 } as const satisfies SemanticColors;
 
-/** Inverted black surfaces ("night"). Same keys, so a subtree can swap modes safely. */
+/**
+ * Inverted indigo surfaces (the brand moments). Same keys, so a subtree can swap modes safely.
+ * White on indigo is 4.9:1, so every text level stays white; hierarchy comes from size.
+ */
 export const brandColors = {
   ...lightColors,
-  background: g.night,
-  surface: g.night2,
-  surfaceRaised: g.night3,
-  surfaceSunken: g.night,
+  background: g.indigo,
+  surface: g.indigoNight,
+  surfaceRaised: g.indigoNight2,
+  surfaceSunken: g.indigoNight2,
   fill: p.whiteA3,
   fillHover: p.whiteA4,
   fillPressed: p.whiteA5,
@@ -200,23 +206,23 @@ export const brandColors = {
   borderStrong: p.whiteA6,
 
   text: g.paper,
-  textSecondary: p.whiteA11,
-  textTertiary: p.whiteA9,
-  textDisabled: p.whiteA6,
+  textSecondary: g.paper,
+  textTertiary: g.paper,
+  textDisabled: p.whiteA8,
   textInverse: g.ink,
 
-  // On black the action pill turns white with a black label.
+  // On indigo the action pill turns white with an indigo label.
   accentBg: p.whiteA3,
   accentBorder: g.paper,
   accentSolid: g.paper,
   accentSolidPressed: g.paperPressed,
-  onAccent: g.ink,
-  // The italic word on black is sprout.
-  accentText: g.sprout,
+  onAccent: g.indigo,
+  // The italic word on indigo is sun (large text only: 3.2:1).
+  accentText: g.sun,
   brandSolid: g.paper,
   brandSolidPressed: g.paperPressed,
-  onBrand: g.ink,
-  brandText: g.sprout,
+  onBrand: g.indigo,
+  brandText: g.sun,
 
   shadow: g.ink,
 } as const satisfies SemanticColors;
@@ -225,26 +231,26 @@ export type ColorToken = keyof SemanticColors;
 
 /** Gradient pairs (top → bottom / start → end). Used by LinearGradient and SVG icons. */
 export const gradients = {
-  /** Flat night: the gallery has no gradients on the interface. */
-  hero: [g.night, g.night] as const,
+  /** Flat indigo: no gradients on the interface. */
+  hero: [g.indigo, g.indigo] as const,
   heroSpotlight: ['rgba(255, 255, 255, 0.10)', 'rgba(255, 255, 255, 0)'] as const,
-  /** Sprout: progress fills and reward surfaces (never a button). */
-  accent: [g.sprout, g.sprout2] as const,
+  /** Indigo: progress fills. */
+  accent: [g.indigo, g.indigo] as const,
   flame: [p.flameFrom, p.flameTo] as const,
   heart: [p.heartFrom, p.heartTo] as const,
   gold: [p.goldFrom, p.goldTo] as const,
   shield: [p.shieldFrom, p.shieldTo] as const,
   gem: [p.gemFrom, p.gemTo] as const,
   assistant: [g.surface, g.paper] as const,
-  academyStory: [g.lagoonTint, g.lagoonTint] as const,
+  academyStory: [g.greenTint, g.greenTint] as const,
   /** Greyscale pair for locked / muted economy icons. */
   muted: ['#C7C7C7', '#8F8F8F'] as const,
   /** White sweep band for `<Shimmer/>` (transparent → sheen → transparent), any surface. */
   shimmer: ['rgba(255, 255, 255, 0)', p.whiteA7, 'rgba(255, 255, 255, 0)'] as const,
   /** Glossy top highlight on progress fills (white 30% → 0). */
   sheen: [p.whiteA5, 'rgba(255, 255, 255, 0)'] as const,
-  /** Unseen story ring (ink). */
-  storyRing: [g.ink, g.ink2] as const,
+  /** Unseen story ring (indigo → lilac). */
+  storyRing: [g.indigo, g.lilac] as const,
   /** Soft violet halo behind the Pro gem on evergreen (gemFrom @ 40% → 0). Appended by features/pro. */
   proGlow: ['rgba(164, 139, 255, 0.4)', 'rgba(164, 139, 255, 0)'] as const,
 } as const;
@@ -258,13 +264,15 @@ export const illustration = {
   kiwiSeed: p.kiwiSeed,
   kiwiCore: p.kiwiCore,
   flameCore: p.flameCore,
-  paper: p.olive1,
-  ink: p.olive12,
-  forest: p.forest9,
-  forestDeep: p.deep3,
-  forestLight: p.forest5,
-  lime: g.sprout,
-  limeLight: '#EAFBC2',
+  paper: g.paper,
+  ink: g.ink,
+  /** The old evergreen slots now hold the brand indigo (metal, frames, the logo's letters). */
+  forest: g.indigo,
+  forestDeep: g.indigoInk,
+  forestLight: g.indigoLight,
+  /** The old lime slots now hold the palette's green (growth, charts, leaves). */
+  lime: g.green,
+  limeLight: g.greenLight,
   white: p.white,
   whiteSoft: p.whiteA8,
   mint: p.mint5,
@@ -288,9 +296,9 @@ export const illustration = {
  */
 export const characterColors = {
   volpe: { base: g.coral, mid: '#E2431F', tint: g.coralTint, deep: g.coralDeep },
-  castoro: { base: g.cobalt, mid: '#2A44D6', tint: g.cobaltTint, deep: g.cobaltDeep },
-  lontra: { base: g.lagoon, mid: '#16A094', tint: g.lagoonTint, deep: g.lagoonDeep },
-  scoiattolo: { base: g.honey, mid: '#E89A0C', tint: g.honeyTint, deep: g.honeyDeep },
+  castoro: { base: g.indigo, mid: '#5C4EC4', tint: g.indigoTint, deep: g.indigoDeep },
+  lontra: { base: g.cyan, mid: '#00ABD1', tint: g.cyanTint, deep: g.cyanDeep },
+  scoiattolo: { base: g.sun, mid: '#E4A72A', tint: g.sunTint, deep: g.sunDeep },
 } as const;
 
 /**
@@ -298,12 +306,12 @@ export const characterColors = {
  * deep for text on the tint. Buildings without an animal take the colour of their material.
  */
 export const buildingTones = {
-  cobalt: { tint: g.cobaltTint, glow: g.cobalt, deep: g.cobaltDeep },
-  mint: { tint: g.mintTint, glow: g.mint, deep: g.mintDeep },
+  indigo: { tint: g.indigoTint, glow: g.indigo, deep: g.indigoDeep },
+  green: { tint: g.greenTint, glow: g.green, deep: g.greenDeep },
   coral: { tint: g.coralTint, glow: g.coral, deep: g.coralDeep },
-  honey: { tint: g.honeyTint, glow: g.honey, deep: g.honeyDeep },
-  wheat: { tint: g.wheatTint, glow: g.honey, deep: g.honeyDeep },
-  lagoon: { tint: g.lagoonTint, glow: g.lagoon, deep: g.lagoonDeep },
+  sun: { tint: g.sunTint, glow: g.sun, deep: g.sunDeep },
+  wheat: { tint: g.wheatTint, glow: g.sun, deep: g.sunDeep },
+  cyan: { tint: g.cyanTint, glow: g.cyan, deep: g.cyanDeep },
   leaf: { tint: g.leafTint, glow: g.leaf, deep: g.leafDeep },
   stone: { tint: g.stoneTint, glow: g.stone, deep: g.stoneDeep },
   wood: { tint: g.woodTint, glow: g.wood, deep: g.woodDeep },
@@ -311,11 +319,15 @@ export const buildingTones = {
 
 export type BuildingTone = keyof typeof buildingTones;
 
-/** Gallery inks for places where a raw value is needed (SVG markup, the pact's paper). */
+/** Raw palette values for places where a token can't reach (SVG markup, the pact's paper). */
 export const galleryColors = {
-  sprout: g.sprout,
-  sprout2: g.sprout2,
-  sproutDeep: g.sproutDeep,
+  indigo: g.indigo,
+  indigoTint: g.indigoTint,
+  indigoText: g.indigoText,
+  sun: g.sun,
+  green: g.green,
+  rose: g.rose,
+  lilac: g.lilac,
   thread: g.thread,
   contract: g.contract,
   sign: g.sign,

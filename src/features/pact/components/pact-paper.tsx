@@ -1,7 +1,7 @@
 /**
  * The pact on paper (concept board, screen 3): warm paper with a dot grain, "Il patto del borgo ·
  * n. 0001" and the date in code, the title "Il *Patto*", five numbered articles and, below, the
- * signature area passed by the caller. When editable, the words in sprout can be tapped to cycle
+ * signature area passed by the caller. When editable, the words in indigo can be tapped to cycle
  * through their options; article 4 is the partner's clause.
  */
 import type { ReactNode } from 'react';
@@ -23,7 +23,7 @@ export type PactPaperProps = {
   terms: PactTerms;
   number: number;
   date: number;
-  /** Tapping a sprout word: when set, the choices are live. */
+  /** Tapping an indigo word: when set, the choices are live. */
   onCycle?: (field: 'why' | 'minutes' | 'when') => void;
   /** Signature and countersignature. */
   children?: ReactNode;
@@ -121,9 +121,9 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
   },
   choice: {
-    backgroundColor: galleryColors.sprout,
+    backgroundColor: galleryColors.indigoTint,
     textDecorationLine: 'underline',
-    textDecorationColor: galleryColors.sprout2,
+    textDecorationColor: galleryColors.indigo,
     borderRadius: radius.xs,
   },
 });

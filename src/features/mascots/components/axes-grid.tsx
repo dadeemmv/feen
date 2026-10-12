@@ -91,6 +91,7 @@ export function AxesGrid({ future, risk, mascot }: AxesGridProps) {
 
 const styles = StyleSheet.create({
   root: { gap: spacing.xs },
+  // White under the quadrants: the dimmed ones fade towards white, not into the indigo card.
   square: {
     width: '100%',
     aspectRatio: 1,
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     borderRadius: radius.xl,
     overflow: 'hidden',
+    backgroundColor: galleryColors.paper,
   },
   quadrant: { width: '50%', height: '50%', padding: spacing.sm },
   badge: { gap: spacing.xxs },

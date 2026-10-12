@@ -47,7 +47,7 @@ export function UiShowcase({ toastHost = true, withTabBar = false }: UiShowcaseP
   return (
     <View style={styles.flex}>
       <Screen edges={['top', 'bottom']} withTabBar={withTabBar}>
-        <ScreenTitle title="Design system" subtitle="Finanz UI kit — tutti i componenti e i loro stati." />
+        <ScreenTitle title="Design system" subtitle="Feen UI kit — tutti i componenti e i loro stati." />
         <View style={styles.filters}>
           <Chip label="Tutto" variant="outline" tone="brand" selected={groupId === 'all'} onPress={() => setGroupId('all')} />
           {GROUPS.map((group) => (

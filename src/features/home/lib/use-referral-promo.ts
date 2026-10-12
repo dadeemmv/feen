@@ -1,6 +1,6 @@
 /**
  * Referral promo on launch (spec §3.1): the first time Home gains focus in an app launch, the
- * "30 giorni di Finanz Pro" sheet slides up over it — at most once a day (`lastReferralPromoOn`),
+ * "30 giorni di Feen Pro" sheet slides up over it — at most once a day (`lastReferralPromoOn`),
  * never while another global overlay is open, and no more once the 3 friends are invited.
  */
 import { useCallback, useState } from 'react';

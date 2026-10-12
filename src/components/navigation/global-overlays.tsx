@@ -9,7 +9,7 @@
  * registered overlay stays mounted, only `visible` flips):
  * - 'lives'        [features/lives]    "Vite al massimo!" / refill countdown, PRO card, "Ottieni vite illimitate"
  * - 'out-of-lives' [features/lives]    0 hearts: wait timer, refill with coins, Pro CTA
- * - 'referral'     [features/invite]   "30 giorni di Finanz Pro" promo (Home also renders it locally on launch)
+ * - 'referral'     [features/invite]   "30 giorni di Feen Pro" promo (Home also renders it locally on launch)
  * - 'rate'         [features/account]  "Valuta app"
  * - 'redeem'       [features/account]  "Utilizza codice" (TextField + keyboard)
  * - 'shield-info'  [features/streak]   what a streak shield does + "Acquista scudi"

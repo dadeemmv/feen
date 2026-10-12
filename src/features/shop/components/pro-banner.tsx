@@ -1,5 +1,5 @@
 /**
- * ProBanner — the "Finanz Pro" card that closes the Shop: evergreen card with the gem, the three
+ * ProBanner — the "Feen Pro" card that closes the Shop: evergreen card with the gem, the three
  * headline benefits and a CTA to the paywall. When Pro is already active it becomes a calm
  * membership summary that still opens the paywall ("Dettagli abbonamento").
  */

@@ -48,12 +48,12 @@ export const STREAK_COPY = {
   lockedA11y: (label: string) => `Sfida bloccata. ${label}`,
   claimFailed: 'Non è stato possibile riscattare la sfida',
 
-  shareTitle: 'La mia serie su Finanz',
+  shareTitle: 'La mia serie su Feen',
   shareCopied: 'Testo copiato: incollalo dove vuoi',
   shareMessage: (days: number) =>
     days > 0
-      ? `Sono a ${formatDays(days)} di fila su Finanz! 🔥 Impara anche tu a gestire i tuoi soldi, 5 minuti al giorno.`
-      : 'Sto iniziando la mia serie su Finanz 🔥 Impara anche tu a gestire i tuoi soldi, 5 minuti al giorno.',
+      ? `Sono a ${formatDays(days)} di fila su Feen! 🔥 Impara anche tu a gestire i tuoi soldi, 5 minuti al giorno.`
+      : 'Sto iniziando la mia serie su Feen 🔥 Impara anche tu a gestire i tuoi soldi, 5 minuti al giorno.',
 } as const;
 
 export const SHIELD_INFO_COPY = {

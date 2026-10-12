@@ -1,6 +1,6 @@
 /**
  * Residents strip of the completion screen. First lesson of the day: a day of the pact kept, so a
- * resident arrives (the people icon pops in on sprout). Already studied today: a calm line. The
+ * resident arrives (the people icon pops in on lilac). Already studied today: a calm line. The
  * count never goes down: a skipped day takes nobody away.
  */
 import { StyleSheet, View } from 'react-native';

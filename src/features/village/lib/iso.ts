@@ -9,6 +9,7 @@
 import { RESIDENTS_PER_HOUSE, VILLAGE_LOTS, type BuildingId, type DecorId } from '@/content/village';
 import { shade } from '@/components/illustrations/mascots/animal-svg';
 import type { BuildingState } from '@/store';
+import { characterColors, galleryColors } from '@/theme';
 
 export const TW = 64;
 export const TH = 32;
@@ -27,6 +28,17 @@ const GL = '#3A4157';
 const GR = '#2B3043';
 const DOOR = '#2A2F40';
 const WARM = '#FFD36B';
+/** The animals' colours (roofs, stalls, flags, villagers' clothes) and the Banco's green roof. */
+const CORAL = characterColors.volpe.base;
+const INDIGO = characterColors.castoro.base;
+const SUN = characterColors.scoiattolo.base;
+const SUN_MID = characterColors.scoiattolo.mid;
+const CYAN = characterColors.lontra.base;
+const GREEN = galleryColors.green;
+/** Today's site and the free lots of "Costruisci" glow in sun on the grass. */
+const SUN_GLOW = 'rgba(255, 204, 77, .55)';
+const SUN_GLOW_SOFT = 'rgba(255, 204, 77, .45)';
+const SUN_GLOW_STRONG = 'rgba(255, 204, 77, .9)';
 const WOOD = '#A8743F';
 const fp = (i: number, j: number, fw: number, fd: number): [number, number] => [i + (1 - fw) / 2, j + (1 - fd) / 2];
 
@@ -104,7 +116,7 @@ function kit(g: string) {
   }
   function flowers(i: number, j: number) {
     const sp = [[0.14, 0.95], [0.3, 0.97], [0.52, 0.96], [0.95, 0.16], [0.97, 0.36], [0.96, 0.58], [0.9, 0.93], [0.74, 0.97]];
-    const cs = ['#FF5B3A', '#FFB627', '#FFFFFF', '#FF8FA3'];
+    const cs = [CORAL, SUN, '#FFFFFF', '#FF8FA3'];
     return sp
       .map(([a, b], k) => {
         const p = P(i + a, j + b);
@@ -120,7 +132,7 @@ function kit(g: string) {
       `<circle cx="${x}" cy="${y - 20 * s}" r="${12 * s}" fill="${col}"/><circle cx="${x}" cy="${y - 20 * s}" r="${12 * s}" fill="${u('isoSph')}"/>`;
     if (fruit)
       [[-5, -17], [5, -22], [3, -13], [-2, -27]].forEach(([dx, dy]) => {
-        o += `<circle cx="${x + dx * s}" cy="${y + dy * s}" r="${2.1 * s}" fill="#FF5B3A"/>`;
+        o += `<circle cx="${x + dx * s}" cy="${y + dy * s}" r="${2.1 * s}" fill="${CORAL}"/>`;
       });
     return o;
   }
@@ -169,10 +181,10 @@ function kit(g: string) {
       let s = box(i0, j0, fw, fw, 0, h, WALL);
       s += onL(j1, i0 + 0.32, i0 + 0.48, 0, 16, DOOR) + onL(j1, i0 + 0.08, i0 + 0.2, 14, 23, w) + onL(j1, i0 + 0.6, i0 + 0.72, 14, 23, w);
       s += onR(i1, j0 + 0.12, j0 + 0.3, 14, 23, GR) + onR(i1, j0 + 0.5, j0 + 0.68, 14, 23, GR);
-      s += box(i0 - 0.04, j0 - 0.04, fw + 0.08, fw + 0.08, h, 3, TRIM) + pyr(i0, j0, fw, fw, h + 3, 22, '#3B5BFF');
+      s += box(i0 - 0.04, j0 - 0.04, fw + 0.08, fw + 0.08, h, 3, TRIM) + pyr(i0, j0, fw, fw, h + 3, 22, INDIGO);
       const t0 = P(i0 + fw / 2, j0 + fw / 2, h + 25);
       const t1 = P(i0 + fw / 2, j0 + fw / 2, h + 46);
-      s += ln(t0, t1, DOOR, 1.6) + `<path d="M${t1[0]} ${t1[1]} l15 4 l-15 6 z" fill="#CFF56A" stroke="#9CCB2E" stroke-width=".8"/>`;
+      s += ln(t0, t1, DOOR, 1.6) + `<path d="M${t1[0]} ${t1[1]} l15 4 l-15 6 z" fill="${SUN}" stroke="${SUN_MID}" stroke-width=".8"/>`;
       return st === 'fiorito' ? s + flowers(i, j) : s;
     },
     bottega(i, j, st) {
@@ -185,12 +197,12 @@ function kit(g: string) {
       let s = box(i0, j0, fw, fd, 0, h, WALL);
       s += onL(j1, i0 + 0.08, i0 + 0.22, 0, 14, DOOR) + onL(j1, i0 + 0.32, i0 + 0.56, 6, 14, st === 'fiorito' ? WARM : GL);
       s += onR(i1, j0 + 0.18, j0 + 0.38, 10, 18, GR) + onR(i1, j0 + 0.5, j0 + 0.7, 10, 18, GR);
-      s += awning(i0 + 0.04, i0 + 0.62, j1, h - 5, 0.15, 6, '#FF5B3A', '#FFFFFF', 6);
-      s += gable(i0, j0, fw, fd, h, 16, '#FF5B3A');
+      s += awning(i0 + 0.04, i0 + 0.62, j1, h - 5, 0.15, 6, CORAL, '#FFFFFF', 6);
+      s += gable(i0, j0, fw, fd, h, 16, CORAL);
       s += box(i0 + 0.1, j0 + 0.16, 0.1, 0.1, h + 6, 15, { top: '#5E6270', left: '#555966', right: '#43464F' });
       const m = P(i0 + 0.15, j0 + 0.21, h + 24);
       s += `<circle cx="${m[0]}" cy="${m[1]}" r="3.5" fill="#fff"/><circle cx="${m[0] + 4}" cy="${m[1] - 7}" r="4.5" fill="#fff"/><circle cx="${m[0] + 1}" cy="${m[1] - 16}" r="5.5" fill="#fff"/>`;
-      return st === 'fiorito' ? s + flowers(i, j) + villager(i + 0.4, j + 0.97, '#3B5BFF', '#C68642') : s;
+      return st === 'fiorito' ? s + flowers(i, j) + villager(i + 0.4, j + 0.97, INDIGO, '#C68642') : s;
     },
     mercato(i, j, st) {
       const stall = (i0: number, j0: number, ca: string) => {
@@ -200,13 +212,13 @@ function kit(g: string) {
         const i1 = i0 + fw;
         const j1 = j0 + fd;
         let t = box(i0, j0, fw, fd, 0, h, { top: '#F6E5C6', left: '#E8D0A6', right: '#D0B486' });
-        t += box(i0 + 0.03, j0 + 0.04, 0.12, 0.1, h, 4, faces('#FFB627')) + box(i0 + 0.17, j0 + 0.05, 0.11, 0.1, h, 4, faces('#7CC95A'));
+        t += box(i0 + 0.03, j0 + 0.04, 0.12, 0.1, h, 4, faces(SUN)) + box(i0 + 0.17, j0 + 0.05, 0.11, 0.1, h, 4, faces('#7CC95A'));
         [[i0 + 0.01, j1 - 0.01], [i1 - 0.01, j1 - 0.01], [i1 - 0.01, j0 + 0.01]].forEach(([a, b]) => {
           t += ln(P(a, b, h), P(a, b, h + 13), '#8A6A45', 1.3);
         });
         return t + pyr(i0, j0, fw, fd, h + 13, 8, ca, 0.05);
       };
-      const s = stall(i + 0.08, j + 0.1, '#FF5B3A') + stall(i + 0.58, j + 0.12, '#3B5BFF') + stall(i + 0.32, j + 0.6, '#1FBFB0');
+      const s = stall(i + 0.08, j + 0.1, CORAL) + stall(i + 0.58, j + 0.12, INDIGO) + stall(i + 0.32, j + 0.6, CYAN);
       return st === 'fiorito' ? s + flowers(i, j) : s;
     },
     granaio(i, j, st) {
@@ -220,7 +232,7 @@ function kit(g: string) {
       const b = i0 + 0.5;
       let s = box(i0, j0, fw, fd, 0, h, WALL) + onL(j1, a, b, 0, 19, '#C0702A');
       s += ln(P(a, j1, 0), P(b, j1, 19), '#FFE9C7', 1.3) + ln(P(b, j1, 0), P(a, j1, 19), '#FFE9C7', 1.3);
-      s += onR(i1, j0 + 0.32, j0 + 0.52, 15, 23, GR) + gable(i0, j0, fw, fd, h, 20, '#FFB627');
+      s += onR(i1, j0 + 0.32, j0 + 0.52, 15, 23, GR) + gable(i0, j0, fw, fd, h, 20, SUN);
       s += box(i1 + 0.01, j0 + 0.56, 0.12, 0.12, 0, 7, faces('#F2CF63'));
       return st === 'fiorito' ? s + flowers(i, j) : s;
     },
@@ -249,7 +261,7 @@ function kit(g: string) {
       const h = 62;
       let s = box(i0, j0, fw, fw, 0, h, WALL) + onL(j1, i0 + 0.16, i0 + 0.3, 0, 13, DOOR);
       for (let z = 22; z < h - 6; z += 13) s += onL(j1, i0 + 0.17, i0 + 0.29, z, z + 7, GL) + onR(i1, j0 + 0.17, j0 + 0.29, z, z + 7, GR);
-      s += box(i0 - 0.04, j0 - 0.04, fw + 0.08, fw + 0.08, h, 3, TRIM) + pyr(i0, j0, fw, fw, h + 3, 26, '#3B5BFF');
+      s += box(i0 - 0.04, j0 - 0.04, fw + 0.08, fw + 0.08, h, 3, TRIM) + pyr(i0, j0, fw, fw, h + 3, 26, INDIGO);
       return st === 'fiorito' ? s + flowers(i, j) : s;
     },
     faro(i, j, st) {
@@ -259,7 +271,7 @@ function kit(g: string) {
       let s = box(b0, c0, 0.52, 0.52, 0, 7, STONE);
       let z = 7;
       ['w', 'c', 'w', 'c', 'w'].forEach((t) => {
-        s += box(k0, l0, fw, fw, z, 9.5, t === 'w' ? WALL : faces('#FF5B3A'));
+        s += box(k0, l0, fw, fw, z, 9.5, t === 'w' ? WALL : faces(CORAL));
         z += 9.5;
       });
       s += box(k0 - 0.05, l0 - 0.05, fw + 0.1, fw + 0.1, z, 2.5, { top: '#454A5A', left: '#363A47', right: '#272A33' });
@@ -267,15 +279,15 @@ function kit(g: string) {
       s += box(k0 + 0.03, l0 + 0.03, fw - 0.06, fw - 0.06, z, 9, { top: '#FFF6CF', left: '#FFE58A', right: '#F3CC4C' });
       const bm = P(i + 0.5, j + 0.5, z + 4.5);
       s += `<path d="M${bm[0]} ${bm[1]} L${bm[0] - 74} ${bm[1] - 20} L${bm[0] - 74} ${bm[1] + 12} Z" fill="#FFE58A" opacity=".5"/>`;
-      s += pyr(k0, l0, fw, fw, z + 9, 11, '#FF5B3A', 0.05);
+      s += pyr(k0, l0, fw, fw, z + 9, 11, CORAL, 0.05);
       return st === 'fiorito' ? s + flowers(i, j) : s;
     },
     mura(i, j, st) {
       let s = box(i + 0.1, j + 0.36, 0.8, 0.2, 0, 14, STONE);
       for (let k = 0; k < 5; k++) s += box(i + 0.14 + k * 0.15, j + 0.38, 0.08, 0.16, 14, 5, STONE);
       s += onL(j + 0.56, i + 0.43, i + 0.57, 0, 10, DOOR);
-      s += box(i + 0.02, j + 0.3, 0.2, 0.32, 0, 22, STONE) + pyr(i + 0.02, j + 0.3, 0.2, 0.32, 22, 10, '#3B5BFF', 0.04);
-      s += box(i + 0.78, j + 0.3, 0.2, 0.32, 0, 22, STONE) + pyr(i + 0.78, j + 0.3, 0.2, 0.32, 22, 10, '#3B5BFF', 0.04);
+      s += box(i + 0.02, j + 0.3, 0.2, 0.32, 0, 22, STONE) + pyr(i + 0.02, j + 0.3, 0.2, 0.32, 22, 10, INDIGO, 0.04);
+      s += box(i + 0.78, j + 0.3, 0.2, 0.32, 0, 22, STONE) + pyr(i + 0.78, j + 0.3, 0.2, 0.32, 22, 10, INDIGO, 0.04);
       return st === 'fiorito' ? s + flowers(i, j) : s;
     },
     ponte(i, j, st) {
@@ -306,7 +318,7 @@ function kit(g: string) {
         s += box(i1 + 0.03, j0 + a, 0.05, 0.05, 4, h, TRIM);
       });
       s += box(i0 - 0.04, j0 - 0.04, fw + 0.16, fd + 0.08, 4 + h, 4, TRIM);
-      s += gable(i0 - 0.02, j0 - 0.02, fw + 0.14, fd + 0.04, 8 + h, 14, '#2E9E6B', WALL.left);
+      s += gable(i0 - 0.02, j0 - 0.02, fw + 0.14, fd + 0.04, 8 + h, 14, GREEN, WALL.left);
       return st === 'fiorito' ? s + flowers(i, j) : s;
     },
   };
@@ -362,12 +374,12 @@ function blueprint(k: ReturnType<typeof kit>, i: number, j: number, t: BuildingI
   const [i0, j0] = fp(i, j, b.fw, b.fd);
   const i1 = i0 + b.fw;
   const j1 = j0 + b.fd;
-  const st = 'stroke="#3B5BFF" stroke-width="1.3" stroke-dasharray="3.5 3" stroke-linejoin="round"';
+  const st = `stroke="${INDIGO}" stroke-width="1.3" stroke-dasharray="3.5 3" stroke-linejoin="round"`;
   // The lot is marked on the ground with a stake: it opens whenever you want, no locks.
-  let s = k.poly([P(i0, j0), P(i1, j0), P(i1, j1), P(i0, j1)], 'rgba(59,91,255,.08)', st);
+  let s = k.poly([P(i0, j0), P(i1, j0), P(i1, j1), P(i0, j1)], 'rgba(108,92,231,.08)', st);
   const a = P(i0 + 0.08, j1 - 0.08);
   const top = P(i0 + 0.08, j1 - 0.08, Math.min(26, b.h * 0.6 + 6));
-  s += k.ln(a, top, '#8A5A2B', 1.8) + `<path d="M${top[0]} ${top[1]} l12 3.5 l-12 4.5 z" fill="#3B5BFF"/>`;
+  s += k.ln(a, top, '#8A5A2B', 1.8) + `<path d="M${top[0]} ${top[1]} l12 3.5 l-12 4.5 z" fill="${INDIGO}"/>`;
   return s;
 }
 
@@ -468,7 +480,7 @@ const HOMES: [number, number][] = [
   [6.3, 4.6],
   [4.3, 6.3],
 ];
-const ROOFS = ['#FF5B3A', '#1FBFB0', '#FFB627', '#3B5BFF'];
+const ROOFS = [CORAL, CYAN, SUN, INDIGO];
 const DECO: ['pine' | 'tree', number, number][] = [
   ['pine', 0, 0],
   ['tree', 1, 0],
@@ -482,10 +494,10 @@ const DECO: ['pine' | 'tree', number, number][] = [
   ['pine', 6, 6],
 ];
 const WALKERS: [number, number, string, string][] = [
-  [3.5, 1.4, '#FF5B3A', '#F1C9A5'],
-  [1.5, 3.6, '#3B5BFF', '#8D5524'],
-  [3.4, 5.3, '#FFB627', '#C68642'],
-  [5.2, 3.5, '#1FBFB0', '#FFDBAC'],
+  [3.5, 1.4, CORAL, '#F1C9A5'],
+  [1.5, 3.6, INDIGO, '#8D5524'],
+  [3.4, 5.3, SUN, '#C68642'],
+  [5.2, 3.5, CYAN, '#FFDBAC'],
   [3.6, 4.3, '#000', '#E0AC69'],
   [2.5, 3.4, '#FF8FA3', '#F1C9A5'],
 ];
@@ -524,21 +536,21 @@ export function villageSvg(m: VillageModel, prefix: string) {
     if (m.current === t)
       g += k.poly(
         [P(i + 0.04, j + 0.04), P(i + 0.96, j + 0.04), P(i + 0.96, j + 0.96), P(i + 0.04, j + 0.96)],
-        'rgba(207,245,106,.65)',
-        'stroke="#9CCB2E" stroke-width="1.4" stroke-dasharray="4 3"',
+        SUN_GLOW,
+        `stroke="${SUN_MID}" stroke-width="1.4" stroke-dasharray="4 3"`,
       );
     objs.push({ k: i + j + 1, k2: i, svg: castShadow(k, t, i, j, st) + render(k, t, i, j, st, m.progress[t]) });
   });
 
-  // "Costruisci": free lots glow on the ground, the chosen one is outlined in ink with a ghost.
+  // "Costruisci": free lots glow on the ground, the chosen one is outlined in indigo with a ghost.
   if (m.lots) {
     for (const lot of m.lots.free) {
       const [i, j] = VILLAGE_LOTS[lot];
       const chosen = lot === m.lots.selected;
       g += k.poly(
         [P(i + 0.06, j + 0.06), P(i + 0.94, j + 0.06), P(i + 0.94, j + 0.94), P(i + 0.06, j + 0.94)],
-        chosen ? 'rgba(207,245,106,.9)' : 'rgba(207,245,106,.5)',
-        chosen ? 'stroke="#000" stroke-width="2"' : 'stroke="#9CCB2E" stroke-width="1.4" stroke-dasharray="4 3"',
+        chosen ? SUN_GLOW_STRONG : SUN_GLOW_SOFT,
+        chosen ? `stroke="${INDIGO}" stroke-width="2"` : `stroke="${SUN_MID}" stroke-width="1.4" stroke-dasharray="4 3"`,
       );
     }
     const { selected, preview } = m.lots;
@@ -600,7 +612,7 @@ function bed(k: ReturnType<typeof kit>, ti: number, tj: number) {
   const [i0, j0] = fp(ti, tj, fw, fw);
   let s = k.box(i0, j0, fw, fw, 0, 4, STONE);
   s += k.poly([P(i0 + 0.05, j0 + 0.05, 4), P(i0 + fw - 0.05, j0 + 0.05, 4), P(i0 + fw - 0.05, j0 + fw - 0.05, 4), P(i0 + 0.05, j0 + fw - 0.05, 4)], '#6B4A2B');
-  const cs = ['#FF5B3A', '#FFB627', '#FFFFFF', '#FF8FA3'];
+  const cs = [CORAL, SUN, '#FFFFFF', '#FF8FA3'];
   [0.16, 0.3, 0.44].forEach((a, r) =>
     [0.16, 0.3, 0.44].forEach((b, c) => {
       const p = P(i0 + a, j0 + b, 4);

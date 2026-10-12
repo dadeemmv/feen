@@ -1,5 +1,5 @@
 /**
- * "Tieni premuto per firmare": the black pill fills with sprout from the left while you hold it
+ * "Tieni premuto per firmare": the indigo pill fills with lilac from the left while you hold it
  * (1.1 s). Locked and grey until there is a signature; pressing it then asks for the signature
  * instead. Works with a held Space/Enter, and with a screen reader (a single activation fills it
  * on its own, since holding is not possible there).
@@ -73,7 +73,7 @@ export function HoldToSign({ locked, done, onLockedPress, onComplete }: HoldToSi
           {label}
         </Text>
       </View>
-      {/* The sprout fill carries its own ink label, clipped to the filled part. */}
+      {/* The lilac fill carries its own ink label, clipped to the filled part. */}
       <Animated.View style={[styles.fill, { backgroundColor: colors.reward }, fill]} pointerEvents="none">
         <View style={[styles.labels, styles.inner, { width }]}>
           <Text variant="labelLg" style={{ color: colors.onReward }}>

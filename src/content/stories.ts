@@ -5,7 +5,7 @@
 import type { StoryGroup } from './types';
 
 /**
- * Value of a timeline card `emoji` that the story renderer should draw as the Finanz logo tile
+ * Value of a timeline card `emoji` that the story renderer should draw as the Feen logo tile
  * (lime square with "FZ") instead of an emoji. Rendered as plain text it still reads correctly.
  */
 export const STORY_BRAND_MARK = 'FZ';
@@ -100,8 +100,8 @@ export const STORY_GROUPS: StoryGroup[] = [
         kind: 'timeline',
         cards: [
           {
-            text: 'Quindi abbiamo creato Finanz.',
-            emphasis: ['Finanz'],
+            text: 'Quindi abbiamo creato Feen.',
+            emphasis: ['Feen'],
             emoji: STORY_BRAND_MARK,
           },
           {
@@ -110,7 +110,7 @@ export const STORY_GROUPS: StoryGroup[] = [
             emoji: '💰',
           },
           {
-            text: 'Accessibile e intuitiva, Finanz ti supporta nel tuo viaggio verso l’indipendenza finanziaria.',
+            text: 'Accessibile e intuitiva, Feen ti supporta nel tuo viaggio verso l’indipendenza finanziaria.',
             emphasis: ['Accessibile e intuitiva', 'l’indipendenza finanziaria'],
           },
           {

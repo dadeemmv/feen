@@ -1,6 +1,6 @@
 /**
  * ProSuccess — the moment right after the (demo) trial starts: confetti, the jewel pops in, a lime
- * "Benvenuto in Finanz Pro!", the expiry date and the unlocked benefits checking in one by one.
+ * "Benvenuto in Feen Pro!", the expiry date and the unlocked benefits checking in one by one.
  * The status-header lives chip already shows ∞ behind the modal.
  */
 import { StyleSheet, View } from 'react-native';

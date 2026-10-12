@@ -1,6 +1,6 @@
 /**
- * TextField — rounded input on a soft `fill` background; focus draws a 2 pt evergreen ring (lime on
- * brand surfaces), errors a danger ring + message. One component for forms (name, email), the
+ * TextField — rounded input on a soft `fill` background; focus draws a 2 pt indigo ring (white on
+ * indigo surfaces), errors a danger ring + message. One component for forms (name, email), the
  * redeem-code field (`align="center"`, `autoCapitalize="characters"`) and the chat composer
  * (`shape="pill"` + `trailing` send button, `multiline`).
  */

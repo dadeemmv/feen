@@ -28,7 +28,7 @@ export function isProActive(state: Pick<EconomyData, 'proUntil'>, now: number): 
   return state.proUntil !== null && state.proUntil > now;
 }
 
-/** Unlimited lives from the 1-hour shop item OR Finanz Pro. */
+/** Unlimited lives from the 1-hour shop item OR Feen Pro. */
 export function hasUnlimitedLives(state: PerksInput, now: number): boolean {
   return isProActive(state, now) || (state.unlimitedUntil !== null && state.unlimitedUntil > now);
 }

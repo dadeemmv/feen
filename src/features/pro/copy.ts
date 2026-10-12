@@ -1,5 +1,5 @@
 /**
- * Italian copy of the Finanz Pro paywall. Plan names, prices, benefits, the demo notice and the
+ * Italian copy of the Feen Pro paywall. Plan names, prices, benefits, the demo notice and the
  * legal line come from `PRO_PLAN` (`@/content/shop`); this file holds the screen's own strings.
  * There are no real payments in this build: the trial is a demo activation, always labelled so.
  */
@@ -11,7 +11,7 @@ export const PRO_TRIAL_DAYS = 7;
 export const PRO_COPY = {
   close: 'Chiudi',
   tag: 'Pro',
-  headline: 'Finanz Pro',
+  headline: 'Feen Pro',
   benefitsTitle: 'Cosa ottieni',
   plansTitle: 'Scegli il tuo piano',
   bestValue: 'Più conveniente',
@@ -27,7 +27,7 @@ export const PRO_COPY = {
 
   restore: 'Ripristina acquisti',
   restoreNone: 'Nessun abbonamento da ripristinare su questo account.',
-  restoreActive: (date: string) => `Finanz Pro è già attivo fino al ${date}.`,
+  restoreActive: (date: string) => `Feen Pro è già attivo fino al ${date}.`,
 
   // Already a member
   activeTag: 'Membro Pro',
@@ -40,7 +40,7 @@ export const PRO_COPY = {
 
   // Success moment
   successTag: 'Attivato',
-  successTitle: 'Benvenuto in Finanz Pro!',
+  successTitle: 'Benvenuto in Feen Pro!',
   successMessage: (date: string) => `Le vite illimitate e tutti i vantaggi sono attivi fino al ${date}.`,
   successUnlocked: 'Ora hai sbloccato',
   successCta: 'Inizia a imparare',

@@ -1,6 +1,6 @@
 /**
  * The pact (concept board, screen 3) — the only screen on warm paper. The partner proposes it;
- * the words in sprout can be tapped to change them; article 4 is the partner's clause. You sign
+ * the underlined words can be tapped to change them; article 4 is the partner's clause. You sign
  * (with the finger or your name), hold the button, and the partner's wax seal drops with a spring.
  * Then "Posa la prima pietra".
  */

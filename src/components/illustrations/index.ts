@@ -1,5 +1,5 @@
 /**
- * Finanz illustrations — custom SVG compositions in the economy-icon language (soft 2-stop
+ * Feen illustrations — custom SVG compositions in the economy-icon language (soft 2-stop
  * gradients, rounded geometry, evergreen / lime / gold). Every artwork has a transparent
  * background (except course covers and `KiwiPattern`, which fill their box) and takes
  * `{ width?, height?, style?, accessibilityLabel? }`.

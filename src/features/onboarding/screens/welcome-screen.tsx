@@ -1,5 +1,5 @@
 /**
- * Step 1 — Welcome (first launch): black cover with the wordmark, the four animals floating,
+ * Step 1 — Welcome (first launch): indigo cover with the wordmark, the four animals floating,
  * "Ogni lezione, un *mattone*." and the two ways in:
  *   "Inizia"            → name → level → the test → the pact → the first stone
  *   "Ho già un account" → demo: keeps the saved profile and enters the village.
@@ -16,7 +16,7 @@ import Animated, {
 import { router } from 'expo-router';
 import { ArrowRight, Clock, House, PenLine } from 'lucide-react-native';
 
-import { FinanzWordmark } from '@/components/icons';
+import { FeenWordmark } from '@/components/icons';
 import { MascotArt } from '@/components/illustrations';
 import { MASCOT_IDS } from '@/content/personality';
 import { Button, Chip, iconSize, Screen, Spotlight, Text, useReduceMotion } from '@/components/ui';
@@ -108,8 +108,8 @@ export function WelcomeScreen() {
         style={styles.brandRow}
         accessible
         accessibilityRole="image"
-        accessibilityLabel="Finanz">
-        <FinanzWordmark tone="white" withMark height={WORDMARK_HEIGHT} />
+        accessibilityLabel="Feen">
+        <FeenWordmark tone="white" withMark height={WORDMARK_HEIGHT} />
       </Animated.View>
 
       <View style={styles.hero}>

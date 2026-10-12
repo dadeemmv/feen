@@ -1,5 +1,5 @@
 /**
- * "Il tuo personaggio" (/mascot, from the village and Account): the saved result on black with
+ * "Il tuo personaggio" (/mascot, from the village and Account): the saved result on indigo with
  * "Rifai il test", or — for a profile without a result — the test intro. The retake runs the same
  * quiz in place with its own answers; finishing saves the new position on the axes (the animal
  * stays the same: the partner signed with you), toasts it and shows the reveal again.

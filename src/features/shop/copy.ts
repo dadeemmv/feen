@@ -60,7 +60,7 @@ export const SHOP_COPY = {
 
   // Pro banner
   proTag: 'Pro',
-  proTitle: 'Finanz Pro',
+  proTitle: 'Feen Pro',
   proBody: 'Vite illimitate, spiegazioni AI e nessuna pubblicità.',
   proCta: 'Prova 7 giorni gratis',
   proActiveTitle: 'Sei un membro Pro',

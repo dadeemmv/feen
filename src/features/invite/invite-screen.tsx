@@ -1,7 +1,7 @@
 /**
  * Invite a friend (spec §3.2, route /invite): back button, "Invita un amico", the evergreen code
  * card (copy + share), "Come funziona" in three steps and the honest 0/3 friends tracker that
- * leads to "30 giorni di Finanz Pro".
+ * leads to "30 giorni di Feen Pro".
  */
 import { StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';

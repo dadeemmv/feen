@@ -29,7 +29,7 @@ export const unstable_settings = { anchor: '(tabs)' };
 
 const colors = lightTheme.colors;
 
-/** React Navigation theme on the Finanz canvas (no white flashes between screens). */
+/** React Navigation theme on the Feen canvas (no white flashes between screens). */
 const navigationTheme: NavigationTheme = {
   ...DefaultTheme,
   colors: {

@@ -87,7 +87,7 @@ export function FeedbackDialogs({
                 key={chip.kind}
                 label={chip.label}
                 icon={chipIcon(chip.kind)}
-                tone={chip.kind === 'combo' ? 'streak' : 'accent'}
+                tone={chip.kind === 'combo' ? 'streak' : 'lilac'}
                 size="sm"
               />
             ))}

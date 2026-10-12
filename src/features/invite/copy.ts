@@ -12,10 +12,10 @@ export const INVITE_COPY = {
   copied: 'Codice copiato',
   copiedA11y: 'Codice copiato negli appunti',
   shareCta: 'Condividi codice',
-  shareTitle: 'Invita un amico su Finanz',
+  shareTitle: 'Invita un amico su Feen',
   shareCopied: 'Messaggio copiato: incollalo dove vuoi',
   shareMessage: (code: string) =>
-    `Sto imparando a gestire i miei soldi con Finanz 🥝 Lezioni da 5 minuti su risparmio e investimenti. ` +
+    `Sto imparando a gestire i miei soldi con Feen 🥝 Lezioni da 5 minuti su risparmio e investimenti. ` +
     `Scarica l’app e usa il mio codice ${code} per iniziare insieme a me!`,
 
   howTitle: 'Come funziona',
@@ -30,7 +30,7 @@ export const INVITE_COPY = {
     {
       key: 'signup',
       title: 'Il tuo amico si iscrive',
-      body: 'Scarica Finanz e inserisce il codice in Account → Utilizza codice.',
+      body: 'Scarica Feen e inserisce il codice in Account → Utilizza codice.',
     },
     {
       key: 'reward',

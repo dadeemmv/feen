@@ -142,7 +142,7 @@ export const scegliBrokerLesson: Lesson = {
         { emoji: '🧩', text: 'Non esiste il broker migliore per tutti: dipende da come investi.', tone: 'mint' },
         {
           emoji: 'ℹ️',
-          text: 'Finanz non consiglia broker specifici: questi sono criteri per scegliere, non raccomandazioni.',
+          text: 'Feen non consiglia broker specifici: questi sono criteri per scegliere, non raccomandazioni.',
           tone: 'butter',
         },
         { emoji: '📱', text: 'Ultimo capitolo: entriamo dentro l’app di un broker.', tone: 'sky' },

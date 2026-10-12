@@ -54,6 +54,6 @@ export function rewardClaimedMessage(reward: MilestoneReward): string {
     case 'coins':
       return 'I Kiwi sono già nel tuo saldo: spendili nello Shop per vite e scudi.';
     case 'pro':
-      return 'Finanz Pro è attivo: vite illimitate per tutta la durata del premio.';
+      return 'Feen Pro è attivo: vite illimitate per tutta la durata del premio.';
   }
 }

@@ -1,6 +1,6 @@
 /**
  * Supporto: FAQ accordion (5 answers built from the real game rules) + "Scrivici" → mail app
- * (mailto: supporto@finanz.app). When no mail app can open the link, the address is copied.
+ * (mailto: supporto@feen.app). When no mail app can open the link, the address is copied.
  */
 import { Linking } from 'react-native';
 import { Headset, Mail } from 'lucide-react-native';

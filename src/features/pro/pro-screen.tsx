@@ -1,9 +1,9 @@
 /**
- * Finanz Pro paywall (/pro, modal — docs/PRODUCT_SPEC.md §1, §3.6 CTA target, §5).
+ * Feen Pro paywall (/pro, modal — docs/PRODUCT_SPEC.md §1, §3.6 CTA target, §5).
  *
  *   offer       hero · benefits · plan selector (yearly preselected) · "Prova 7 giorni gratis"
  *   processing  the CTA spins for a beat (simulated store sheet); plans are locked
- *   success     confetti + "Benvenuto in Finanz Pro!" once the DEMO trial is active
+ *   success     confetti + "Benvenuto in Feen Pro!" once the DEMO trial is active
  *   member      opened while Pro is already active: membership summary, no plans
  *
  * This build has no payments: the CTA activates a 7-day demo Pro (`activatePro`), and the screen
