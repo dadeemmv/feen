@@ -134,6 +134,33 @@ export const CHAPTERS: Record<string, Chapter> = {
     xpReward: 20,
     coinReward: 20,
   },
+  truffe: {
+    id: 'truffe',
+    title: 'Le truffe online',
+    emoji: '🚨',
+    summary: 'Fretta, guadagni garantiti e richieste strane: i segnali per riconoscerle.',
+    estimatedMinutes: 4,
+    xpReward: 20,
+    coinReward: 20,
+  },
+  'spese-invisibili': {
+    id: 'spese-invisibili',
+    title: 'Le spese invisibili',
+    emoji: '🧾',
+    summary: 'Piccole spese, abbonamenti e un budget che decide prima di spendere.',
+    estimatedMinutes: 4,
+    xpReward: 20,
+    coinReward: 20,
+  },
+  proteggersi: {
+    id: 'proteggersi',
+    title: 'Proteggere quello che hai',
+    emoji: '🧱',
+    summary: 'Assicurazioni, garanzia e diritto di recesso: le mura dei tuoi soldi.',
+    estimatedMinutes: 5,
+    xpReward: 20,
+    coinReward: 20,
+  },
 };
 
 const firstInvestmentLevels: CourseLevel[] = [

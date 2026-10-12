@@ -75,7 +75,7 @@ export const BUILDINGS: Record<BuildingId, Building> = {
     at: 'al Mercato',
     topic: 'Spese e budget',
     description: 'Bisogni e desideri, abbonamenti, trucchi del marketing. Dove i soldi escono.',
-    chapterIds: [],
+    chapterIds: ['spese-invisibili'],
     tone: 'honey',
   },
   granaio: {
@@ -135,7 +135,7 @@ export const BUILDINGS: Record<BuildingId, Building> = {
     at: 'alle Mura',
     topic: 'Protezione',
     description: 'Assicurazioni e prevenzione. Non servono, finché non servono.',
-    chapterIds: [],
+    chapterIds: ['proteggersi'],
     tone: 'stone',
   },
   ponte: {
@@ -153,7 +153,7 @@ export const BUILDINGS: Record<BuildingId, Building> = {
     at: 'al Faro',
     topic: 'Truffe e sicurezza',
     description: 'Phishing, schemi Ponzi, hype. Avvisa degli scogli prima che tu li veda.',
-    chapterIds: [],
+    chapterIds: ['truffe'],
     tone: 'coral',
   },
 };

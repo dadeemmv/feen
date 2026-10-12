@@ -15,7 +15,10 @@ import { inflazioneLesson } from './inflazione';
 import { interesseCompostoLesson } from './interesse-composto';
 import { obbligazioniLesson } from './obbligazioni';
 import { rischiRendimentiLesson } from './rischi-rendimenti';
+import { proteggersiLesson } from './proteggersi';
 import { scegliBrokerLesson } from './scegli-broker';
+import { speseInvisibiliLesson } from './spese-invisibili';
+import { truffeLesson } from './truffe';
 
 export { getCorrectAnswerLabel } from './answer-label';
 
@@ -34,6 +37,9 @@ const ALL_LESSONS: Lesson[] = [
   scegliBrokerLesson,
   dentroBrokerLesson,
   fondoEmergenzeLesson,
+  truffeLesson,
+  speseInvisibiliLesson,
+  proteggersiLesson,
 ];
 
 /** All lessons keyed by chapter id. */
