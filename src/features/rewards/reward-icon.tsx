@@ -4,7 +4,7 @@
  */
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { CheckBadgeIcon, GemIcon, KiwiCoinIcon, LockIcon, ShieldIcon } from '@/components/icons';
+import { CheckBadgeIcon, GemIcon, BrickIcon, LockIcon, ShieldIcon } from '@/components/icons';
 import type { MilestoneReward } from '@/content/extra-types';
 import { radius, useTheme } from '@/theme';
 
@@ -34,7 +34,7 @@ export function RewardIcon({ kind, size, status = 'claimable', style }: RewardIc
       {kind === 'shield' ? (
         <ShieldIcon size={size} muted={muted} />
       ) : kind === 'coins' ? (
-        <KiwiCoinIcon size={size} muted={muted} />
+        <BrickIcon size={size} muted={muted} />
       ) : (
         <GemIcon size={size} muted={muted} />
       )}

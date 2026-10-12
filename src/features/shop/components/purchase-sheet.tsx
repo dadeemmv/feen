@@ -16,7 +16,7 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 import { router } from 'expo-router';
 import { CircleAlert } from 'lucide-react-native';
 
-import { KiwiCoinIcon } from '@/components/icons';
+import { BrickIcon } from '@/components/icons';
 import {
   Button,
   HStack,
@@ -181,7 +181,7 @@ function PurchaseContent({ item, phase, onInsufficient, onSuccess, onFailure, on
         ) : (
           <Button
             title={success ? SHOP_COPY.done : SHOP_COPY.buyFor(item.price)}
-            iconRight={success ? undefined : <KiwiCoinIcon size={iconSize.md} />}
+            iconRight={success ? undefined : <BrickIcon size={iconSize.md} />}
             haptic={success ? 'light' : false}
             fullWidth
             onPress={success ? onCancel : buy}

@@ -10,7 +10,7 @@ import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { TicketPercent } from 'lucide-react-native';
 
-import { KiwiCoinIcon, ShieldIcon } from '@/components/icons';
+import { BrickIcon, ShieldIcon } from '@/components/icons';
 import { Button, Confetti, IconTile, Sheet, Text, TextField, VStack, useShake } from '@/components/ui';
 import { haptics } from '@/lib/haptics';
 import { spacing } from '@/theme';
@@ -62,7 +62,7 @@ export function RedeemCodeSheet({ visible, onClose }: RedeemCodeSheetProps) {
         <View style={styles.success}>
           <Confetti run origin={{ x: 0.5, y: 0.2 }} />
           <RewardBurst>
-            {success.reward.kind === 'coins' ? <KiwiCoinIcon size={accountMetrics.rewardIcon} /> : <ShieldIcon size={accountMetrics.rewardIcon} />}
+            {success.reward.kind === 'coins' ? <BrickIcon size={accountMetrics.rewardIcon} /> : <ShieldIcon size={accountMetrics.rewardIcon} />}
           </RewardBurst>
           <VStack gap="xxs" align="center">
             <Text variant="displaySm" align="center" accessibilityRole="header" accessibilityLiveRegion="polite">

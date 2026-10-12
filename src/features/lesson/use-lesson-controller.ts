@@ -21,9 +21,7 @@ import { duration } from '@/theme';
 import {
   computeChapterReward,
   getStoreState,
-  hasUnlimitedLives,
   selectIsChapterCompleted,
-  selectIsOutOfLives,
   selectLives,
   type ChapterReward,
   type CompletionSummary,
@@ -93,16 +91,15 @@ export function useLessonController(chapter: Chapter, lesson: Lesson, notify: No
     [],
   );
 
-  // Register the session ("RIPRENDI DA QUI") and stop at the door when there are no lives left.
+  // Register the session ("RIPRENDI DA QUI").
   useEffect(() => {
     if (practice) return;
-    const store = getStoreState();
-    store.startOrResumeSession(chapterId);
-    if (steps.some(isGradedStep) && selectIsOutOfLives(store, Date.now())) openSheet('out-of-lives');
-  }, [practice, chapterId, steps]);
+    getStoreState().startOrResumeSession(chapterId);
+  }, [practice, chapterId]);
 
-  const canLoseLife = (now: number) => !practice && !hasUnlimitedLives(getStoreState(), now);
-  const isBlocked = (now: number) => !practice && selectIsOutOfLives(getStoreState(), now);
+  // Gioco sì, trucchi no: a wrong answer never costs anything and a lesson is never blocked.
+  const canLoseLife = (_now: number) => false;
+  const isBlocked = (_now: number) => false;
 
   const commit = (accuracy: number, results: StepResult[], now: number) => {
     if (committed.current) return;

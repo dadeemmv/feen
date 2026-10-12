@@ -3,7 +3,7 @@
  * tinted surface colour, shared by the product art band, the purchase medallion and toasts.
  */
 import type { ShopItemKind } from '@/content/types';
-import { HeartIcon, HeartInfinityIcon, KiwiCoinIcon, ShieldIcon } from '@/components/icons';
+import { HeartIcon, HeartInfinityIcon, BrickIcon, ShieldIcon } from '@/components/icons';
 import type { SemanticColors } from '@/theme';
 
 export type ShopItemIconProps = {
@@ -15,7 +15,7 @@ export type ShopItemIconProps = {
 export function ShopItemIcon({ kind, size, muted }: ShopItemIconProps) {
   switch (kind) {
     case 'daily-reward':
-      return <KiwiCoinIcon size={size} muted={muted} />;
+      return <BrickIcon size={size} muted={muted} />;
     case 'streak-shield':
       return <ShieldIcon size={size} muted={muted} />;
     case 'extra-life':

@@ -22,7 +22,7 @@ export type LessonHeaderProps = {
   onCoinsPress: () => void;
 };
 
-const STATS: ('lives' | 'coins')[] = ['lives', 'coins'];
+const STATS: 'coins'[] = ['coins'];
 
 export function LessonHeader({ progress, practice, onClose, onReport, onShare, onLivesPress, onCoinsPress }: LessonHeaderProps) {
   return (

@@ -8,7 +8,7 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { Check } from 'lucide-react-native';
 
-import { CheckBadgeIcon, KiwiCoinIcon, LockIcon } from '@/components/icons';
+import { CheckBadgeIcon, BrickIcon, LockIcon } from '@/components/icons';
 import {
   Button,
   Card,
@@ -56,7 +56,7 @@ export function ChallengeCard({ challenge, onClaim }: ChallengeCardProps) {
                 variant="surface"
                 label={STREAK_COPY.reward(reward)}
                 textVariant="numeric"
-                iconRight={<KiwiCoinIcon size={iconSize.sm} />}
+                iconRight={<BrickIcon size={iconSize.sm} />}
                 accessibilityLabel={STREAK_COPY.rewardA11y(reward)}
               />
             </Animated.View>

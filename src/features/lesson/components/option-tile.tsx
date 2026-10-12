@@ -57,14 +57,15 @@ type Face = { bg: string; border: string; label: string };
 function faceColors(theme: Theme, status: OptionStatus): Face {
   const c = theme.colors;
   switch (status) {
+    // Gallery answers (DESIGN.md "option-answer"): white on the grey step card, no line until chosen.
     case 'idle':
-      return { bg: c.surface, border: c.border, label: c.text };
+      return { bg: c.surfaceRaised, border: 'transparent', label: c.text };
     case 'selected':
-      return { bg: c.brandBg, border: c.brandSolid, label: c.brandText };
+      return { bg: c.surfaceRaised, border: c.accentSolid, label: c.text };
     case 'correct':
-      return { bg: c.successBg, border: c.successSolid, label: c.successText };
+      return { bg: c.successBg, border: c.successBorder, label: c.successText };
     case 'wrong':
-      return { bg: c.dangerBg, border: c.dangerSolid, label: c.dangerText };
+      return { bg: c.dangerBg, border: c.dangerBorder, label: c.dangerText };
     case 'matched':
       return { bg: c.successBg, border: c.successBorder, label: c.successText };
     case 'disabled':

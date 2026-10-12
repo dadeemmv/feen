@@ -5,7 +5,7 @@
 import type { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { KiwiCoinIcon } from '@/components/icons';
+import { BrickIcon } from '@/components/icons';
 import { Divider, HStack, RollingNumber, Text } from '@/components/ui';
 import { formatCoins } from '@/lib/format';
 import { radius, spacing, useTheme, type ColorToken, type TextVariant } from '@/theme';
@@ -82,7 +82,7 @@ function CoinAmount({
           {formatCoins(value)}
         </Text>
       )}
-      <KiwiCoinIcon size={shopMetrics.priceIcon} />
+      <BrickIcon size={shopMetrics.priceIcon} />
     </HStack>
   );
 }

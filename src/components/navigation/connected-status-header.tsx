@@ -26,7 +26,7 @@ export type ConnectedStatusHeaderProps = Omit<
 
 const openStreak = () => router.push('/streak');
 const openLives = () => openSheet('lives');
-const openShop = () => router.navigate('/shop');
+const openShop = () => router.navigate('/');
 const openAccount = () => router.push('/account');
 
 export function ConnectedStatusHeader({

@@ -2,15 +2,15 @@
  * Italian copy of the Account feature (menu labels follow the reference video, spec §3.8).
  */
 export const ACCOUNT_COPY = {
-  title: 'Account',
+  title: 'Profilo',
   profileHint: 'Modifica nome e avatar',
   levelLabel: (level: number, title: string) => `Livello ${level} · ${title}`,
   levelXp: (current: number, next: number) => `${current}/${next} XP`,
   levelMax: (totalXp: string) => `${totalXp} · livello massimo`,
   stats: {
-    streak: 'Giorni di fila',
+    streak: 'Abitanti',
     lessons: 'Lezioni completate',
-    coins: 'Kiwi',
+    coins: 'Mattoni',
   },
   referral: {
     friendsProgress: (count: number, total: number) => `${count}/${total} amici invitati`,
@@ -21,17 +21,17 @@ export const ACCOUNT_COPY = {
   logout: 'Logout',
   logoutDialog: {
     title: 'Vuoi uscire?',
-    message: 'Progressi, Kiwi e impostazioni salvati su questo dispositivo verranno cancellati.',
+    message: 'Patto, borgo, progressi e impostazioni salvati su questo dispositivo verranno cancellati.',
     confirm: 'Esci e cancella',
     cancel: 'Annulla',
   },
   version: (version: string) => `Finanz ${version} · versione demo`,
-  madeIn: 'Fatto con 💚 in Italia',
+  madeIn: 'Fatto in Italia',
 } as const;
 
 export const MENU_COPY = {
   settings: { title: 'Impostazioni', subtitle: 'Modifica le impostazioni' },
-  mascot: { title: 'Il tuo personaggio', subtitle: 'La tua bussola dei soldi' },
+  mascot: { title: 'Il tuo personaggio', subtitle: 'Il test, gli assi e chi ti accompagna' },
   language: { title: 'Lingua e Paese', subtitle: 'Cambia lingua e Paese del tuo account' },
   purchases: { title: 'I tuoi acquisti', subtitle: 'Visualizza i tuoi acquisti' },
   pro: { title: 'Finanz PRO', subtitle: 'Dettagli abbonamento' },

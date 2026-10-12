@@ -14,7 +14,7 @@ import { Text } from './text';
 import { resolveTone, type Tone } from './tones';
 
 export type StatTileProps = {
-  /** Economy icon node (`<KiwiCoinIcon size={28} />`) or a Lucide component / emoji. */
+  /** Economy icon node (`<BrickIcon size={28} />`) or a Lucide component / emoji. */
   icon?: IconSource;
   /** Formatted value ("120", "92%") or a node (CountUp, RollingNumber). */
   value: ReactNode;

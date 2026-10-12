@@ -5,7 +5,7 @@
 import { StyleSheet, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
-import { BoltIcon, KiwiCoinIcon } from '@/components/icons';
+import { BoltIcon, BrickIcon } from '@/components/icons';
 import { CountUp, StatTile, iconSize } from '@/components/ui';
 import { spacing, useTheme } from '@/theme';
 
@@ -37,7 +37,7 @@ export function RewardTiles({ xp, coins, accuracy, delay }: RewardTilesProps) {
       />
       <StatTile
         size="lg"
-        icon={<KiwiCoinIcon size={iconSize.xl} muted={coins === 0} />}
+        icon={<BrickIcon size={iconSize.xl} muted={coins === 0} />}
         value={<CountUp value={coins} format={plus} variant="displaySm" delay={delay + step} />}
         label={COPY.completion.kiwi}
       />

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { BookOpen, Check, Clock } from 'lucide-react-native';
 
-import { FlameIcon, HeartIcon, KiwiCoinIcon } from '@/components/icons';
+import { FlameIcon, HeartIcon, BrickIcon } from '@/components/icons';
 import { spacing } from '@/theme';
 
 import { Badge } from '../badge';
@@ -37,7 +37,7 @@ export function ChipShowcase() {
         </ShowcaseRow>
       ))}
       <ShowcaseRow label="content chips">
-        <Chip label="+500" icon={<KiwiCoinIcon size={iconSize.sm} />} variant="surface" />
+        <Chip label="+500" icon={<BrickIcon size={iconSize.sm} />} variant="surface" />
         <Chip label="13 capitoli" icon={BookOpen} size="sm" />
         <Chip label="Gratuito" iconRight="🎁" tone="accent" size="sm" />
         <Chip label="23:59" icon={Clock} variant="outline" />
@@ -86,7 +86,7 @@ export function StatChipShowcase() {
       <ShowcaseRow label="economy icons">
         <StatChip kind="streak" value={streak} muted={false} icon={<FlameIcon size={iconSize.md} muted={streak === 0} />} />
         <StatChip kind="lives" value={lives} unlimited={unlimited} icon={<HeartIcon size={iconSize.md} muted={lives === 0} />} />
-        <StatChip kind="coins" value={coins} icon={<KiwiCoinIcon size={iconSize.md} />} />
+        <StatChip kind="coins" value={coins} icon={<BrickIcon size={iconSize.md} />} />
       </ShowcaseRow>
       <ShowcaseRow label="lucide fallback">
         <StatChip kind="streak" value={streak} />

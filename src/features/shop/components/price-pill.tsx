@@ -4,7 +4,7 @@
  */
 import { Check, CircleCheck } from 'lucide-react-native';
 
-import { GiftIcon, KiwiCoinIcon } from '@/components/icons';
+import { GiftIcon, BrickIcon } from '@/components/icons';
 import { Chip, type ChipSize } from '@/components/ui';
 import { formatCoins } from '@/lib/format';
 
@@ -52,7 +52,7 @@ export function CoinPrice({ price, size = 'md' }: { price: number; size?: ChipSi
       size={size}
       label={formatCoins(price)}
       textVariant="numeric"
-      iconRight={<KiwiCoinIcon size={shopMetrics.priceIcon} />}
+      iconRight={<BrickIcon size={shopMetrics.priceIcon} />}
       accessibilityLabel={`${formatCoins(price)} ${SHOP_COPY.kiwi}`}
     />
   );

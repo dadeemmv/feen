@@ -5,7 +5,7 @@
 import { router } from 'expo-router';
 import { ShoppingBag } from 'lucide-react-native';
 
-import { KiwiCoinIcon } from '@/components/icons';
+import { BrickIcon } from '@/components/icons';
 import { EmptyBox } from '@/components/illustrations';
 import { Card, EmptyState, HStack, iconSize, ListGroup, StatTile, VStack } from '@/components/ui';
 import { formatMonthYear } from '@/lib/dates';
@@ -45,7 +45,7 @@ export function PurchasesSection() {
             illustration={<EmptyBox width={accountMetrics.emptyArt} />}
             title={copy.emptyTitle}
             message={copy.emptyMessage}
-            action={{ label: copy.emptyCta, onPress: () => router.navigate('/shop') }}
+            action={{ label: copy.emptyCta, onPress: () => router.navigate('/') }}
           />
         </Card>
       </SectionPage>
@@ -57,7 +57,7 @@ export function PurchasesSection() {
   return (
     <SectionPage title={title} subtitle={copy.subtitle}>
       <HStack gap="xs" align="stretch">
-        <StatTile icon={<KiwiCoinIcon size={iconSize.lg} />} value={formatCoins(spent)} label={copy.total} />
+        <StatTile icon={<BrickIcon size={iconSize.lg} />} value={formatCoins(spent)} label={copy.total} />
         <StatTile icon={ShoppingBag} tone="blush" value={purchases.length} label={copy.countLabel} />
       </HStack>
       <VStack gap="xl">

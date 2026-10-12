@@ -11,6 +11,7 @@ export { GemIcon } from './gem-icon';
 export { GiftIcon } from './gift-icon';
 export { HeartIcon } from './heart-icon';
 export { HeartInfinityIcon } from './heart-infinity-icon';
+export { BrickIcon } from './brick-icon';
 export { KiwiCoinIcon } from './kiwi-coin-icon';
 export { LockIcon, type LockIconProps } from './lock-icon';
 export { ShieldIcon } from './shield-icon';

@@ -1,1 +1,1 @@
-export { HomeScreen as default } from '@/features/home/home-screen';
+export { VillageScreen as default } from '@/features/village/village-screen';

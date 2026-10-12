@@ -26,7 +26,7 @@ export function ShieldInfoSheet({ visible, onClose }: ShieldInfoSheetProps) {
     action?.();
   };
   const buy = () => {
-    afterClose.current = () => router.navigate('/shop');
+    afterClose.current = () => router.navigate('/');
     onClose();
   };
 

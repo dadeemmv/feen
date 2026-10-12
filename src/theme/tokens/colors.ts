@@ -105,7 +105,8 @@ export const lightColors = {
   fillPressed: g.veilPressed,
   scrim: 'rgba(0, 0, 0, 0.48)',
 
-  borderSubtle: g.line,
+  // No-Line Rule: container hairlines (cards, tiles, list groups) disappear; dividers use `border`.
+  borderSubtle: 'transparent',
   border: g.line,
   borderStrong: g.lineStrong,
 
@@ -194,7 +195,7 @@ export const brandColors = {
   fillHover: p.whiteA4,
   fillPressed: p.whiteA5,
 
-  borderSubtle: p.whiteA3,
+  borderSubtle: 'transparent',
   border: p.whiteA4,
   borderStrong: p.whiteA6,
 

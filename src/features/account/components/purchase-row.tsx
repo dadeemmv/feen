@@ -5,7 +5,7 @@
 import type { ReactElement } from 'react';
 import { ShoppingBag } from 'lucide-react-native';
 
-import { GiftIcon, HeartIcon, HeartInfinityIcon, KiwiCoinIcon, ShieldIcon } from '@/components/icons';
+import { GiftIcon, HeartIcon, HeartInfinityIcon, BrickIcon, ShieldIcon } from '@/components/icons';
 import { HStack, IconTile, iconSize, ListItem, Text, type IconSource, type Tone } from '@/components/ui';
 import type { ShopItemKind } from '@/content/types';
 import { formatLongDate } from '@/lib/dates';
@@ -49,7 +49,7 @@ export function PurchaseRow({ purchase }: { purchase: Purchase }) {
           <Text variant="labelLg" tabular>
             {purchase.price > 0 ? `−${price}` : PURCHASES_COPY.free}
           </Text>
-          <KiwiCoinIcon size={iconSize.sm} />
+          <BrickIcon size={iconSize.sm} />
         </HStack>
       }
     />

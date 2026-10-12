@@ -10,7 +10,7 @@ import type { ReactNode } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { ArrowLeft } from 'lucide-react-native';
 
-import { FlameIcon, HeartIcon, HeartInfinityIcon, KiwiCoinIcon } from '@/components/icons';
+import { FlameIcon, HeartIcon, HeartInfinityIcon, BrickIcon } from '@/components/icons';
 import { Avatar } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
 import { iconSize } from '@/components/ui/metrics';
@@ -91,7 +91,7 @@ export function StatusHeader({
         );
       case 'coins':
         return (
-          <StatChip key={kind} kind="coins" value={coins} onPress={onCoinsPress} icon={<KiwiCoinIcon size={CHIP_ICON} />} />
+          <StatChip key={kind} kind="coins" value={coins} onPress={onCoinsPress} icon={<BrickIcon size={CHIP_ICON} />} />
         );
     }
   };

@@ -11,16 +11,18 @@ import { StyleSheet, View, useWindowDimensions, type StyleProp, type ViewStyle }
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
 import { Button, Chip, Confetti, Screen, Text, useReduceMotion } from '@/components/ui';
-import { getChapter, getCourseForChapter, getLevelForChapter, getNextChapterId } from '@/content/courses';
+import { getChapter } from '@/content/courses';
 import { isGradedStep, type Chapter, type LessonStep } from '@/content/types';
-import { useCourseProgress } from '@/store/hooks';
-import { duration, easing, spacing } from '@/theme';
+import { BUILDINGS, buildingOfChapter } from '@/content/village';
+import { BuildingScene } from '@/features/village/components/building-scene';
+import { isBuilt, useStoreShallow } from '@/store';
+import { duration, easing, radius, spacing, useTheme } from '@/theme';
 
 import { COPY } from '../copy';
 import { COMPLETION, lessonMetrics } from '../metrics';
 import type { LessonCompletion } from '../use-lesson-controller';
 import { CompletionHero } from './completion-hero';
-import { CourseDoneCard, MilestoneCard, NextChapterCard } from './next-up-cards';
+import { NextChapterCard } from './next-up-cards';
 import { ReviewSheet } from './review-sheet';
 import { RewardTiles } from './reward-tiles';
 import { StreakMoment } from './streak-moment';
@@ -52,10 +54,13 @@ export function CompletionScreen({
   const { height } = useWindowDimensions();
   const compact = height < lessonMetrics.compactHeight;
   const { summary } = completion;
-  const level = getLevelForChapter(chapter.id);
-  const courseId = getCourseForChapter(chapter.id)?.id ?? '';
-  const courseDone = useCourseProgress(courseId).isDone;
-  const nextId = getNextChapterId(chapter.id);
+  const theme = useTheme();
+  // What comes next lives in the lesson's building: its next lesson, or the building finished.
+  const buildingId = buildingOfChapter(chapter.id);
+  const building = buildingId ? BUILDINGS[buildingId] : undefined;
+  const village = useStoreShallow((s) => ({ chapterRecords: s.chapterRecords, pact: s.pact }));
+  const builtNow = Boolean(buildingId && isBuilt(buildingId, village) && summary.isFirstCompletion);
+  const nextId = building?.chapterIds.find((id) => village.chapterRecords[id] === undefined);
   const next = nextId ? getChapter(nextId) : undefined;
   const hasReview = steps.some(isGradedStep);
   const perfect = summary.accuracy >= 1;
@@ -78,11 +83,11 @@ export function CompletionScreen({
         statusBar="light"
         footer={footer}
         contentContainerStyle={styles.content}>
-        <CompletionHero emoji={chapter.emoji} courseDone={courseDone && !next && summary.isFirstCompletion} compact={compact} />
+        <CompletionHero emoji={chapter.emoji} courseDone={false} compact={compact} />
 
         <Reveal delay={COMPLETION.revealMs} style={styles.titles}>
           <Text variant="overline" color="accentText" align="center">
-            {COPY.completion.overline(level?.number)}
+            {building ? `${building.name} · ${building.topic}` : COPY.completion.overline(undefined)}
           </Text>
           <Text variant={compact ? 'displayMd' : 'displayLg'} color="accentText" align="center" accessibilityRole="header">
             {summary.isFirstCompletion ? COPY.completion.titleFirst : COPY.completion.titleReplay}
@@ -118,11 +123,20 @@ export function CompletionScreen({
         </Reveal>
 
         <Reveal delay={COMPLETION.nextDelayMs} style={[styles.block, styles.nextUp]}>
-          {summary.milestoneReached ? <MilestoneCard milestone={summary.milestoneReached} /> : null}
-          {next ? (
+          {builtNow && buildingId && building ? (
+            <View style={[styles.built, { backgroundColor: theme.colors.reward }]}>
+              <BuildingScene id={buildingId} state="costruito" width={96} />
+              <View style={styles.builtText}>
+                <Text variant="titleMd" color="onReward">
+                  {COPY.completion.built(building.name)}
+                </Text>
+                <Text variant="bodySm" color="onReward">
+                  {COPY.completion.builtBody}
+                </Text>
+              </View>
+            </View>
+          ) : next ? (
             <NextChapterCard chapter={next} justUnlocked={summary.isFirstCompletion} />
-          ) : courseDone ? (
-            <CourseDoneCard />
           ) : null}
         </Reveal>
       </Screen>
@@ -157,4 +171,6 @@ const styles = StyleSheet.create({
   note: { alignSelf: 'center', marginTop: spacing.sm },
   nextUp: { gap: spacing.xs },
   actions: { gap: spacing.xxs },
+  built: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.md, borderRadius: radius.xl },
+  builtText: { flex: 1, gap: spacing.xxxs },
 });

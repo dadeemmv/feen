@@ -3,7 +3,7 @@
  * locked ones as the grey "Raggiungi n giorni di fila…" card. Claiming credits the coins once
  * (store `claimChallenge`) with a success haptic and a toast.
  */
-import { KiwiCoinIcon } from '@/components/icons';
+import { BrickIcon } from '@/components/icons';
 import { VStack, iconSize, toast } from '@/components/ui';
 import { haptics } from '@/lib/haptics';
 import { formatCoins } from '@/lib/format';
@@ -28,7 +28,7 @@ export function MarathonSection({ now }: { now: number }) {
     toast.show({
       message: STREAK_COPY.claimedToast(formatCoins(challenge.reward)),
       tone: 'success',
-      icon: <KiwiCoinIcon size={iconSize.md} />,
+      icon: <BrickIcon size={iconSize.md} />,
     });
     return true;
   };

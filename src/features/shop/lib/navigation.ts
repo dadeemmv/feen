@@ -10,6 +10,6 @@ export function goBackOr(fallback: Href = '/') {
   else router.replace(fallback);
 }
 
-export const openShop = () => router.navigate('/shop');
+export const openShop = () => router.navigate('/');
 export const openHome = () => router.navigate('/');
 export const openPro = () => router.push('/pro');

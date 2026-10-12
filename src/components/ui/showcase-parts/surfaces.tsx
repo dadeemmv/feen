@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Globe, LogOut, Settings, ShoppingBag, Target, Vibrate } from 'lucide-react-native';
 
-import { GemIcon, KiwiCoinIcon, LockIcon } from '@/components/icons';
+import { GemIcon, BrickIcon, LockIcon } from '@/components/icons';
 import { spacing } from '@/theme';
 
 import { Avatar, StoryRing } from '../avatar';
@@ -145,12 +145,12 @@ export function IdentityShowcase() {
       </ShowcaseRow>
       <View style={styles.statRow}>
         <StatTile icon="⚡" value="120" label="XP totali" />
-        <StatTile icon={<KiwiCoinIcon size={iconSize.lg} />} value="1.250" label="Kiwi" />
+        <StatTile icon={<BrickIcon size={iconSize.lg} />} value="1.250" label="Kiwi" />
         <StatTile icon="🎯" value="92%" label="Precisione" tone="mint" />
       </View>
       <Card variant="brand" padding="md" contentStyle={styles.statRow}>
         <StatTile size="lg" icon="⚡" value="+40" label="XP" />
-        <StatTile size="lg" icon={<KiwiCoinIcon size={iconSize.xl} />} value="+50" label="Kiwi" />
+        <StatTile size="lg" icon={<BrickIcon size={iconSize.xl} />} value="+50" label="Kiwi" />
         <StatTile size="lg" icon="🎯" value="100%" label="Precisione" />
       </Card>
     </ShowcaseSection>
@@ -170,7 +170,7 @@ export function EmptyStateShowcase() {
         />
       </Card>
       <EmptyState
-        illustration={<KiwiCoinIcon size={iconSize.xl * 3} />}
+        illustration={<BrickIcon size={iconSize.xl * 3} />}
         title="Ancora nessun amico"
         message="Invita un amico: riceverete entrambi 500 kiwi."
         action={{ label: 'Invita un amico', onPress: () => {}, variant: 'brand' }}

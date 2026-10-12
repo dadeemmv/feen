@@ -13,7 +13,7 @@ export type DividerProps = {
   inset?: number;
   /** Margin on both sides along the cross axis. Default `none`. */
   spacing?: SpacingToken;
-  /** Default `borderSubtle`. */
+  /** Default `border` (container hairlines are transparent in the gallery). */
   color?: ColorToken;
   /** Line thickness. Default hairline. */
   thickness?: number;
@@ -24,7 +24,7 @@ export function Divider({
   vertical = false,
   inset = 0,
   spacing: gap = 'none',
-  color = 'borderSubtle',
+  color = 'border',
   thickness = hairline,
   style,
 }: DividerProps) {

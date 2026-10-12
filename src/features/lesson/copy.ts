@@ -5,7 +5,7 @@
  */
 import type { StepTag } from '@/content/types';
 import type { Tone } from '@/components/ui';
-import { countOf, formatNumber } from '@/lib/format';
+import { formatNumber } from '@/lib/format';
 
 export const TAGS: Record<StepTag, { label: string; emoji: string; tone: Tone }> = {
   indovina: { label: 'Indovina', emoji: '🎩', tone: 'butter' },
@@ -30,7 +30,7 @@ export const COPY = {
   practiceTag: 'Ripasso',
   fabPill: 'Spiegami il perché',
   resumed: 'Bentornato! Riprendi da dove eri rimasto',
-  practiceStart: 'Ripasso: nessuna vita in gioco, metà XP',
+  practiceStart: 'Ripasso: metà XP, nessun mattone',
 
   feedback: {
     correctTitle: 'Risposta corretta',
@@ -50,15 +50,15 @@ export const COPY = {
     close: 'Chiudi',
     lifeLost: (left: number) => (left === 0 ? 'Hai perso l’ultima vita' : `Hai perso una vita · ne restano ${left}`),
     noExtraLife: 'Per questa domanda non perdi altre vite',
-    practice: 'Ripasso: nessuna vita in gioco',
+    practice: 'Ripasso: sbagliare qui non costa niente',
     unlimited: 'Vite illimitate: nessuna vita persa',
     pairLifeLost: 'Coppia sbagliata: hai perso una vita',
   },
 
   exit: {
-    title: 'Aspetta, non uscire!',
-    message: 'Ti bastano meno di 5 minuti per completare una lezione, non mollare!',
-    stay: 'Continua a studiare',
+    title: 'Vuoi uscire?',
+    message: 'Il cantiere resta com’è: quando torni riprendi da qui.',
+    stay: 'Continua',
     leave: 'Esci',
   },
 
@@ -77,13 +77,13 @@ export const COPY = {
   share: {
     title: 'Finanz',
     message: (chapterTitle: string) =>
-      `Sto imparando “${chapterTitle}” su Finanz 🥝 Lezioni da 5 minuti per capire davvero i soldi. Provala anche tu!`,
+      `Sto imparando “${chapterTitle}”: ogni lezione è un mattone del mio borgo. Provala anche tu!`,
     copied: 'Messaggio copiato: incollalo dove vuoi',
     failed: 'Condivisione non riuscita. Riprova tra poco.',
   },
 
   coinsInfo: (coins: number) =>
-    `Hai ${formatNumber(coins)} Kiwi. Completa la lezione per guadagnarne altri!`,
+    `Hai ${formatNumber(coins)} mattoni. Ogni lezione finita ne aggiunge qualcuno.`,
 
   outOfLives: {
     title: 'Hai finito le vite',
@@ -129,17 +129,20 @@ export const COPY = {
     titleReplay: 'Lezione completata!',
     overline: (level: number | undefined) => (level ? `Livello ${level} · completato` : 'Completato'),
     xp: 'XP',
-    kiwi: 'Kiwi',
+    kiwi: 'Mattoni',
     accuracy: 'Precisione',
     perfect: 'Perfetto! Nessun errore 🎯',
-    replayNote: 'Ripasso: metà XP, nessun Kiwi',
-    streakNewTitle: (days: number) => `Giorno ${days} di fila!`,
-    streakFirst: 'Hai acceso la tua serie. Torna domani per tenerla viva!',
-    streakGrow: 'La tua serie cresce: continua così!',
-    streakKeptTitle: (days: number) => `Serie di ${countOf(days, 'day')}`,
-    streakKept: 'Oggi hai già studiato: la tua serie è al sicuro.',
-    nextOverline: 'Prossimo capitolo sbloccato',
-    nextOverlineDone: 'Prossimo capitolo',
+    replayNote: 'Ripasso: metà XP, nessun mattone',
+    streakNewTitle: (_days: number) => 'Giorno rispettato: arriva un abitante',
+    streakFirst: 'Il primo abitante del borgo. Ne arriva uno per ogni giorno del patto.',
+    streakGrow: 'Un abitante in più nel borgo. Un giorno saltato non manda via nessuno.',
+    streakKeptTitle: (_days: number) => 'Oggi hai già fatto la tua parte',
+    streakKept: 'L’abitante di oggi è già arrivato.',
+    residents: (n: number) => (n === 1 ? '1 abitante nel borgo' : `${n} abitanti nel borgo`),
+    built: (name: string) => `${name}: costruito!`,
+    builtBody: 'Tutte le lezioni di questo edificio sono fatte. Restano qui per ripassare.',
+    nextOverline: 'Prossima lezione',
+    nextOverlineDone: 'Prossima lezione',
     nextMinutes: (minutes: number) => `Circa ${minutes} minuti`,
     courseDoneTitle: 'Percorso completato! 🏆',
     courseDoneMessage: 'Hai finito tutti i capitoli. Condividi il tuo traguardo dal percorso!',

@@ -1,11 +1,14 @@
 /**
- * Streak strip of the completion screen. First lesson of the day: the flame pops in large with
- * a warm halo and "Giorno N di fila!". Already studied today: a calm "Serie di N giorni".
+ * Residents strip of the completion screen. First lesson of the day: a day of the pact kept, so a
+ * resident arrives (the people icon pops in on sprout). Already studied today: a calm line. The
+ * count never goes down: a skipped day takes nobody away.
  */
 import { StyleSheet, View } from 'react-native';
 
-import { FlameIcon } from '@/components/icons';
-import { Text } from '@/components/ui';
+import { Users } from 'lucide-react-native';
+
+import { Icon, Text } from '@/components/ui';
+import { countResidents, useStoreShallow } from '@/store';
 import { PopIn } from '@/features/rewards';
 import { radius, spacing, useTheme } from '@/theme';
 
@@ -20,29 +23,32 @@ export type StreakMomentProps = {
 
 export function StreakMoment({ isNewStreakDay, streak, delay }: StreakMomentProps) {
   const theme = useTheme();
+  const residents = countResidents(useStoreShallow((s) => ({ activeDays: s.activeDays, pact: s.pact })));
   const title = isNewStreakDay ? COPY.completion.streakNewTitle(streak) : COPY.completion.streakKeptTitle(streak);
   const body = isNewStreakDay
     ? streak <= 1
       ? COPY.completion.streakFirst
       : COPY.completion.streakGrow
     : COPY.completion.streakKept;
+  const count = COPY.completion.residents(residents);
 
   const flame = (
-    <View style={[styles.halo, { backgroundColor: isNewStreakDay ? theme.colors.streakBg : theme.colors.fill }]}>
-      <FlameIcon size={isNewStreakDay ? COMPLETION.flame : COMPLETION.flame - spacing.xs} />
+    <View style={[styles.halo, { backgroundColor: isNewStreakDay ? theme.colors.reward : theme.colors.fill }]}>
+      <Icon icon={Users} size={COMPLETION.flame - spacing.md} color={isNewStreakDay ? 'onReward' : 'textSecondary'} />
     </View>
   );
 
   return (
     <View
       accessible
-      accessibilityLabel={`${title} ${body}`}
+      accessibilityLabel={`${title}. ${count}. ${body}`}
       style={[styles.strip, { backgroundColor: theme.colors.surfaceRaised }]}>
       {isNewStreakDay ? <PopIn delay={delay}>{flame}</PopIn> : flame}
       <View style={styles.text}>
         <Text variant="titleMd" color={isNewStreakDay ? 'accentText' : 'text'}>
           {title}
         </Text>
+        <Text variant="labelMd">{count}</Text>
         <Text variant="bodySm" color="textSecondary">
           {body}
         </Text>

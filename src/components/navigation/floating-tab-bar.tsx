@@ -110,7 +110,8 @@ export function FloatingTabBar({ state, descriptors, navigation, insets }: Botto
 
   const onBarLayout = (event: LayoutChangeEvent) => setBarWidth(event.nativeEvent.layout.width);
   const onLabelLayout = (key: string) => (event: LayoutChangeEvent) => {
-    const width = Math.ceil(event.nativeEvent.layout.width);
+    // One spare point: web reports fractional text widths and a hair less ellipsises the label.
+    const width = Math.ceil(event.nativeEvent.layout.width) + 1;
     setLabelWidths((current) => (current[key] === width ? current : { ...current, [key]: width }));
   };
 

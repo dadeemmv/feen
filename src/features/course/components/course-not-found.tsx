@@ -17,7 +17,7 @@ export function CourseNotFound() {
         illustration={<EmptyBox width={STATE_ART.width} />}
         title={COURSE_COPY.notFoundTitle}
         message={COURSE_COPY.notFoundMessage}
-        action={{ label: COURSE_COPY.backToAcademy, onPress: () => router.replace('/academy') }}
+        action={{ label: COURSE_COPY.backToAcademy, onPress: () => router.replace('/lessons') }}
       />
     </Screen>
   );

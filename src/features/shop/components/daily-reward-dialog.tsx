@@ -5,7 +5,7 @@
  */
 import { StyleSheet, View } from 'react-native';
 
-import { KiwiCoinIcon } from '@/components/icons';
+import { BrickIcon } from '@/components/icons';
 import { Confetti, CountUp, Dialog, HStack, RollingNumber, Text, VStack, iconSize } from '@/components/ui';
 import { formatCoins, formatSignedCoins } from '@/lib/format';
 import { useStore } from '@/store';
@@ -33,7 +33,7 @@ export function DailyRewardDialog({ visible, amount, onClose }: DailyRewardDialo
       onClose={onClose}
       tone="neutral"
       haptic={false}
-      icon={<KiwiCoinIcon size={shopMetrics.rewardBadgeIcon} />}
+      icon={<BrickIcon size={shopMetrics.rewardBadgeIcon} />}
       title={SHOP_COPY.rewardTitle}
       message={<RewardBody amount={amount} coins={coins} />}
       primaryAction={{ label: SHOP_COPY.rewardCta, onPress: onClose }}>
@@ -62,7 +62,7 @@ function RewardBody({ amount, coins }: { amount: number; coins: number }) {
             {SHOP_COPY.balanceRow}
           </Text>
           <RollingNumber value={coins} format={formatCoins} variant="labelMd" />
-          <KiwiCoinIcon size={iconSize.sm} />
+          <BrickIcon size={iconSize.sm} />
         </HStack>
         <Text variant="bodyMd" color="textSecondary" align="center">
           {SHOP_COPY.rewardMessage(amount)}

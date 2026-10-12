@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import { KiwiCoinIcon } from '@/components/icons';
+import { BrickIcon } from '@/components/icons';
 import { HStack, PressableScale, Text, VStack, hairline, iconSize, tileSize, uiOpacity, useShake } from '@/components/ui';
 import { getShopItem } from '@/content/shop';
 import type { ShopItem } from '@/content/types';
@@ -47,7 +47,7 @@ export function RefillOptions({ now, onPurchased }: RefillOptionsProps) {
           <Text variant="labelSm" color="textSecondary" tabular>
             {LIVES_COPY.balance(coins)}
           </Text>
-          <KiwiCoinIcon size={iconSize.sm} />
+          <BrickIcon size={iconSize.sm} />
         </HStack>
       </HStack>
       {ITEM_IDS.map(({ id, copy }) => {
