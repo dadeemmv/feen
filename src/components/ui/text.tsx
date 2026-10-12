@@ -39,21 +39,22 @@ export type TextProps = Omit<RNTextProps, 'style'> &
 const MAX_FONT_SCALE = { display: 1.2, text: 1.4 } as const;
 
 const variantStyles = StyleSheet.create(textVariants);
-const displayFamilies: readonly string[] = Object.values(fonts.display);
+/** Display and text share one family, so display roles are listed by name. */
+const DISPLAY_VARIANTS: readonly TextVariant[] = ['displayXl', 'displayLg', 'displayMd', 'displaySm'];
+const fixedFamilies: readonly string[] = [...Object.values(fonts.serif), ...Object.values(fonts.mono)];
 
 const styles = StyleSheet.create({
   tabular: { fontVariant: ['tabular-nums'] },
 });
 
 function isDisplayVariant(variant: TextVariant): boolean {
-  return displayFamilies.includes(textVariants[variant].fontFamily);
+  return DISPLAY_VARIANTS.includes(variant);
 }
 
+/** Serif numbers and mono codes have a single weight: `weight` leaves them as they are. */
 function familyForWeight(variant: TextVariant, weight: FontWeight): string {
-  if (!isDisplayVariant(variant)) return fonts.text[weight];
-  if (weight === 'extraBold') return fonts.display.extraBold;
-  if (weight === 'bold') return fonts.display.bold;
-  return fonts.display.semiBold;
+  const family = textVariants[variant].fontFamily;
+  return fixedFamilies.includes(family) ? family : fonts.text[weight];
 }
 
 /** Resolved style for a variant/colour pair — reuse it for TextInput or animated text. */

@@ -4,10 +4,10 @@
  *
  * Two colour modes (Rainbow's contextual colour-mode pattern):
  * - `light`: the default app canvas.
- * - `brand`: inverted evergreen surfaces (hero card, streak header, invite card, App stories).
+ * - `brand`: inverted black surfaces (hero card, streak header, invite card, App stories).
  *   A `<ColorModeProvider mode="brand">` makes every Text/Icon inside pick these values.
  */
-import { palette as p } from './palette';
+import { gallery as g, palette as p } from './palette';
 
 export type SemanticColors = {
   // Canvas & surfaces
@@ -29,7 +29,7 @@ export type SemanticColors = {
   textTertiary: string;
   textDisabled: string;
   textInverse: string;
-  // Accent (lime) — the single action colour
+  // Accent (ink) — the single action colour
   accentBg: string;
   accentBgHover: string;
   accentBgActive: string;
@@ -38,7 +38,7 @@ export type SemanticColors = {
   accentSolidPressed: string;
   onAccent: string;
   accentText: string;
-  // Brand (evergreen)
+  // Brand (night)
   brandBg: string;
   brandBorder: string;
   brandSolid: string;
@@ -90,60 +90,60 @@ export type SemanticColors = {
 };
 
 export const lightColors = {
-  background: p.olive2,
-  surface: p.white,
-  surfaceRaised: p.olive1,
-  surfaceSunken: p.olive3,
-  fill: p.olive3,
-  fillHover: p.olive4,
-  fillPressed: p.olive5,
-  scrim: 'rgba(8, 20, 14, 0.48)',
+  background: g.paper,
+  surface: g.surface,
+  surfaceRaised: g.paper,
+  surfaceSunken: g.surfaceSunken,
+  fill: g.veil,
+  fillHover: g.veilHover,
+  fillPressed: g.veilPressed,
+  scrim: 'rgba(0, 0, 0, 0.48)',
 
-  borderSubtle: p.olive4,
-  border: p.olive6,
-  borderStrong: p.olive8,
+  borderSubtle: g.line,
+  border: g.line,
+  borderStrong: g.lineStrong,
 
-  text: p.olive12,
-  textSecondary: p.olive11,
-  textTertiary: p.olive9,
-  textDisabled: p.olive8,
-  textInverse: p.white,
+  text: g.ink,
+  textSecondary: g.ink2,
+  textTertiary: g.muted,
+  textDisabled: g.faint,
+  textInverse: g.paper,
 
-  accentBg: p.lime3,
-  accentBgHover: p.lime4,
-  accentBgActive: p.lime5,
-  accentBorder: p.lime7,
-  accentSolid: p.lime9,
-  accentSolidPressed: p.lime10,
-  onAccent: p.forest12,
-  accentText: p.lime11,
+  // The action colour is ink: black pills on white, white pills on black (brand mode below).
+  accentBg: g.disabled,
+  accentBgHover: g.veilHover,
+  accentBgActive: g.veilPressed,
+  accentBorder: g.ink,
+  accentSolid: g.ink,
+  accentSolidPressed: g.inkPressed,
+  onAccent: g.paper,
+  accentText: g.ink,
 
-  brandBg: p.forest3,
-  brandBorder: p.forest7,
-  brandSolid: p.forest9,
-  brandSolidPressed: p.forest10,
-  onBrand: p.white,
-  brandText: p.forest11,
-  brandSurface: p.deep3,
-  brandSurfaceRaised: p.deep5,
+  brandBg: g.surface,
+  brandBorder: g.lineStrong,
+  brandSolid: g.ink,
+  brandSolidPressed: g.inkPressed,
+  onBrand: g.paper,
+  brandText: g.ink,
+  brandSurface: g.night,
+  brandSurfaceRaised: g.night2,
 
-  successBg: p.green3,
-  successBorder: p.green7,
-  successSolid: p.green9,
-  // green11 on green3 is 4.2:1 → use a deeper custom step for AA on tinted feedback surfaces.
-  successText: '#1A6E48',
-  dangerBg: p.red3,
-  dangerBorder: p.red7,
-  // red9 with white labels is 3.9:1 → red11 keeps AA (4.9:1) for the "Chiudi" CTA.
-  dangerSolid: p.red11,
-  dangerSolidPressed: '#B42329',
-  dangerText: p.red11,
-  warningBg: p.amber3,
-  warningSolid: p.amber9,
-  warningText: p.amber11,
-  infoBg: p.blue3,
-  infoSolid: p.blue9,
-  infoText: p.blue11,
+  successBg: g.ok,
+  successBorder: g.okLine,
+  successSolid: g.okLine,
+  successText: g.sproutDeep,
+  dangerBg: g.no,
+  dangerBorder: g.coral,
+  // coral with white labels is ~3:1 → the deep coral keeps AA for the "Chiudi" CTA.
+  dangerSolid: g.coralDeep,
+  dangerSolidPressed: '#6E1B0C',
+  dangerText: g.coralDeep,
+  warningBg: g.honeyTint,
+  warningSolid: g.honey,
+  warningText: g.honeyDeep,
+  infoBg: g.cobaltTint,
+  infoSolid: g.cobalt,
+  infoText: g.cobaltDeep,
 
   streak: p.orange9,
   streakBg: p.orange3,
@@ -156,69 +156,82 @@ export const lightColors = {
   pro: p.violet9,
   proBg: p.violet3,
 
-  tintMint: p.mint3,
-  tintMintText: p.mint11,
-  tintSky: p.sky3,
-  tintSkyText: p.sky11,
-  tintBlush: p.pink3,
-  tintBlushText: p.pink11,
-  tintButter: p.amber2,
-  tintButterText: p.amber11,
-  tintLilac: p.violet3,
-  tintLilacText: p.violet11,
+  // Lesson tints come from the character families (tint + deep text on it).
+  tintMint: g.lagoonTint,
+  tintMintText: g.lagoonDeep,
+  tintSky: g.cobaltTint,
+  tintSkyText: g.cobaltDeep,
+  tintBlush: g.coralTint,
+  tintBlushText: g.coralDeep,
+  tintButter: g.honeyTint,
+  tintButterText: g.honeyDeep,
+  tintLilac: g.stoneTint,
+  tintLilacText: g.stoneDeep,
 
-  shadow: p.forest12,
+  shadow: g.ink,
 } as const satisfies SemanticColors;
 
-/** Inverted evergreen surfaces. Same keys, so a subtree can swap modes safely. */
+/** Inverted black surfaces ("night"). Same keys, so a subtree can swap modes safely. */
 export const brandColors = {
   ...lightColors,
-  background: p.deep3,
-  surface: p.deep4,
-  surfaceRaised: p.deep5,
-  surfaceSunken: p.deep2,
-  fill: p.whiteA2,
-  fillHover: p.whiteA3,
-  fillPressed: p.whiteA4,
+  background: g.night,
+  surface: g.night2,
+  surfaceRaised: g.night3,
+  surfaceSunken: g.night,
+  fill: p.whiteA3,
+  fillHover: p.whiteA4,
+  fillPressed: p.whiteA5,
 
   borderSubtle: p.whiteA3,
   border: p.whiteA4,
   borderStrong: p.whiteA6,
 
-  text: p.white,
-  textSecondary: p.whiteA10,
-  textTertiary: p.whiteA8,
+  text: g.paper,
+  textSecondary: p.whiteA11,
+  textTertiary: p.whiteA9,
   textDisabled: p.whiteA6,
-  textInverse: p.forest12,
+  textInverse: g.ink,
 
-  accentText: p.lime9,
-  brandText: p.lime9,
+  // On black the action pill turns white with a black label.
+  accentBg: p.whiteA3,
+  accentBorder: g.paper,
+  accentSolid: g.paper,
+  accentSolidPressed: g.paperPressed,
+  onAccent: g.ink,
+  // The italic word on black is sprout.
+  accentText: g.sprout,
+  brandSolid: g.paper,
+  brandSolidPressed: g.paperPressed,
+  onBrand: g.ink,
+  brandText: g.sprout,
 
-  shadow: p.black,
+  shadow: g.ink,
 } as const satisfies SemanticColors;
 
 export type ColorToken = keyof SemanticColors;
 
 /** Gradient pairs (top → bottom / start → end). Used by LinearGradient and SVG icons. */
 export const gradients = {
-  hero: [p.deep5, p.deep2] as const,
-  heroSpotlight: ['rgba(189, 238, 99, 0.22)', 'rgba(189, 238, 99, 0)'] as const,
-  accent: [p.lime9, p.lime10] as const,
+  /** Flat night: the gallery has no gradients on the interface. */
+  hero: [g.night, g.night] as const,
+  heroSpotlight: ['rgba(255, 255, 255, 0.10)', 'rgba(255, 255, 255, 0)'] as const,
+  /** Sprout: progress fills and reward surfaces (never a button). */
+  accent: [g.sprout, g.sprout2] as const,
   flame: [p.flameFrom, p.flameTo] as const,
   heart: [p.heartFrom, p.heartTo] as const,
   gold: [p.goldFrom, p.goldTo] as const,
   shield: [p.shieldFrom, p.shieldTo] as const,
   gem: [p.gemFrom, p.gemTo] as const,
-  assistant: [p.lime4, p.olive2] as const,
-  academyStory: [p.mint3, p.mint5] as const,
+  assistant: [g.surface, g.paper] as const,
+  academyStory: [g.lagoonTint, g.lagoonTint] as const,
   /** Greyscale pair for locked / muted economy icons. */
-  muted: [p.olive7, p.olive9] as const,
+  muted: ['#C7C7C7', '#8F8F8F'] as const,
   /** White sweep band for `<Shimmer/>` (transparent → sheen → transparent), any surface. */
   shimmer: ['rgba(255, 255, 255, 0)', p.whiteA7, 'rgba(255, 255, 255, 0)'] as const,
   /** Glossy top highlight on progress fills (white 30% → 0). */
   sheen: [p.whiteA5, 'rgba(255, 255, 255, 0)'] as const,
-  /** Unseen story ring (lime → mint). */
-  storyRing: [p.lime9, p.mint9] as const,
+  /** Unseen story ring (ink). */
+  storyRing: [g.ink, g.ink2] as const,
   /** Soft violet halo behind the Pro gem on evergreen (gemFrom @ 40% → 0). Appended by features/pro. */
   proGlow: ['rgba(164, 139, 255, 0.4)', 'rgba(164, 139, 255, 0)'] as const,
 } as const;
@@ -237,8 +250,8 @@ export const illustration = {
   forest: p.forest9,
   forestDeep: p.deep3,
   forestLight: p.forest5,
-  lime: p.lime9,
-  limeLight: p.lime4,
+  lime: g.sprout,
+  limeLight: '#EAFBC2',
   white: p.white,
   whiteSoft: p.whiteA8,
   mint: p.mint5,

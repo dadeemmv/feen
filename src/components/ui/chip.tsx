@@ -1,15 +1,15 @@
 /**
  * Chip — compact pill for rewards ("+500 🥝"), progress ("0/7"), filters and meta
- * ("📖 13 capitoli"). `surface` is the white hairline chip used by the status row.
+ * ("📖 13 capitoli"). `surface` is the veil chip used by the status row.
  */
 import type { ReactNode } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import type { HapticKind } from '@/lib/haptics';
-import { elevation, radius, spacing, useTheme, type TextVariant } from '@/theme';
+import { radius, spacing, useTheme, type TextVariant } from '@/theme';
 
 import { renderIcon, type IconSource } from './icon';
-import { borderWidth, chipHeight, hairline, iconSize, iconStroke } from './metrics';
+import { borderWidth, chipHeight, iconSize, iconStroke } from './metrics';
 import { PressableScale } from './pressable-scale';
 import { Text } from './text';
 import { resolveTone, type Tone } from './tones';
@@ -68,7 +68,8 @@ export function Chip({
       case 'outline':
         return { backgroundColor: 'transparent', borderColor: colors.border };
       case 'surface':
-        return { backgroundColor: theme.colors.surface, borderColor: theme.colors.border, boxShadow: elevation.sm };
+        // Counters and status chips: a veil on the canvas, no border, no shadow.
+        return { backgroundColor: theme.colors.fill, borderColor: theme.colors.fill };
       case 'soft':
         return { backgroundColor: colors.bg, borderColor: colors.bg };
     }
@@ -96,7 +97,7 @@ export function Chip({
   const frameStyle = [
     styles.base,
     size === 'sm' ? styles.sm : styles.md,
-    { borderWidth: effective === 'surface' ? hairline : borderWidth.thin },
+    { borderWidth: borderWidth.thin },
     frame,
     style,
   ];

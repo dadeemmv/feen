@@ -40,6 +40,56 @@ const forest = {
   forest12: '#0B2E20',
 } as const;
 
+/**
+ * Gallery palette (docs/design/DESIGN.md, "Il plastico in galleria"): pure black and white for
+ * the structure, one sprout green for rewards, a red thread for the pact, and four character
+ * families (base · tint · deep text on the tint) that live only in the world.
+ */
+export const gallery = {
+  ink: '#000000',
+  ink2: '#444444',
+  muted: '#6B6B6B',
+  faint: '#A3A3A3',
+  paper: '#FFFFFF',
+  surface: '#F4F4F4',
+  surfaceSunken: '#EBEBEB',
+  line: 'rgba(0, 0, 0, 0.08)',
+  lineStrong: 'rgba(0, 0, 0, 0.2)',
+  veil: 'rgba(0, 0, 0, 0.055)',
+  veilHover: 'rgba(0, 0, 0, 0.08)',
+  veilPressed: 'rgba(0, 0, 0, 0.11)',
+  inkPressed: '#262626',
+  paperPressed: '#E6E6E6',
+  night: '#000000',
+  night2: '#161616',
+  night3: '#222222',
+  disabled: '#E8E8E8',
+  contract: '#F6F1E6',
+  sprout: '#CFF56A',
+  sprout2: '#B8E04F',
+  sproutDeep: '#3F5A00',
+  thread: '#D42B26',
+  honey: '#FFB627',
+  honeyTint: '#FFF0CC',
+  honeyDeep: '#7A4A00',
+  cobalt: '#3B5BFF',
+  cobaltTint: '#DDE3FF',
+  cobaltDeep: '#16247A',
+  lagoon: '#1FBFB0',
+  lagoonTint: '#D2F4F0',
+  lagoonDeep: '#0A554E',
+  coral: '#FF5B3A',
+  coralTint: '#FFE0D8',
+  coralDeep: '#8A2310',
+  stone: '#9C9384',
+  stoneTint: '#ECE9E3',
+  stoneDeep: '#4A443A',
+  ok: '#E9F9D0',
+  okLine: '#7DB321',
+  no: '#FFE6E1',
+  sign: '#1B2A8A',
+} as const;
+
 /** Deep tones used only for inverted "brand" surfaces (hero cards, streak header, sheets). */
 const forestDeep = {
   deep1: '#061A11',

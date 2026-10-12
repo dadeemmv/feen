@@ -3,7 +3,8 @@
 # Finanz — project conventions
 
 Duolingo-style personal-finance learning app. Italian UI copy. Product spec: `docs/PRODUCT_SPEC.md`.
-Architecture & design-system decisions: `docs/ARCHITECTURE.md`. Art direction: `docs/DESIGN_DIRECTION.md`.
+Architecture & design-system decisions: `docs/ARCHITECTURE.md`. Design system: `docs/design/DESIGN.md`
+(gallery black and white; supersedes the colours and fonts of `docs/DESIGN_DIRECTION.md`).
 
 ## Stack facts (verified in node_modules — do not guess)
 - Expo SDK 57, React Native 0.86, React 19.2, TypeScript 6, **React Compiler enabled** (no manual
@@ -19,7 +20,7 @@ Architecture & design-system decisions: `docs/ARCHITECTURE.md`. Art direction: `
 - react-native-gesture-handler 2.32 (`Gesture`, `GestureDetector`), safe-area-context 5.7,
   react-native-svg, expo-linear-gradient, expo-haptics, expo-clipboard, expo-sharing, expo-blur,
   expo-image, @react-native-async-storage/async-storage, zustand 5, lucide-react-native,
-  @expo-google-fonts/bricolage-grotesque + plus-jakarta-sans.
+  @expo-google-fonts/instrument-sans + instrument-serif + fragment-mono.
 - Everything must also work on **web** (react-native-web) — guard native-only APIs
   (`Platform.OS !== 'web'` for haptics; `expo-sharing` fallback to `navigator.share`/clipboard).
 - All libraries used are in Expo Go (no custom native code) — keep it that way.

@@ -5,13 +5,16 @@
  */
 export const radius = {
   none: 0,
-  xs: 6,
-  sm: 10,
-  md: 16,
-  lg: 18,
-  xl: 22,
-  xxl: 28,
-  xxxl: 36,
+  xs: 8,
+  sm: 12,
+  /** Option tiles (18 in the board's answer options). */
+  md: 18,
+  lg: 20,
+  /** Cards. */
+  xl: 28,
+  /** Hero cards, sheets, character cards. */
+  xxl: 36,
+  xxxl: 44,
   pill: 999,
 } as const;
 

@@ -1,6 +1,6 @@
 /**
  * Card — one idea per card. `style` styles the outer box (size, margins, flex); `contentStyle`
- * the inner layout (flexDirection, gap, alignment). The `brand` variant is an inverted evergreen
+ * the inner layout (flexDirection, gap, alignment). The `brand` variant is an inverted black
  * surface: its children render inside `ColorModeProvider mode="brand"`, so Text/Button/Chip pick
  * brand tokens automatically.
  */
@@ -11,7 +11,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import type { HapticKind } from '@/lib/haptics';
 import {
   ColorModeProvider,
-  elevation,
   gradients,
   layout,
   radius as radii,
@@ -21,7 +20,7 @@ import {
 } from '@/theme';
 
 import { createThemedVariants } from './internal/themed-variants';
-import { borderWidth, hairline, uiOpacity } from './metrics';
+import { borderWidth, uiOpacity } from './metrics';
 import { PressableScale } from './pressable-scale';
 import { Spotlight } from './spotlight';
 
@@ -63,21 +62,12 @@ const useShell = createThemedVariants((t) =>
     base: shellBase,
     variants: {
       variant: {
-        surface: {
-          backgroundColor: t.colors.surface,
-          borderWidth: hairline,
-          borderColor: t.colors.borderSubtle,
-          boxShadow: elevation.sm,
-        },
-        elevated: {
-          backgroundColor: t.colors.surface,
-          borderWidth: hairline,
-          borderColor: t.colors.borderSubtle,
-          boxShadow: elevation.md,
-        },
-        brand: { backgroundColor: t.colors.brandSurface, borderRadius: radii.xxl, boxShadow: elevation.md },
-        accent: { backgroundColor: t.colors.accentBg, borderWidth: borderWidth.thin, borderColor: t.colors.accentBorder },
-        locked: { backgroundColor: t.colors.fill, borderWidth: hairline, borderColor: t.colors.borderSubtle },
+        // No-Line Rule: filled cards, no borders, no elevation; they separate by tint.
+        surface: { backgroundColor: t.colors.surface },
+        elevated: { backgroundColor: t.colors.surface },
+        brand: { backgroundColor: t.colors.brandSurface, borderRadius: radii.xxl },
+        accent: { backgroundColor: t.colors.surface },
+        locked: { backgroundColor: t.colors.fill },
         outline: { backgroundColor: 'transparent', borderWidth: borderWidth.thin, borderColor: t.colors.border },
       },
     },

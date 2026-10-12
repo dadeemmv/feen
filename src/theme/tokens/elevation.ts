@@ -1,22 +1,22 @@
 /**
  * Elevation tokens as `boxShadow` strings (RN 0.76+ New Architecture + react-native-web, which
  * deprecates `shadow*`). Two-layer far + near recipe from Rainbow's design-system `shadow.ts`,
- * tinted with the evergreen ink instead of pure black.
+ * in pure black (gallery: no elevation on resting UI).
  */
 export const elevation = {
   none: undefined,
-  /** Resting cards. */
-  sm: '0px 1px 2px rgba(11, 46, 32, 0.06), 0px 2px 8px rgba(11, 46, 32, 0.04)',
-  /** Chips, raised cards. */
-  md: '0px 4px 14px rgba(11, 46, 32, 0.08), 0px 1px 3px rgba(11, 46, 32, 0.05)',
-  /** Floating tab bar, FABs. */
-  lg: '0px 10px 30px rgba(11, 46, 32, 0.14), 0px 2px 6px rgba(11, 46, 32, 0.06)',
+  /** Resting cards: none. The gallery is flat; cards separate by tint, never by shadow. */
+  sm: undefined,
+  /** Chips, raised cards: none, same rule. */
+  md: undefined,
+  /** Floating tab bar, FABs: the only UI that floats over content keeps a soft neutral shadow. */
+  lg: '0px 12px 32px rgba(0, 0, 0, 0.12), 0px 2px 6px rgba(0, 0, 0, 0.06)',
   /** Bottom sheets and dialogs. */
-  xl: '0px 18px 48px rgba(11, 46, 32, 0.22), 0px 4px 12px rgba(11, 46, 32, 0.08)',
-  /** Coloured glow under the primary lime CTA on dark surfaces. */
-  accentGlow: '0px 8px 24px rgba(189, 238, 99, 0.35)',
-  /** Coloured glow for the AI sparkle button. */
-  brandGlow: '0px 8px 22px rgba(20, 92, 60, 0.35)',
+  xl: '0px 18px 48px rgba(0, 0, 0, 0.22), 0px 4px 12px rgba(0, 0, 0, 0.08)',
+  /** No coloured glow under CTAs. */
+  accentGlow: undefined,
+  /** AI sparkle button: neutral float. */
+  brandGlow: '0px 8px 22px rgba(0, 0, 0, 0.25)',
 } as const;
 
 export type ElevationToken = keyof typeof elevation;

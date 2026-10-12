@@ -119,7 +119,7 @@ export function FloatingTabBar({ state, descriptors, navigation, insets }: Botto
       <View
         onLayout={onBarLayout}
         accessibilityRole="tablist"
-        style={[styles.bar, { backgroundColor: theme.colors.surface, borderColor: theme.colors.borderSubtle }]}>
+        style={[styles.bar, { backgroundColor: theme.colors.surfaceRaised }]}>
         {/* Off-screen measuring pass: natural label widths size the active pill. */}
         <View style={styles.measure} aria-hidden importantForAccessibility="no-hide-descendants">
           {labels.map(({ route, label }) => (
@@ -187,7 +187,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: BAR_PAD,
     borderRadius: radius.pill,
+    // The hairline stays for the pill geometry; the gallery draws no line.
     borderWidth: hairline,
+    borderColor: 'transparent',
     boxShadow: elevation.lg,
   },
   pill: {
