@@ -11,13 +11,17 @@ import {
   BUILDING_IDS,
   BUILDINGS,
   buildingOfChapter,
+  DECORS,
   FIRST_STONE,
   MAX_OPEN_SITES,
+  RESIDENTS_PER_HOUSE,
+  VILLAGE_LOTS,
   type BuildingId,
+  type DecorId,
 } from '@/content/village';
 import { toDayKey } from '@/lib/dates';
 
-import type { OpenSiteFailure, Pact, ProgressData } from '../types';
+import type { BuildFailure, OpenSiteFailure, Pact, Placement, ProgressData } from '../types';
 
 export type BuildingState = 'progetto' | 'cantiere' | 'costruito' | 'fiorito';
 
@@ -90,4 +94,27 @@ export function suggestedBuilding(s: VillageInput, starts: readonly BuildingId[]
   const sites = activeSites(s);
   if (sites.length > 0) return sites[0];
   return [...starts, ...BUILDING_IDS].find((id) => openSiteIssue(id, s) === null);
+}
+
+/* ── What bricks build ─────────────────────────────────────────────────────────────────────── */
+
+/** Lots still free, in the order of `VILLAGE_LOTS`. */
+export function freeLots(placements: readonly Placement[]): number[] {
+  const taken = new Set(placements.map((p) => p.lot));
+  return VILLAGE_LOTS.map((_, lot) => lot).filter((lot) => !taken.has(lot));
+}
+
+/** Houses bought with bricks. */
+export const countHouses = (placements: readonly Placement[]): number => placements.filter((p) => p.kind === 'casa').length;
+
+/** Residents still in a tent: a house holds four, the rest wait (happy all the same). */
+export const countInTents = (residents: number, placements: readonly Placement[]): number =>
+  Math.max(0, residents - countHouses(placements) * RESIDENTS_PER_HOUSE);
+
+/** Why this cannot be built there right now, or null when it can. */
+export function buildIssue(kind: DecorId, lot: number, s: { coins: number; placements: readonly Placement[] }): BuildFailure | null {
+  if (!Number.isInteger(lot) || lot < 0 || lot >= VILLAGE_LOTS.length) return 'no-lot';
+  if (s.placements.some((p) => p.lot === lot)) return 'taken';
+  if (s.coins < DECORS[kind].cost) return 'bricks';
+  return null;
 }

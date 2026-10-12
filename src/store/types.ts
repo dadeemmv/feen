@@ -6,7 +6,7 @@
 import type { StateCreator } from 'zustand';
 
 import type { MascotId } from '@/content/personality';
-import type { BuildingId } from '@/content/village';
+import type { BuildingId, DecorId } from '@/content/village';
 import type { DayKey } from '@/lib/dates';
 
 import type { ResolvedChallenge } from './challenges';
@@ -196,7 +196,15 @@ export type ProgressData = {
   openSites: BuildingId[];
   /** Buildings that bloomed: built, and the one-week review brought by a resident was right. */
   bloomed: BuildingId[];
+  /** What bricks built, each on its own free lot (index into `VILLAGE_LOTS`). */
+  placements: Placement[];
 };
+
+/** A house, a tree or a decoration bought with bricks and placed on a free lot. */
+export type Placement = { kind: DecorId; lot: number; at: number };
+
+export type BuildFailure = 'bricks' | 'taken' | 'no-lot';
+export type BuildResult = { ok: true; placement: Placement } | { ok: false; reason: BuildFailure };
 
 export type OpenSiteFailure = 'built' | 'needs-building' | 'too-many' | 'no-lessons';
 export type OpenSiteResult = { ok: true } | { ok: false; reason: OpenSiteFailure };
@@ -253,6 +261,8 @@ export type ProgressActions = {
   claimChallenge: (challengeId: string, now?: number) => ClaimChallengeResult;
   /** Opens a project as a site (no locks: at most two open, the Tower after the Well). */
   openSite: (id: BuildingId) => OpenSiteResult;
+  /** Spends bricks on a house or a decoration, placed on a free lot of the village. */
+  build: (kind: DecorId, lot: number, now?: number) => BuildResult;
 };
 
 export type ProgressSlice = ProgressData & ProgressActions;

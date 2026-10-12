@@ -206,3 +206,65 @@ export const VILLAGE_NAME_IDEAS = [
   'Salvia',
   'Quercia',
 ] as const;
+
+/* ── What bricks build ─────────────────────────────────────────────────────────────────────── */
+
+/**
+ * Bricks never raise a building (knowledge cannot be bought): they build homes for the residents
+ * and the things that make the village yours, placed where you want on the free lots.
+ */
+export type DecorId = 'casa' | 'albero' | 'pino' | 'aiuola' | 'panchina' | 'lampione';
+
+export type Decor = {
+  id: DecorId;
+  name: string;
+  /** "una casa", "un albero": for "Hai costruito una casa". */
+  withArticle: string;
+  /** Price in bricks. */
+  cost: number;
+  /** One line under the name in the catalogue. */
+  note: string;
+};
+
+/** Residents per house: whoever has no house sleeps in a tent, happy all the same. */
+export const RESIDENTS_PER_HOUSE = 4;
+
+export const DECORS: Record<DecorId, Decor> = {
+  casa: {
+    id: 'casa',
+    name: 'Casa',
+    withArticle: 'una casa',
+    cost: 60,
+    note: `Ci vivono ${RESIDENTS_PER_HOUSE} abitanti: escono dalla tenda.`,
+  },
+  albero: { id: 'albero', name: 'Albero', withArticle: 'un albero', cost: 15, note: 'Un po’ d’ombra nel borgo.' },
+  pino: { id: 'pino', name: 'Pino', withArticle: 'un pino', cost: 15, note: 'Verde anche d’inverno.' },
+  aiuola: { id: 'aiuola', name: 'Aiuola', withArticle: 'un’aiuola', cost: 10, note: 'Fiori di quattro colori.' },
+  panchina: { id: 'panchina', name: 'Panchina', withArticle: 'una panchina', cost: 20, note: 'Per chi passeggia.' },
+  lampione: { id: 'lampione', name: 'Lampione', withArticle: 'un lampione', cost: 25, note: 'La sera il borgo si accende.' },
+};
+
+/** Catalogue order: homes first, then the rest from the cheapest. */
+export const DECOR_IDS: readonly DecorId[] = ['casa', 'aiuola', 'albero', 'pino', 'panchina', 'lampione'];
+
+export const isDecorId = (value: unknown): value is DecorId =>
+  typeof value === 'string' && Object.hasOwn(DECORS, value);
+
+/**
+ * The free lots of the 7 × 7 island (tile coordinates): not a building, not a road, not a tree
+ * or a tent of the board's layout. Whatever bricks build stands on one of them.
+ */
+export const VILLAGE_LOTS: readonly (readonly [number, number])[] = [
+  [2, 0],
+  [4, 0],
+  [5, 0],
+  [0, 1],
+  [2, 1],
+  [4, 1],
+  [6, 2],
+  [1, 4],
+  [5, 4],
+  [4, 5],
+  [1, 6],
+  [5, 6],
+];

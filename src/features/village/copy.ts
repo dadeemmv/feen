@@ -45,6 +45,30 @@ export const VILLAGE_COPY = {
   } satisfies Record<BuildingState, string>,
   buildingA11y: (name: string, topic: string, state: string) => `${name}, ${topic}: ${state}`,
 
+  /** "Costruisci con i mattoni": homes for the residents and decorations, where you want. */
+  decor: {
+    entry: 'Usa i mattoni',
+    entryA11y: (bricks: number) => `Usa i mattoni: ne hai ${bricks}`,
+    close: 'Chiudi',
+    titleStart: 'Costruisci con i ',
+    titleWord: 'mattoni',
+    subtitle: 'Gli edifici crescono solo con le lezioni. I mattoni danno una casa agli abitanti e decorano il borgo, dove vuoi tu.',
+    bricks: (n: number) => (n === 1 ? '1 mattone' : `${n} mattoni`),
+    tents: (n: number, perHouse: number) =>
+      n === 1
+        ? `1 abitante dorme in tenda: una casa ne ospita ${perHouse}.`
+        : `${n} abitanti dormono in tenda: una casa ne ospita ${perHouse}.`,
+    housed: 'Tutti gli abitanti hanno una casa.',
+    catalogA11y: 'Cosa vuoi costruire',
+    pickLot: 'Scegli un posto sulla mappa',
+    missing: (n: number) => (n === 1 ? 'Ti manca 1 mattone' : `Ti mancano ${n} mattoni`),
+    missingHint: 'Ogni lezione finita ne porta altri.',
+    cta: (cost: number) => `Costruisci qui · ${cost} mattoni`,
+    built: (what: string) => `Hai costruito ${what}.`,
+    full: 'Non ci sono più posti liberi nel borgo.',
+    lotA11y: (at: string) => `Posto libero vicino ${at}`,
+  },
+
   lessons: {
     title: 'Lezioni',
     titleWord: 'Lezioni',

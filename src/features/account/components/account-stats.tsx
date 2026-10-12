@@ -1,6 +1,6 @@
 /**
  * Three mini stats under the profile card (residents · buildings built · bricks), all counted in
- * the village. Each tile is a shortcut: the pact, the lessons list, the village.
+ * the village. Each tile is a shortcut: the pact, the lessons list, what bricks can build.
  */
 import type { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
@@ -39,7 +39,7 @@ export function AccountStats() {
       <StatShortcut label={`${built} ${copy.built}`} onPress={() => router.navigate('/lessons')}>
         <StatTile icon={Landmark} value={built} label={copy.built} />
       </StatShortcut>
-      <StatShortcut label={`${formatCoins(coins)} ${copy.coins}`} onPress={() => router.navigate('/')}>
+      <StatShortcut label={`${formatCoins(coins)} ${copy.coins}`} onPress={() => router.push('/build')}>
         <StatTile icon={<BrickIcon size={iconSize.lg} />} value={formatCoins(coins)} label={copy.coins} />
       </StatShortcut>
     </HStack>

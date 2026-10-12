@@ -6,7 +6,7 @@
  * Every function returns markup; ids of the shared gradients are prefixed per instance because
  * they are document-global on web.
  */
-import type { BuildingId } from '@/content/village';
+import { RESIDENTS_PER_HOUSE, VILLAGE_LOTS, type BuildingId, type DecorId } from '@/content/village';
 import { shade } from '@/components/illustrations/mascots/animal-svg';
 import type { BuildingState } from '@/store';
 
@@ -490,9 +490,6 @@ const WALKERS: [number, number, string, string][] = [
   [2.5, 3.4, '#FF8FA3', '#F1C9A5'],
 ];
 
-/** Residents per house (the rest wait in tents, happy all the same). */
-export const RESIDENTS_PER_HOUSE = 4;
-
 export type VillageModel = {
   states: Record<BuildingId, BuildingState>;
   /** Walls of each site, 0…1 (lessons done / lessons). */
@@ -500,8 +497,13 @@ export type VillageModel = {
   /** Today's site, highlighted on the ground with the partner next to it. */
   current?: BuildingId;
   residents: number;
-  /** Houses bought with bricks. */
-  houses: number;
+  /** Houses and decorations bought with bricks, each on its lot (index into `VILLAGE_LOTS`). */
+  placements: readonly { kind: DecorId; lot: number }[];
+  /**
+   * "Costruisci": the free lots light up on the ground; the chosen one gets an ink outline and a
+   * ghost of what is about to be built.
+   */
+  lots?: { free: readonly number[]; selected?: number; preview?: DecorId };
 };
 
 const PARTNER_SPOT: [number, number] = [0.8, 0.6];
@@ -528,12 +530,35 @@ export function villageSvg(m: VillageModel, prefix: string) {
     objs.push({ k: i + j + 1, k2: i, svg: castShadow(k, t, i, j, st) + render(k, t, i, j, st, m.progress[t]) });
   });
 
-  // Houses bought with bricks hold four residents each; whoever has no house sleeps in a tent.
-  const houses = Math.min(m.houses, HOMES.length);
+  // "Costruisci": free lots glow on the ground, the chosen one is outlined in ink with a ghost.
+  if (m.lots) {
+    for (const lot of m.lots.free) {
+      const [i, j] = VILLAGE_LOTS[lot];
+      const chosen = lot === m.lots.selected;
+      g += k.poly(
+        [P(i + 0.06, j + 0.06), P(i + 0.94, j + 0.06), P(i + 0.94, j + 0.94), P(i + 0.06, j + 0.94)],
+        chosen ? 'rgba(207,245,106,.9)' : 'rgba(207,245,106,.5)',
+        chosen ? 'stroke="#000" stroke-width="2"' : 'stroke="#9CCB2E" stroke-width="1.4" stroke-dasharray="4 3"',
+      );
+    }
+    const { selected, preview } = m.lots;
+    if (selected !== undefined && preview) {
+      const [i, j] = VILLAGE_LOTS[selected];
+      objs.push({ k: i + j + 0.6, k2: i, svg: `<g opacity=".6">${decorAt(k, preview, i, j, m.placements.length)}</g>` });
+    }
+  }
+
+  // Bricks: houses and decorations on their lots.
+  m.placements.forEach((p, n) => {
+    const [i, j] = VILLAGE_LOTS[p.lot] ?? [0, 0];
+    objs.push({ k: i + j + 0.6, k2: i, svg: decorAt(k, p.kind, i, j, n) });
+  });
+
+  // A house holds four residents; whoever has no house sleeps in a tent, happy all the same.
+  const houses = m.placements.filter((p) => p.kind === 'casa').length;
   const homeless = Math.max(0, m.residents - houses * RESIDENTS_PER_HOUSE);
-  const tents = Math.min(Math.ceil(homeless / RESIDENTS_PER_HOUSE), HOMES.length - houses);
-  HOMES.slice(0, houses).forEach(([i, j], n) => objs.push({ k: i + j + 0.64, k2: i, svg: house(k, i, j, ROOFS[n % ROOFS.length]) }));
-  HOMES.slice(houses, houses + tents).forEach(([i, j]) => objs.push({ k: i + j + 0.68, k2: i, svg: tent(k, i, j) }));
+  const tents = Math.min(Math.ceil(homeless / RESIDENTS_PER_HOUSE), HOMES.length);
+  HOMES.slice(0, tents).forEach(([i, j]) => objs.push({ k: i + j + 0.68, k2: i, svg: tent(k, i, j) }));
 
   if (m.current) {
     const { i, j } = LAYOUT[m.current];
@@ -567,6 +592,90 @@ function tent(k: ReturnType<typeof kit>, i: number, j: number) {
   const fw = 0.34;
   const fd = 0.34;
   return k.pyr(i, j, fw, fd, 0, 17, '#FF8FA3', 0.01) + k.poly([P(i + 0.11, j + fd), P(i + 0.23, j + fd), P(i + 0.17, j + fd - 0.08, 10)], '#6E2A3A');
+}
+
+/** A flower bed: a low stone border, dark soil, four colours of flowers. */
+function bed(k: ReturnType<typeof kit>, ti: number, tj: number) {
+  const fw = 0.56;
+  const [i0, j0] = fp(ti, tj, fw, fw);
+  let s = k.box(i0, j0, fw, fw, 0, 4, STONE);
+  s += k.poly([P(i0 + 0.05, j0 + 0.05, 4), P(i0 + fw - 0.05, j0 + 0.05, 4), P(i0 + fw - 0.05, j0 + fw - 0.05, 4), P(i0 + 0.05, j0 + fw - 0.05, 4)], '#6B4A2B');
+  const cs = ['#FF5B3A', '#FFB627', '#FFFFFF', '#FF8FA3'];
+  [0.16, 0.3, 0.44].forEach((a, r) =>
+    [0.16, 0.3, 0.44].forEach((b, c) => {
+      const p = P(i0 + a, j0 + b, 4);
+      s += `<circle cx="${p[0]}" cy="${p[1] - 2.4}" r="2.2" fill="#4E9A3A"/><circle cx="${p[0]}" cy="${p[1] - 4}" r="1.8" fill="${cs[(r + c) % 4]}"/>`;
+    }),
+  );
+  return s;
+}
+
+/** A wooden bench facing the road: two legs, the seat, the backrest. */
+function bench(k: ReturnType<typeof kit>, ti: number, tj: number) {
+  const fw = 0.46;
+  const fd = 0.16;
+  const [i0, j0] = fp(ti, tj, fw, fd);
+  const leg = '#6B4A26';
+  return (
+    `<ellipse cx="${P(ti + 0.5, tj + 0.5)[0]}" cy="${P(ti + 0.5, tj + 0.5)[1] + 2}" rx="13" ry="4" fill="rgba(0,0,0,.08)"/>` +
+    k.box(i0 + 0.03, j0 + 0.03, 0.05, 0.1, 0, 5, leg) +
+    k.box(i0 + fw - 0.08, j0 + 0.03, 0.05, 0.1, 0, 5, leg) +
+    k.box(i0, j0 - 0.02, fw, 0.04, 5, 8, WOOD) +
+    k.box(i0, j0, fw, fd, 5, 2, WOOD)
+  );
+}
+
+/** A street lamp: a dark pole and a warm light with its glow. */
+function lamp(k: ReturnType<typeof kit>, ti: number, tj: number) {
+  const base = P(ti + 0.5, tj + 0.5);
+  const top = P(ti + 0.5, tj + 0.5, 30);
+  return (
+    `<ellipse cx="${base[0]}" cy="${base[1]}" rx="5" ry="2.2" fill="rgba(0,0,0,.15)"/>` +
+    k.ln(base, top, GR, 2.2) +
+    `<circle cx="${top[0]}" cy="${top[1] - 3}" r="9" fill="${WARM}" opacity=".28"/>` +
+    `<circle cx="${top[0]}" cy="${top[1] - 3}" r="4" fill="${WARM}"/>` +
+    `<rect x="${top[0] - 4.5}" y="${top[1] - 9}" width="9" height="2.4" rx="1.2" fill="${GR}"/>`
+  );
+}
+
+/** Whatever bricks built, drawn on its tile (`n` picks the roof colour of a house). */
+function decorAt(k: ReturnType<typeof kit>, kind: DecorId, ti: number, tj: number, n: number) {
+  switch (kind) {
+    case 'casa':
+      return house(k, ti + 0.34, tj + 0.34, ROOFS[n % ROOFS.length]);
+    case 'albero':
+      return k.tree(ti + 0.5, tj + 0.5, 0.85);
+    case 'pino':
+      return k.pine(ti + 0.5, tj + 0.5, 0.9);
+    case 'aiuola':
+      return bed(k, ti, tj);
+    case 'panchina':
+      return bench(k, ti, tj);
+    case 'lampione':
+      return lamp(k, ti, tj);
+  }
+}
+
+/** Tallest drawn height per decoration, so catalogue scenes fill their frame. */
+const DECOR_TOP: Record<DecorId, number> = { casa: 34, albero: 40, pino: 44, aiuola: 16, panchina: 22, lampione: 44 };
+
+/** One decoration on its own tile of ground (the "Costruisci" catalogue). */
+export function decorSceneSvg(kind: DecorId, prefix: string) {
+  const k = kit(prefix);
+  const g =
+    `<ellipse cx="0" cy="${TH + 15}" rx="26" ry="5" fill="rgba(0,0,0,.08)"/>` +
+    sides(k, 1, 9) +
+    tile(k, 0, 0, '#C8ED8F') +
+    decorAt(k, kind, 0, 0, 0);
+  const top = DECOR_TOP[kind];
+  return `<svg viewBox="-48 ${-top} 96 ${top + 52}" xmlns="http://www.w3.org/2000/svg">${isoDefs(prefix)}${g}</svg>`;
+}
+
+/** Centre of a lot's tile on the ground (viewBox units), for hit areas and the camera. */
+export function lotAnchor(lot: number) {
+  const [i, j] = VILLAGE_LOTS[lot] ?? [0, 0];
+  const [x, y] = P(i + 0.5, j + 0.5);
+  return { x, y };
 }
 
 /**

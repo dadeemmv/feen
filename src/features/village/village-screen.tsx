@@ -2,15 +2,17 @@
  * The village (home tab, concept board screen 5). Not a list of lessons but a place that grows
  * while you learn: "Borgo Ginestra", residents, bricks and days of the pact as big numbers, the
  * island with today's site and the partner beside it, the partner's line and the next site with
- * "Costruisci". A building opens its page; the partner opens the pact.
+ * "Costruisci". A building opens its page; the partner opens the pact; "Usa i mattoni" opens the
+ * catalogue of homes and decorations.
  */
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { router } from 'expo-router';
 
+import { BrickIcon } from '@/components/icons';
 import { MascotArt } from '@/components/illustrations';
-import { avatarSize, Button, Card, HStack, Screen, Text, VStack } from '@/components/ui';
+import { avatarSize, Button, Card, HStack, Screen, Text, VStack, iconSize } from '@/components/ui';
 import { getChapter } from '@/content/courses';
 import { getMascot } from '@/content/personality';
 import { BUILDINGS } from '@/content/village';
@@ -62,6 +64,16 @@ export function VillageScreen() {
       </Animated.View>
 
       <Animated.View entering={rise(2)} style={styles.map}>
+        <View style={styles.useBricks}>
+          <Button
+            title={VILLAGE_COPY.decor.entry}
+            size="sm"
+            iconLeft={<BrickIcon size={iconSize.sm} />}
+            accessibilityLabel={VILLAGE_COPY.decor.entryA11y(village.bricks)}
+            onPress={() => router.push('/build')}
+            testID="village-use-bricks"
+          />
+        </View>
         <VillageMap
           village={village}
           partner={mascotId}
@@ -115,6 +127,8 @@ const styles = StyleSheet.create({
   heading: { gap: spacing.xxxs, marginTop: spacing.sm, marginBottom: spacing.lg },
   italic: { fontFamily: fonts.serif.italic, letterSpacing: 0 },
   map: { marginHorizontal: -layout.screenX, marginVertical: spacing.md },
+  // Over the island, not on it: stays put while the map scrolls sideways.
+  useBricks: { position: 'absolute', right: layout.screenX, bottom: spacing.xs, zIndex: 1 },
   flex: { flex: 1 },
   next: { gap: spacing.md },
   bottom: { height: spacing.xl },

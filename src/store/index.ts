@@ -69,6 +69,8 @@ export async function resetStore() {
 export type { PersistedData, RootState };
 export type {
   AppLanguage,
+  BuildFailure,
+  BuildResult,
   BuyFailureReason,
   BuyResult,
   ChapterRecord,
@@ -85,6 +87,7 @@ export type {
   PactInput,
   PactSignature,
   PersonalityResult,
+  Placement,
   Purchase,
   ReminderSlot,
   Settings,
@@ -101,9 +104,13 @@ export { countCompletedChapters, countCompletedLessons } from './rules/progress'
 export { computeChapterReward, getUserLevel } from './rules/levels';
 export {
   activeSites,
+  buildIssue,
   buildingState,
   chaptersDone,
+  countHouses,
+  countInTents,
   countResidents,
+  freeLots,
   isBuilt,
   nextChapterOf,
   openSiteIssue,

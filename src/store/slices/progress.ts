@@ -1,7 +1,8 @@
 /**
  * Progress slice: chapter records, the in-progress lesson session ("RIPRENDI DA QUI"),
- * active days (streak), XP and milestone claims.
+ * active days (streak), XP and milestone claims, the village's sites and what bricks built.
  */
+import { DECORS } from '@/content/village';
 import { toDayKey } from '@/lib/dates';
 
 import { findChallenge, resolveChallenge } from '../challenges';
@@ -9,7 +10,7 @@ import { createInitialProgress } from '../initial-state';
 import { findCrossedMilestone, findMilestone, resolveMilestone } from '../milestones';
 import { countCompletedLessons } from '../rules/progress';
 import { computeLongestStreak, computeStreak, findPendingShieldDay, insertDay } from '../rules/streak';
-import { activeSites, openSiteIssue, sitesAfterLesson } from '../rules/village';
+import { activeSites, buildIssue, openSiteIssue, sitesAfterLesson } from '../rules/village';
 import type { ChapterRecord, CompletionSummary, LessonSession, ProgressSlice, SliceCreator } from '../types';
 
 const toAmount = (value: number) => (Number.isFinite(value) && value > 0 ? Math.floor(value) : 0);
@@ -104,6 +105,14 @@ export const createProgressSlice: SliceCreator<ProgressSlice> = (set, get) => ({
     if (issue) return { ok: false, reason: issue };
     set((s) => ({ openSites: activeSites(s).includes(id) ? activeSites(s) : [...activeSites(s), id] }));
     return { ok: true };
+  },
+
+  build: (kind, lot, now = Date.now()) => {
+    const issue = buildIssue(kind, lot, get());
+    if (issue) return { ok: false, reason: issue };
+    const placement = { kind, lot, at: now };
+    set((s) => ({ coins: s.coins - DECORS[kind].cost, placements: [...s.placements, placement] }));
+    return { ok: true, placement };
   },
 
   claimMilestone: (milestoneId, now = Date.now()) => {

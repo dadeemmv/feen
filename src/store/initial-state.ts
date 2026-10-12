@@ -42,6 +42,7 @@ export const createInitialProgress = (): ProgressData => ({
   claimedChallenges: [],
   openSites: [],
   bloomed: [],
+  placements: [],
 });
 
 export const createInitialMeta = (): MetaData => ({

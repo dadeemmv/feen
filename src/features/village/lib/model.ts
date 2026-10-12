@@ -1,6 +1,6 @@
 /**
  * The village derived from the store: every building's state, the walls of each site, today's
- * site (where the partner waits), residents, bricks and the day of the pact.
+ * site (where the partner waits), residents, what bricks built, bricks and the day of the pact.
  */
 import { getMascot } from '@/content/personality';
 import { BUILDING_IDS, BUILDINGS, type BuildingId } from '@/content/village';
@@ -34,6 +34,7 @@ export function useVillage(now: number): Village {
     pact: st.pact,
     activeDays: st.activeDays,
     coins: st.coins,
+    placements: st.placements,
     villageName: st.villageName,
     mascot: selectMascot(st),
   }));
@@ -53,7 +54,7 @@ export function useVillage(now: number): Village {
     progress,
     current,
     residents: countResidents(s),
-    houses: 0,
+    placements: s.placements,
     name: s.villageName,
     bricks: s.coins,
     day: s.pact ? pactDay(s.pact, now) : null,
