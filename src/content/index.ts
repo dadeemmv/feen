@@ -10,3 +10,4 @@ export * from './shop';
 export * from './challenges';
 export * from './assistant';
 export * from './personality';
+export * from './village';

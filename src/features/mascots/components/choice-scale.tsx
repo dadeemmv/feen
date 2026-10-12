@@ -1,53 +1,51 @@
 /**
- * The 16Personalities-style agreement scale: seven circles from "D'accordo" (left, evergreen)
- * to "In disaccordo" (right, violet), largest at the extremes. The chosen circle fills and pops
- * a check; colours glide with CSS transitions.
+ * The scale between two equally good answers (concept board, screen 1): seven circles in the
+ * rhythm of the 16Personalities test, largest at the extremes, with the two answers written
+ * under the ends. The chosen circle fills with ink and pops a check.
  */
 import { StyleSheet, View } from 'react-native';
 import Animated, { type CSSTransitionProperties } from 'react-native-reanimated';
 import { Check } from 'lucide-react-native';
 
 import { HStack, iconStroke, PressableScale, Text } from '@/components/ui';
-import { AGREEMENT_SCALE, type AgreementValue } from '@/content/personality';
+import { CHOICE_SCALE, choiceLabel, type ChoiceValue } from '@/content/personality';
 import { PopIn } from '@/features/rewards';
-import { duration, radius, useTheme, type SemanticColors } from '@/theme';
+import { duration, radius, useTheme } from '@/theme';
 
 import { MASCOT_COPY } from '../copy';
 import { mascotMetrics } from '../metrics';
 
-export type LikertScaleProps = {
-  value: AgreementValue | undefined;
-  onChange: (value: AgreementValue) => void;
+export type ChoiceScaleProps = {
+  /** Answer under the left end. */
+  left: string;
+  /** Answer under the right end. */
+  right: string;
+  value: ChoiceValue | undefined;
+  onChange: (value: ChoiceValue) => void;
 };
 
-const diameterFor = (value: AgreementValue) => mascotMetrics.likertDiameters[3 - Math.abs(value)];
+const diameterFor = (value: ChoiceValue) => mascotMetrics.likertDiameters[3 - Math.abs(value)];
 
-function sideColor(colors: SemanticColors, value: AgreementValue) {
-  if (value > 0) return colors.brandSolid;
-  if (value < 0) return colors.pro;
-  return colors.borderStrong;
-}
-
-export function LikertScale({ value, onChange }: LikertScaleProps) {
+export function ChoiceScale({ left, right, value, onChange }: ChoiceScaleProps) {
   const { colors } = useTheme();
   const copy = MASCOT_COPY.quiz;
 
   return (
     <View style={styles.root}>
       <HStack justify="space-between" accessibilityRole="radiogroup" accessibilityLabel={copy.scaleLabel}>
-        {AGREEMENT_SCALE.map((option) => {
-          const selected = value === option.value;
-          const size = diameterFor(option.value);
-          const color = sideColor(colors, option.value);
+        {CHOICE_SCALE.map((option) => {
+          const selected = value === option;
+          const size = diameterFor(option);
+          const color = option === 0 ? colors.borderStrong : colors.accentSolid;
           return (
             <PressableScale
-              key={option.value}
-              onPress={() => onChange(option.value)}
+              key={option}
+              onPress={() => onChange(option)}
               scaleTo="small"
               haptic="selection"
               accessibilityRole="radio"
               accessibilityState={{ checked: selected }}
-              accessibilityLabel={option.label}
+              accessibilityLabel={choiceLabel(option, left, right)}
               style={styles.target}>
               <Animated.View
                 style={[
@@ -57,12 +55,12 @@ export function LikertScale({ value, onChange }: LikertScaleProps) {
                     width: size,
                     height: size,
                     borderColor: color,
-                    backgroundColor: selected ? color : colors.surface,
+                    backgroundColor: selected ? colors.accentSolid : colors.background,
                   },
                 ]}>
                 {selected ? (
                   <PopIn>
-                    <Check size={Math.round(size * 0.5)} color={colors.onBrand} strokeWidth={iconStroke.heavy} />
+                    <Check size={Math.round(size * 0.5)} color={colors.onAccent} strokeWidth={iconStroke.heavy} />
                   </PopIn>
                 ) : null}
               </Animated.View>
@@ -70,12 +68,12 @@ export function LikertScale({ value, onChange }: LikertScaleProps) {
           );
         })}
       </HStack>
-      <HStack justify="space-between">
-        <Text variant="labelMd" color="brandText">
-          {copy.agree}
+      <HStack justify="space-between" align="flex-start" gap="lg">
+        <Text variant="titleSm" style={styles.answer}>
+          {left}
         </Text>
-        <Text variant="labelMd" color="pro">
-          {copy.disagree}
+        <Text variant="titleSm" align="right" style={styles.answer}>
+          {right}
         </Text>
       </HStack>
     </View>
@@ -89,7 +87,7 @@ const circleTransition: CSSTransitionProperties = {
 };
 
 const styles = StyleSheet.create({
-  root: { gap: mascotMetrics.likertTarget / 4 },
+  root: { gap: mascotMetrics.likertTarget / 3 },
   target: {
     width: mascotMetrics.likertTarget,
     height: mascotMetrics.likertDiameters[0] + mascotMetrics.likertBorder * 2,
@@ -102,4 +100,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  answer: { flex: 1 },
 });

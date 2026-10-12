@@ -13,6 +13,8 @@ export const createInitialProfile = (): ProfileData => ({
   goalMinutes: 5,
   experience: 'beginner',
   personality: null,
+  pact: null,
+  villageName: null,
   onboardingDone: false,
   referralCode: 'ZGGK2O',
   invitedFriends: 0,
@@ -38,6 +40,8 @@ export const createInitialProgress = (): ProgressData => ({
   xp: 0,
   claimedMilestones: [],
   claimedChallenges: [],
+  openSites: [],
+  bloomed: [],
 });
 
 export const createInitialMeta = (): MetaData => ({

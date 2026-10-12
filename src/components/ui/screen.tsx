@@ -20,7 +20,8 @@ import { useTabBarInset } from '@/components/navigation/use-tab-bar-inset';
 import { isIOS } from '@/lib/platform';
 import { ColorModeProvider, layout, spacing, themes, useTheme } from '@/theme';
 
-export type ScreenBackground = 'background' | 'surface' | 'brand';
+/** `contract`: the pact's warm paper — the only screen on paper (Paper Rule). `reward`: sprout, for reward moments. */
+export type ScreenBackground = 'background' | 'surface' | 'brand' | 'contract' | 'reward';
 
 export type ScreenProps = {
   children?: ReactNode;

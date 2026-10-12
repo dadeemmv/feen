@@ -4,7 +4,7 @@
 import { HOUR_MS } from '@/lib/dates';
 
 export const STORE_NAME = 'finanz-store';
-export const STORE_VERSION = 1;
+export const STORE_VERSION = 2;
 
 export const MAX_LIVES = 3;
 /** One life comes back every 2 hours while below max. */

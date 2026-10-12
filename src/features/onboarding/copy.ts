@@ -1,6 +1,6 @@
 /**
- * Italian copy of the first-run flow (spec §5: welcome → nome → test di personalità → obiettivo →
- * livello → ritmo → tutto pronto). The test's own copy lives in `@/features/mascots/copy`.
+ * Italian copy of the first-run flow: welcome → nome → livello → test → il tuo animale → il patto →
+ * prima pietra → nome del borgo. The test's own copy lives in `@/features/mascots/copy`.
  */
 export const ONBOARDING_COPY = {
   back: 'Indietro',
@@ -9,13 +9,13 @@ export const ONBOARDING_COPY = {
   stepLabel: (step: number, total: number) => `Passo ${step} di ${total}`,
 
   welcome: {
-    headlineStart: 'La finanza, finalmente ',
-    headlineAccent: 'semplice.',
-    subtitle: 'Lezioni da 5 minuti, quiz e sfide per imparare a risparmiare e investire.',
-    perks: ['5 min al giorno', 'Quiz e sfide', 'Premi in Kiwi'] as const,
+    headlineStart: 'Ogni lezione, un ',
+    headlineAccent: 'mattone.',
+    subtitle: 'Impari a gestire i soldi e, lezione dopo lezione, costruisci il tuo borgo.',
+    perks: ['5 minuti al giorno', 'Un patto da firmare', 'Il tuo borgo'] as const,
     start: 'Inizia',
     returning: 'Ho già un account',
-    artLabel: 'Un libro aperto illuminato, con monete e scintille',
+    artLabel: 'I quattro animali: Volpe, Castoro, Lontra e Scoiattolo',
   },
 
   name: {
@@ -27,44 +27,39 @@ export const ONBOARDING_COPY = {
     privacy: 'Resta sul tuo dispositivo: non lo condividiamo con nessuno.',
   },
 
-  interests: {
-    title: 'Cosa vuoi imparare?',
-    subtitle: 'Scegli uno o più argomenti. Potrai cambiarli quando vuoi dall’Account.',
-    selected: (n: number) => (n === 1 ? '1 argomento selezionato' : `${n} argomenti selezionati`),
-    minHint: 'Scegline almeno uno per continuare',
-  },
-
   level: {
-    title: 'Quanto ne sai di finanza?',
+    title: 'Quanto ne sai di soldi?',
     subtitle: 'Nessun giudizio: serve solo a scegliere gli esempi giusti per te.',
-    note: 'Si parte comunque dalle basi: ogni lezione dura meno di 5 minuti.',
+    note: 'Si parte comunque dalle basi: ogni lezione dura pochi minuti.',
   },
 
-  pace: {
-    title: 'Qual è il tuo ritmo?',
-    subtitle: 'Bastano pochi minuti al giorno per creare un’abitudine che dura.',
-    minutes: 'min',
-    perDay: (minutes: number) => `${minutes} minuti al giorno`,
-    recommended: 'Consigliato',
-    reminderTitle: 'Attiva promemoria',
-    reminderSubtitle: 'Un avviso gentile per non perdere la serie',
-    reminderTime: 'A che ora preferisci?',
-    demoNote: 'Versione demo: il promemoria viene salvato ma non invia notifiche reali.',
+  reveal: {
+    sign: (partner: string) => `Firma il patto con ${partner}`,
   },
 
-  ready: {
-    overline: 'Tutto pronto',
-    titleStart: 'Ciao ',
-    titleEnd: ', il tuo percorso è pronto',
-    subtitle: 'Abbiamo preparato tutto per te. Si parte dalle basi, una lezione alla volta.',
-    returningTitle: (name: string) => `Bentornato, ${name}!`,
-    returningSubtitle: 'I tuoi progressi e i tuoi Kiwi ti stanno aspettando.',
-    pathOverline: 'Il tuo primo percorso',
-    pathMeta: (chapters: number, firstChapter: string) => `${chapters} capitoli · Si parte da ${firstChapter}`,
-    companion: (name: string) => `Con ${name}`,
-    interestsCount: (n: number) => (n === 1 ? '1 interesse' : `${n} interessi`),
-    reminderAt: (time: string) => `Promemoria alle ${time}`,
-    cta: 'Inizia il percorso',
-    returningCta: 'Vai alla Home',
+  pact: {
+    intro: (partner: string) => `${partner} ti propone un patto. È breve, e firmarlo è un piccolo rito.`,
+    next: 'Posa la prima pietra',
   },
+
+  stone: {
+    code: (number: string) => `Patto ${number} · firmato`,
+    titleStart: 'Prima pietra ',
+    titleWord: 'posata.',
+    body: (partner: string, building: string) =>
+      `Il Municipio è in piedi e custodisce il patto. Domani ${partner} ti aspetta ${building}.`,
+    cta: 'Dai un nome al borgo',
+    artLabel: 'Il Municipio, costruito',
+  },
+
+  village: {
+    title: 'Come si chiama il tuo borgo?',
+    subtitle: (partner: string) => `Lo scegli tu, come in FIFA City. ${partner} te ne propone tre.`,
+    label: 'Nome del borgo',
+    placeholder: 'Es. Ginestra',
+    preview: (name: string) => `Borgo ${name}`,
+    cta: 'Entra nel borgo',
+  },
+
+  returningCta: 'Entra nel borgo',
 } as const;

@@ -39,7 +39,11 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 export function migrate(persisted: unknown, version: number): PersistedData {
   const data = isRecord(persisted) ? persisted : {};
   switch (version) {
-    // case 1: → future v2 transforms go here, falling through to the latest version.
+    case 1:
+      // v2 (village): the test now assigns animals on new axes, so a v1 result is dropped and
+      // the test is offered again; pact, village name and sites start empty.
+      data.personality = null;
+    // falls through
     default:
       return data as PersistedData;
   }

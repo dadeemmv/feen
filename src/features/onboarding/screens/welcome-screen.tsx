@@ -1,8 +1,8 @@
 /**
- * Step 1 — Welcome (first launch): evergreen cover with the Finanz wordmark, the open book
- * floating in its cone of light, "La finanza, finalmente semplice." and the two ways in:
- *   "Inizia"            → the four questions (name → interests → level → pace)
- *   "Ho già un account" → demo: keeps the saved profile and jumps to "Tutto pronto".
+ * Step 1 — Welcome (first launch): black cover with the wordmark, the four animals floating,
+ * "Ogni lezione, un *mattone*." and the two ways in:
+ *   "Inizia"            → name → level → the test → the pact → the first stone
+ *   "Ho già un account" → demo: keeps the saved profile and enters the village.
  */
 import { useEffect } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
@@ -14,20 +14,23 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { router } from 'expo-router';
-import { ArrowRight, Clock, Target } from 'lucide-react-native';
+import { ArrowRight, Clock, House, PenLine } from 'lucide-react-native';
 
-import { FinanzWordmark, KiwiCoinIcon } from '@/components/icons';
-import { HERO_BOOK_SIZE, HeroBookSpotlight } from '@/components/illustrations';
+import { FinanzWordmark } from '@/components/icons';
+import { MascotArt } from '@/components/illustrations';
+import { MASCOT_IDS } from '@/content/personality';
 import { Button, Chip, iconSize, Screen, Spotlight, Text, useReduceMotion } from '@/components/ui';
 import { useContentWidth } from '@/features/account/lib/use-content-width';
-import { duration, easing, layout, spacing } from '@/theme';
+import { duration, easing, fonts, layout, spacing } from '@/theme';
 
 import { ONBOARDING_COPY } from '../copy';
 import { useOnboardingDraft } from '../draft-store';
 import { useEntering } from '../lib/entering';
-import { STEP_HREF } from '../steps';
+import { finishOnboarding, STEP_HREF } from '../steps';
 
-const [ART_WIDTH, ART_HEIGHT] = HERO_BOOK_SIZE;
+/** The four animals in a 2 × 2 square. */
+const ART_WIDTH = 280;
+const ART_HEIGHT = 280;
 /** Share of the window height the hero art may take (keeps the CTA above the fold on an SE). */
 const HERO_HEIGHT_SHARE = 0.27;
 /** Vertical travel of the floating book. */
@@ -83,7 +86,7 @@ export function WelcomeScreen() {
 
   const signIn = () => {
     setReturning(true);
-    router.push(STEP_HREF.ready);
+    finishOnboarding();
   };
 
   return (
@@ -112,7 +115,11 @@ export function WelcomeScreen() {
       <View style={styles.hero}>
         <Animated.View entering={rise(1)}>
           <Animated.View style={floatStyle}>
-            <HeroBookSpotlight width={heroWidth} accessibilityLabel={copy.artLabel} />
+            <View style={[styles.animals, { width: heroWidth }]} accessible accessibilityRole="image" accessibilityLabel={copy.artLabel}>
+              {MASCOT_IDS.map((id) => (
+                <MascotArt key={id} id={id} width={(heroWidth - spacing.sm) / 2} />
+              ))}
+            </View>
           </Animated.View>
         </Animated.View>
       </View>
@@ -120,7 +127,7 @@ export function WelcomeScreen() {
       <Animated.View entering={rise(2)} style={styles.copy}>
         <Text variant={headline} align="center" accessibilityRole="header">
           {copy.headlineStart}
-          <Text variant={headline} color="accentText">
+          <Text variant={headline} color="accentText" style={styles.italic}>
             {copy.headlineAccent}
           </Text>
         </Text>
@@ -131,8 +138,8 @@ export function WelcomeScreen() {
 
       <Animated.View entering={rise(3)} style={styles.perks}>
         <Chip icon={Clock} label={timePerk} size="sm" />
-        <Chip icon={Target} label={challengePerk} size="sm" />
-        <Chip icon={<KiwiCoinIcon size={iconSize.sm} />} label={rewardPerk} size="sm" />
+        <Chip icon={PenLine} label={challengePerk} size="sm" />
+        <Chip icon={House} label={rewardPerk} size="sm" />
       </Animated.View>
     </Screen>
   );
@@ -151,4 +158,6 @@ const styles = StyleSheet.create({
     marginTop: spacing.lg,
   },
   footer: { gap: spacing.xxs },
+  animals: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  italic: { fontFamily: fonts.serif.italic, letterSpacing: 0 },
 });

@@ -79,6 +79,10 @@ export type {
   Experience,
   LessonSession,
   OnboardingAnswers,
+  OpenSiteFailure,
+  OpenSiteResult,
+  Pact,
+  PactInput,
   PersonalityResult,
   Purchase,
   ReminderSlot,
@@ -94,6 +98,18 @@ export { computeLives, hasUnlimitedLives, isProActive } from './rules/lives';
 export { computeLongestStreak, computeStreak } from './rules/streak';
 export { countCompletedChapters, countCompletedLessons } from './rules/progress';
 export { computeChapterReward, getUserLevel } from './rules/levels';
+export {
+  activeSites,
+  buildingState,
+  chaptersDone,
+  countResidents,
+  isBuilt,
+  nextChapterOf,
+  openSiteIssue,
+  pactDay,
+  suggestedBuilding,
+  type BuildingState,
+} from './rules/village';
 export { getAvailabilityIssue } from './rules/shop';
 export { findShopItem } from './slices/economy';
 export * from './constants';

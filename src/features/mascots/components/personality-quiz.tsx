@@ -1,5 +1,5 @@
 /**
- * The test itself: one statement per screen, the seven-circle scale, a progress header. A tap
+ * The test itself: one scenario per screen, the scale between its two answers, a progress header. A tap
  * records the answer and, after a short beat, slides the next statement in; the last one calls
  * `onComplete`. Back (header arrow or Android back) returns to the previous statement, and from
  * the first one calls `onExit`. Answers and position are owned by the caller (onboarding draft
@@ -11,19 +11,19 @@ import Animated from 'react-native-reanimated';
 import { ArrowLeft } from 'lucide-react-native';
 
 import { IconButton, ProgressBar, Screen, Text } from '@/components/ui';
-import { PERSONALITY_STATEMENTS, type AgreementValue } from '@/content/personality';
+import { SCENARIOS, type ChoiceValue } from '@/content/personality';
 import { useEntering } from '@/features/onboarding/lib/entering';
 import { layout, spacing } from '@/theme';
 
 import { MASCOT_COPY } from '../copy';
 import { QUIZ_LENGTH, type QuizAnswers } from '../lib/score';
 import { mascotMetrics } from '../metrics';
-import { LikertScale } from './likert-scale';
+import { ChoiceScale } from './choice-scale';
 
 export type PersonalityQuizProps = {
   answers: QuizAnswers;
   index: number;
-  onAnswer: (statementId: string, value: AgreementValue) => void;
+  onAnswer: (scenarioId: string, value: ChoiceValue) => void;
   onIndexChange: (index: number) => void;
   onComplete: () => void;
   onExit: () => void;
@@ -35,7 +35,9 @@ export function PersonalityQuiz({ answers, index, onAnswer, onIndexChange, onCom
   const copy = MASCOT_COPY.quiz;
 
   const current = Math.min(Math.max(index, 0), QUIZ_LENGTH - 1);
-  const statement = PERSONALITY_STATEMENTS[current];
+  const statement = SCENARIOS[current];
+  const left = statement.positiveFirst ? statement.positive : statement.negative;
+  const right = statement.positiveFirst ? statement.negative : statement.positive;
 
   const cancelAdvance = () => {
     if (timer.current) clearTimeout(timer.current);
@@ -59,7 +61,7 @@ export function PersonalityQuiz({ answers, index, onAnswer, onIndexChange, onCom
 
   useEffect(() => cancelAdvance, []);
 
-  const choose = (value: AgreementValue) => {
+  const choose = (value: ChoiceValue) => {
     onAnswer(statement.id, value);
     cancelAdvance();
     timer.current = setTimeout(() => {
@@ -103,7 +105,7 @@ export function PersonalityQuiz({ answers, index, onAnswer, onIndexChange, onCom
             {statement.text}
           </Text>
         </Animated.View>
-        <LikertScale value={answers[statement.id]} onChange={choose} />
+        <ChoiceScale left={left} right={right} value={answers[statement.id]} onChange={choose} />
       </View>
     </Screen>
   );

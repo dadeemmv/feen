@@ -85,6 +85,12 @@ export type SemanticColors = {
   tintButterText: string;
   tintLilac: string;
   tintLilacText: string;
+  // Gallery materials: the pact's paper, its red thread and signature ink, the reward surface
+  contract: string;
+  thread: string;
+  signInk: string;
+  reward: string;
+  onReward: string;
   // Shadows
   shadow: string;
 };
@@ -167,6 +173,12 @@ export const lightColors = {
   tintButterText: g.honeyDeep,
   tintLilac: g.stoneTint,
   tintLilacText: g.stoneDeep,
+
+  contract: g.contract,
+  thread: g.thread,
+  signInk: g.sign,
+  reward: g.sprout,
+  onReward: g.ink,
 
   shadow: g.ink,
 } as const satisfies SemanticColors;
@@ -267,6 +279,47 @@ export const illustration = {
   mutedDeep: p.olive11,
   /** Deeper blush for shading pink illustrations (piggy bank). */
   blushDeep: p.pink8,
+} as const;
+
+/**
+ * The four animals (features/mascots): base for the illustration, mid for its shading, tint for
+ * backgrounds, deep for text on the tint. Also the colours of their buildings in the village.
+ */
+export const characterColors = {
+  volpe: { base: g.coral, mid: '#E2431F', tint: g.coralTint, deep: g.coralDeep },
+  castoro: { base: g.cobalt, mid: '#2A44D6', tint: g.cobaltTint, deep: g.cobaltDeep },
+  lontra: { base: g.lagoon, mid: '#16A094', tint: g.lagoonTint, deep: g.lagoonDeep },
+  scoiattolo: { base: g.honey, mid: '#E89A0C', tint: g.honeyTint, deep: g.honeyDeep },
+} as const;
+
+/**
+ * Building tones (village and building cards): tint for the card, glow for the halo under it,
+ * deep for text on the tint. Buildings without an animal take the colour of their material.
+ */
+export const buildingTones = {
+  cobalt: { tint: g.cobaltTint, glow: g.cobalt, deep: g.cobaltDeep },
+  mint: { tint: g.mintTint, glow: g.mint, deep: g.mintDeep },
+  coral: { tint: g.coralTint, glow: g.coral, deep: g.coralDeep },
+  honey: { tint: g.honeyTint, glow: g.honey, deep: g.honeyDeep },
+  wheat: { tint: g.wheatTint, glow: g.honey, deep: g.honeyDeep },
+  lagoon: { tint: g.lagoonTint, glow: g.lagoon, deep: g.lagoonDeep },
+  leaf: { tint: g.leafTint, glow: g.leaf, deep: g.leafDeep },
+  stone: { tint: g.stoneTint, glow: g.stone, deep: g.stoneDeep },
+  wood: { tint: g.woodTint, glow: g.wood, deep: g.woodDeep },
+} as const;
+
+export type BuildingTone = keyof typeof buildingTones;
+
+/** Gallery inks for places where a raw value is needed (SVG markup, the pact's paper). */
+export const galleryColors = {
+  sprout: g.sprout,
+  sprout2: g.sprout2,
+  sproutDeep: g.sproutDeep,
+  thread: g.thread,
+  contract: g.contract,
+  sign: g.sign,
+  ink: g.ink,
+  paper: g.paper,
 } as const;
 
 /**

@@ -10,6 +10,7 @@ import { dentroBrokerLesson } from './dentro-broker';
 import { diversificaLesson } from './diversifica';
 import { dividendiLesson } from './dividendi';
 import { etfLesson } from './etf';
+import { fondoEmergenzeLesson } from './fondo-emergenze';
 import { inflazioneLesson } from './inflazione';
 import { interesseCompostoLesson } from './interesse-composto';
 import { obbligazioniLesson } from './obbligazioni';
@@ -32,6 +33,7 @@ const ALL_LESSONS: Lesson[] = [
   brokerLesson,
   scegliBrokerLesson,
   dentroBrokerLesson,
+  fondoEmergenzeLesson,
 ];
 
 /** All lessons keyed by chapter id. */

@@ -6,6 +6,7 @@
 import type { StateCreator } from 'zustand';
 
 import type { MascotId } from '@/content/personality';
+import type { BuildingId } from '@/content/village';
 import type { DayKey } from '@/lib/dates';
 
 import type { ResolvedChallenge } from './challenges';
@@ -17,17 +18,37 @@ import type { ResolvedMilestone } from './milestones';
 
 export type Experience = 'beginner' | 'some' | 'expert';
 
-/** Outcome of the money-compass test ("Che tipo sei con i soldi?"). */
+/** Outcome of the test ("Che animale sei con i soldi?"). */
 export type PersonalityResult = {
-  /** The companion character assigned by the test. */
+  /** The animal assigned by the first test. It never changes: the partner signed with you. */
   mascot: MascotId;
-  /** Position on the left ↔ right axis (dream home ↔ yacht), 0…100. */
-  right: number;
-  /** Position on the unrisk ↔ risk axis, 0…100. */
+  /** Position on the oggi ↔ domani axis, 0…100 towards domani. */
+  future: number;
+  /** Position on the prudenza ↔ audacia axis, 0…100 towards audacia. */
   risk: number;
   /** Epoch ms. */
   takenAt: number;
 };
+
+/** The pact signed after the test (concept board §03): five articles, countersigned by the partner. */
+export type Pact = {
+  /** Progressive number ("Patto n. 0001"): a new pact at each renewal. */
+  number: number;
+  /** Epoch ms. */
+  signedAt: number;
+  /** Art. 1 · the reason, chosen by the student. */
+  why: string;
+  /** Art. 2 · daily dose in minutes (5 · 10 · 15). */
+  minutes: number;
+  /** Art. 2 · length in days (30, then renewal). */
+  days: number;
+  /** Art. 3 · the habit it hooks onto ("Quando salgo sul bus per andare a scuola"). */
+  when: string;
+  /** Drawn with the finger, or the name written in the signature ink. */
+  signature: { kind: 'drawn' | 'typed'; name: string };
+};
+
+export type PactInput = Omit<Pact, 'number' | 'signedAt'>;
 export type AppLanguage = 'it' | 'en';
 
 export type ProfileData = {
@@ -38,8 +59,12 @@ export type ProfileData = {
   /** Daily study goal chosen in onboarding. */
   goalMinutes: number;
   experience: Experience;
-  /** Money-personality test result; null until the test is taken. */
+  /** Personality test result; null until the test is taken. */
   personality: PersonalityResult | null;
+  /** The pact in force; null until signed. */
+  pact: Pact | null;
+  /** Chosen after the first stone ("Borgo Ginestra"); null until then. */
+  villageName: string | null;
   onboardingDone: boolean;
   referralCode: string;
   /** Friends who redeemed the referral code (0…3 for the "30 giorni di Finanz Pro" promo). */
@@ -47,7 +72,9 @@ export type ProfileData = {
   language: AppLanguage;
 };
 
-export type OnboardingAnswers = Partial<Pick<ProfileData, 'name' | 'interests' | 'goalMinutes' | 'experience' | 'avatar' | 'personality'>>;
+export type OnboardingAnswers = Partial<
+  Pick<ProfileData, 'name' | 'interests' | 'goalMinutes' | 'experience' | 'avatar' | 'personality' | 'villageName'>
+>;
 
 export type ProfileActions = {
   updateProfile: (patch: Partial<Omit<ProfileData, 'referralCode'>>) => void;
@@ -56,6 +83,9 @@ export type ProfileActions = {
   completeOnboarding: (answers?: OnboardingAnswers) => void;
   setLanguage: (language: AppLanguage) => void;
   setPersonality: (result: PersonalityResult) => void;
+  /** Signs (or renews) the pact: the first stone of the village. */
+  signPact: (input: PactInput, now?: number) => Pact;
+  setVillageName: (name: string) => void;
   addInvitedFriend: () => void;
 };
 
@@ -148,7 +178,14 @@ export type ProgressData = {
   claimedMilestones: string[];
   /** Marathon (streak) challenges whose coins were collected. */
   claimedChallenges: string[];
+  /** Village sites opened by the student (at most two at a time, built ones drop out). */
+  openSites: BuildingId[];
+  /** Buildings that bloomed: built, and the one-week review brought by a resident was right. */
+  bloomed: BuildingId[];
 };
+
+export type OpenSiteFailure = 'built' | 'needs-building' | 'too-many' | 'no-lessons';
+export type OpenSiteResult = { ok: true } | { ok: false; reason: OpenSiteFailure };
 
 export type CompleteChapterInput = {
   chapterId: string;
@@ -200,6 +237,8 @@ export type ProgressActions = {
   claimMilestone: (milestoneId: string, now?: number) => ClaimMilestoneResult;
   /** Collects the coins of a reached marathon challenge ("Sfide Maratona"). */
   claimChallenge: (challengeId: string, now?: number) => ClaimChallengeResult;
+  /** Opens a project as a site (no locks: at most two open, the Tower after the Well). */
+  openSite: (id: BuildingId) => OpenSiteResult;
 };
 
 export type ProgressSlice = ProgressData & ProgressActions;

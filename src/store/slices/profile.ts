@@ -1,9 +1,9 @@
 import { createInitialProfile } from '../initial-state';
-import type { ProfileSlice, SliceCreator } from '../types';
+import type { Pact, ProfileSlice, SliceCreator } from '../types';
 
 const unique = (values: readonly string[]) => [...new Set(values)];
 
-export const createProfileSlice: SliceCreator<ProfileSlice> = (set) => ({
+export const createProfileSlice: SliceCreator<ProfileSlice> = (set, get) => ({
   ...createInitialProfile(),
 
   updateProfile: (patch) => set(patch),
@@ -26,6 +26,14 @@ export const createProfileSlice: SliceCreator<ProfileSlice> = (set) => ({
   setLanguage: (language) => set({ language }),
 
   setPersonality: (personality) => set({ personality }),
+
+  signPact: (input, now = Date.now()) => {
+    const pact: Pact = { ...input, number: (get().pact?.number ?? 0) + 1, signedAt: now };
+    set({ pact });
+    return pact;
+  },
+
+  setVillageName: (villageName) => set({ villageName: villageName.trim() || null }),
 
   addInvitedFriend: () => set((s) => ({ invitedFriends: s.invitedFriends + 1 })),
 });

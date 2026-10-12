@@ -41,7 +41,7 @@ export function Greeting({ name, streak, studiedToday, courseDone }: GreetingPro
           scaleTo="small"
           haptic="light"
           accessibilityRole="button"
-          accessibilityLabel={HOME_COPY.mascotA11y(getMascot(mascot).name, getMascot(mascot).title)}>
+          accessibilityLabel={HOME_COPY.mascotA11y(getMascot(mascot).partner.name, getMascot(mascot).title)}>
           <MascotArt id={mascot} framing="bust" width={mascotMetrics.greetingBust} />
         </PressableScale>
       ) : null}

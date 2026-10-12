@@ -15,6 +15,8 @@ export const elevation = {
   xl: '0px 18px 48px rgba(0, 0, 0, 0.22), 0px 4px 12px rgba(0, 0, 0, 0.08)',
   /** No coloured glow under CTAs. */
   accentGlow: undefined,
+  /** The pact's sheet of paper: warm, diffuse (a physical object in the world). */
+  paper: '0px 40px 80px -40px rgba(60, 40, 10, 0.35)',
   /** AI sparkle button: neutral float. */
   brandGlow: '0px 8px 22px rgba(0, 0, 0, 0.25)',
 } as const;

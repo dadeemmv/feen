@@ -1,0 +1,93 @@
+/**
+ * Village rules (pure). A building's state is derived, never stored:
+ *   progetto  → the lot is marked on the ground, opens whenever you want (no locks);
+ *   cantiere  → opened as a site: each lesson raises the walls;
+ *   costruito → all its lessons done;
+ *   fiorito   → built, and the review brought by a resident a week later was right.
+ * The Town Hall stands from the first stone (the signed pact). Residents count the days of the
+ * pact that were kept: a skipped day takes nobody away.
+ */
+import {
+  BUILDING_IDS,
+  BUILDINGS,
+  buildingOfChapter,
+  FIRST_STONE,
+  MAX_OPEN_SITES,
+  type BuildingId,
+} from '@/content/village';
+import { toDayKey } from '@/lib/dates';
+
+import type { OpenSiteFailure, Pact, ProgressData } from '../types';
+
+export type BuildingState = 'progetto' | 'cantiere' | 'costruito' | 'fiorito';
+
+type VillageInput = Pick<ProgressData, 'chapterRecords' | 'openSites' | 'bloomed'> & { pact: Pact | null };
+
+/** Lessons of a building completed at least once. */
+export function chaptersDone(id: BuildingId, records: ProgressData['chapterRecords']): number {
+  return BUILDINGS[id].chapterIds.filter((chapterId) => records[chapterId] !== undefined).length;
+}
+
+export function isBuilt(id: BuildingId, s: Pick<VillageInput, 'chapterRecords' | 'pact'>): boolean {
+  if (id === FIRST_STONE) return s.pact !== null;
+  const { chapterIds } = BUILDINGS[id];
+  return chapterIds.length > 0 && chaptersDone(id, s.chapterRecords) === chapterIds.length;
+}
+
+export function buildingState(id: BuildingId, s: VillageInput): BuildingState {
+  if (isBuilt(id, s)) return s.bloomed.includes(id) ? 'fiorito' : 'costruito';
+  return s.openSites.includes(id) ? 'cantiere' : 'progetto';
+}
+
+/** Sites still open: opened and not built yet (built ones drop out automatically). */
+export function activeSites(s: VillageInput): BuildingId[] {
+  return s.openSites.filter((id) => !isBuilt(id, s));
+}
+
+/** Why a project cannot be opened right now, or null when it can. */
+export function openSiteIssue(id: BuildingId, s: VillageInput): OpenSiteFailure | null {
+  const building = BUILDINGS[id];
+  if (isBuilt(id, s)) return 'built';
+  if (building.chapterIds.length === 0) return 'no-lessons';
+  if (building.requires && !isBuilt(building.requires, s)) return 'needs-building';
+  const sites = activeSites(s);
+  if (!sites.includes(id) && sites.length >= MAX_OPEN_SITES) return 'too-many';
+  return null;
+}
+
+/** Next lesson to play in a building (first not completed), or the first one to practise. */
+export function nextChapterOf(id: BuildingId, records: ProgressData['chapterRecords']): string | undefined {
+  const { chapterIds } = BUILDINGS[id];
+  return chapterIds.find((chapterId) => records[chapterId] === undefined) ?? chapterIds[0];
+}
+
+/** Sites after a lesson: its building joins them if it was a project; built ones drop out. */
+export function sitesAfterLesson(chapterId: string, s: VillageInput): BuildingId[] {
+  const id = buildingOfChapter(chapterId);
+  const opened = id && !s.openSites.includes(id) ? [...s.openSites, id] : s.openSites;
+  return opened.filter((site) => !isBuilt(site, s));
+}
+
+/** Residents: one per day of the pact that was kept (a day with at least one lesson). */
+export function countResidents(s: { activeDays: readonly string[]; pact: Pact | null }): number {
+  if (!s.pact) return 0;
+  const from = toDayKey(s.pact.signedAt);
+  return s.activeDays.filter((day) => day >= from).length;
+}
+
+/** Day of the pact (1-based), capped at its length. */
+export function pactDay(pact: Pact, now: number): number {
+  const start = new Date(pact.signedAt);
+  start.setHours(0, 0, 0, 0);
+  const today = new Date(now);
+  today.setHours(0, 0, 0, 0);
+  const days = Math.round((today.getTime() - start.getTime()) / 86_400_000) + 1;
+  return Math.min(pact.days, Math.max(1, days));
+}
+
+/** Where the partner suggests to go next: an open site, else the animal's first start building. */
+export function suggestedBuilding(s: VillageInput, starts: readonly BuildingId[]): BuildingId | undefined {
+  const sites = activeSites(s);
+  if (sites.length > 0) return sites[0];
+  return [...starts, ...BUILDING_IDS].find((id) => openSiteIssue(id, s) === null);
+}

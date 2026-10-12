@@ -26,15 +26,15 @@ type S = RootState;
 /* ── Profile ──────────────────────────────────────────────────────────────────────────────── */
 
 /**
- * The money-compass result, or null until the test is taken — also for a stale blob from an older
+ * The test result, or null until the test is taken — also for a stale blob from an older
  * version of the test (other character ids or axes), so the user is simply offered the test again.
  */
 export const selectPersonality = (s: Pick<S, 'personality'>): PersonalityResult | null => {
   const p = s.personality;
-  return p && isMascotId(p.mascot) && typeof p.right === 'number' && typeof p.risk === 'number' ? p : null;
+  return p && isMascotId(p.mascot) && typeof p.future === 'number' && typeof p.risk === 'number' ? p : null;
 };
 
-/** The companion character from the money compass (null until taken). */
+/** The animal from the test (null until taken). */
 export const selectMascot = (s: Pick<S, 'personality'>): MascotId | null => selectPersonality(s)?.mascot ?? null;
 
 /* ── Streak ───────────────────────────────────────────────────────────────────────────────── */

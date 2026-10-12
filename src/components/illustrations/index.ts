@@ -49,13 +49,9 @@ export {
 } from './economy/streak-flame-hero';
 export { TrophyCups, type TrophyCupsProps } from './economy/trophy-cups';
 
-// Companion characters (200 × 320 full figure, or square bust; transparent)
-export { MascotArt, type MascotArtProps } from './mascots/mascot-art';
-export { BUST_FRAME, CHARACTER_SIZE, type Framing } from './mascots/character-parts';
-export { GiverCharacter } from './mascots/giver-character';
-export { SharkCharacter } from './mascots/shark-character';
-export { ValueCharacter } from './mascots/value-character';
-export { VisionaryCharacter } from './mascots/visionary-character';
+// The four animals (200 × 200 busts with volume) and the partner's wax seal
+export { MascotArt, type Framing, type MascotArtProps } from './mascots/mascot-art';
+export { WaxSeal, type WaxSealProps } from './mascots/wax-seal';
 
 // Assistant & states
 export { ASSISTANT_ORB_SIZE, AssistantOrb, type AssistantOrbProps } from './assistant-orb';

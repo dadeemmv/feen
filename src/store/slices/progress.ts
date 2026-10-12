@@ -9,6 +9,7 @@ import { createInitialProgress } from '../initial-state';
 import { findCrossedMilestone, findMilestone, resolveMilestone } from '../milestones';
 import { countCompletedLessons } from '../rules/progress';
 import { computeLongestStreak, computeStreak, findPendingShieldDay, insertDay } from '../rules/streak';
+import { activeSites, openSiteIssue, sitesAfterLesson } from '../rules/village';
 import type { ChapterRecord, CompletionSummary, LessonSession, ProgressSlice, SliceCreator } from '../types';
 
 const toAmount = (value: number) => (Number.isFinite(value) && value > 0 ? Math.floor(value) : 0);
@@ -79,6 +80,9 @@ export const createProgressSlice: SliceCreator<ProgressSlice> = (set, get) => ({
       session: s.session?.chapterId === chapterId ? null : s.session,
     }));
 
+    // The lesson's building becomes a site if it was a project; built buildings leave the sites.
+    set((s) => ({ openSites: sitesAfterLesson(chapterId, s) }));
+
     const after = get();
     const lessonsAfter = countCompletedLessons(after.chapterRecords);
     const crossed = findCrossedMilestone(lessonsBefore, lessonsAfter);
@@ -93,6 +97,13 @@ export const createProgressSlice: SliceCreator<ProgressSlice> = (set, get) => ({
       isNewStreakDay: !before.activeDays.includes(today),
       milestoneReached: crossed ? resolveMilestone(crossed, lessonsAfter, after.claimedMilestones) : undefined,
     };
+  },
+
+  openSite: (id) => {
+    const issue = openSiteIssue(id, get());
+    if (issue) return { ok: false, reason: issue };
+    set((s) => ({ openSites: activeSites(s).includes(id) ? activeSites(s) : [...activeSites(s), id] }));
+    return { ok: true };
   },
 
   claimMilestone: (milestoneId, now = Date.now()) => {

@@ -125,6 +125,15 @@ export const CHAPTERS: Record<string, Chapter> = {
     xpReward: 30,
     coinReward: 40,
   },
+  'fondo-emergenze': {
+    id: 'fondo-emergenze',
+    title: 'Il fondo emergenze',
+    emoji: '🪣',
+    summary: 'Una scorta per gli imprevisti, separata dai risparmi per gli obiettivi.',
+    estimatedMinutes: 4,
+    xpReward: 20,
+    coinReward: 20,
+  },
 };
 
 const firstInvestmentLevels: CourseLevel[] = [

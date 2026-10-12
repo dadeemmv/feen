@@ -77,8 +77,8 @@ export function DevMascotsScreen() {
         {(['paper', 'evergreen'] as const).map((surface) => (
           <GallerySection key={surface} title={surface === 'paper' ? 'Su carta' : 'Su evergreen'} surface={surface}>
             {MASCOT_IDS.map((id) => (
-              <GalleryCell key={id} label={`${MASCOTS[id].name} · ${MASCOTS[id].title} · ${MASCOTS[id].quadrant}`}>
-                <MascotArt id={id} height={240} accessibilityLabel={MASCOTS[id].name} />
+              <GalleryCell key={id} label={`${MASCOTS[id].partner.name} · ${MASCOTS[id].title} · ${MASCOTS[id].quadrant}`}>
+                <MascotArt id={id} height={240} accessibilityLabel={MASCOTS[id].title} />
                 <MascotArt id={id} framing="bust" width={64} />
                 <MascotArt id={id} framing="bust" width={36} />
               </GalleryCell>

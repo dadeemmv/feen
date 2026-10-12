@@ -1,15 +1,15 @@
 /**
- * "Il tuo personaggio" (/mascot, from the Home greeting and Account): the saved money compass on
- * evergreen with "Rifai il test", or — for a profile without a result — the test intro. The retake
- * runs the same quiz in place with its own answers; finishing saves the new result, toasts whether
- * the character changed and shows the reveal again.
+ * "Il tuo personaggio" (/mascot, from the village and Account): the saved result on black with
+ * "Rifai il test", or — for a profile without a result — the test intro. The retake runs the same
+ * quiz in place with its own answers; finishing saves the new position on the axes (the animal
+ * stays the same: the partner signed with you), toasts it and shows the reveal again.
  */
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ArrowLeft, Clock, RotateCcw } from 'lucide-react-native';
 
 import { Button, Card, Chip, Confetti, IconButton, Screen, Spotlight, Text, toast, VStack } from '@/components/ui';
-import { getMascot, type AgreementValue } from '@/content/personality';
+import { getMascot, type ChoiceValue } from '@/content/personality';
 import { goBackOr } from '@/features/shop/lib/navigation';
 import { getStoreState, selectPersonality, useStore } from '@/store';
 import { layout, spacing } from '@/theme';
@@ -33,7 +33,7 @@ function BackHeader() {
 export function MascotScreen() {
   const personality = useStore(selectPersonality);
   const [phase, setPhase] = useState<Phase>('result');
-  const [answers, setAnswers] = useState<Record<string, AgreementValue>>({});
+  const [answers, setAnswers] = useState<Record<string, ChoiceValue>>({});
   const [index, setIndex] = useState(0);
   const [celebrate, setCelebrate] = useState(0);
   const copy = MASCOT_COPY.screen;
@@ -45,11 +45,14 @@ export function MascotScreen() {
   };
 
   const finishQuiz = () => {
-    const previous = getStoreState().personality?.mascot;
-    const result = scorePersonality(answers);
+    // The animal never changes on a retake: the partner signed with you. Only the axes move.
+    const previous = getStoreState().personality;
+    const result = scorePersonality(answers, Date.now(), previous?.mascot);
     getStoreState().setPersonality(result);
-    const { name } = getMascot(result.mascot);
-    toast.show({ message: previous === result.mascot ? copy.same(name) : copy.saved(name), tone: 'success' });
+    const { name } = getMascot(result.mascot).partner;
+    const moved =
+      previous !== null && (Math.abs(previous.future - result.future) > 10 || Math.abs(previous.risk - result.risk) > 10);
+    toast.show({ message: moved ? copy.moved(name) : copy.same(name), tone: 'success' });
     setCelebrate((n) => n + 1);
     setPhase('result');
   };
@@ -100,7 +103,14 @@ export function MascotScreen() {
         edges={['top', 'bottom']}
         statusBar="light"
         header={<BackHeader />}
-        footer={<Button title={copy.retake} iconLeft={RotateCcw} variant="outline" fullWidth onPress={startQuiz} />}>
+        footer={
+          <VStack gap="sm">
+            <Text variant="bodySm" color="textTertiary" align="center">
+              {copy.retakeNote}
+            </Text>
+            <Button title={copy.retake} iconLeft={RotateCcw} variant="outline" fullWidth onPress={startQuiz} />
+          </VStack>
+        }>
         <Spotlight reach={{ x: 0.9, y: 0.5 }} />
         <MascotReveal key={personality.takenAt} result={personality} />
       </Screen>

@@ -1,0 +1,30 @@
+/** Italian copy of the pact: the paper, the signature and the hold-to-sign. */
+export const PACT_COPY = {
+  header: (number: string) => `Il patto del borgo · ${number}`,
+  title: 'Il',
+  titleWord: 'Patto',
+  article: (n: number) => `Art. ${n}`,
+  art1: (name: string, why: string) => `Io, ${name}, mi impegno a imparare a gestire i miei soldi ${why}.`,
+  art2: (minutes: number, days: number) => `Ogni giorno dedico ${minutes} minuti al mio borgo, per ${days} giorni.`,
+  art2Minutes: (minutes: number) => `${minutes} minuti`,
+  art3: (when: string) => `${when}, apro il borgo.`,
+  art4Title: (partner: string) => `La clausola di ${partner}`,
+  changeHint: 'Le parole in verde si toccano e cambiano.',
+  changeA11y: (value: string) => `${value}. Tocca per cambiare`,
+
+  signHere: 'Firma qui col dito',
+  signA11y: 'Riquadro della firma: disegna la tua firma col dito',
+  typeInstead: 'Preferisco scrivere il nome',
+  drawInstead: 'Preferisco firmare col dito',
+  typedPlaceholder: 'Il tuo nome',
+  clear: 'Ricomincia',
+  signature: 'Firma',
+  countersign: (partner: string) => `Controfirma di ${partner}`,
+  sealA11y: (partner: string) => `Ceralacca di ${partner}`,
+
+  holdLocked: 'Prima firma, poi tieni premuto',
+  holdReady: 'Tieni premuto per firmare',
+  holdDone: 'Patto firmato · prima pietra posata',
+  needSignature: 'Prima firma: disegna nel riquadro o scrivi il tuo nome.',
+  signed: (partner: string) => `Patto firmato. ${partner} ha controfirmato con la ceralacca.`,
+} as const;
