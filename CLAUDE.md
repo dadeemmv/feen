@@ -4,7 +4,7 @@
 
 Duolingo-style personal-finance learning app. Italian UI copy. Product spec: `docs/PRODUCT_SPEC.md`.
 Architecture & design-system decisions: `docs/ARCHITECTURE.md`. Design system: `docs/design/DESIGN.md`
-(Harmony palette: white canvas, indigo brand, vivid colours for rewards and states; supersedes the
+(Harmony palette: white canvas, blue brand #2B64F4, tokens named `indigo`, vivid colours for rewards and states; supersedes the
 colours and fonts of `docs/DESIGN_DIRECTION.md`).
 
 ## Stack facts (verified in node_modules — do not guess)

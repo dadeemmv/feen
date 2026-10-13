@@ -25,7 +25,7 @@ import {
 } from '@radix-ui/colors';
 
 /**
- * Feen palette (docs/design/DESIGN.md, Harmony): a white canvas, indigo as the brand signature,
+ * Feen palette (docs/design/DESIGN.md, Harmony): a white canvas, blue (#2B64F4, tokens still named `indigo`) as the brand signature,
  * vivid colours for rewards and states, cool greys on the Harmony background. Each colour has a
  * tint (backgrounds) and a deep tone (text on the tint, AA). The four animals take the palette's
  * hues, except the Volpe, who keeps her coral; building materials stay natural.
@@ -45,20 +45,20 @@ export const gallery = {
   veilHover: 'rgba(17, 24, 39, 0.08)',
   veilPressed: 'rgba(17, 24, 39, 0.11)',
   disabled: '#ECEEF2',
-  // Brand: indigo. `indigoText` is the indigo for small text (AA on white and on the tint);
+  // Brand: blue #2B64F4 (from 13/10/2026; the tokens keep the name `indigo`). `indigoText` is the indigo for small text (AA on white and on the tint);
   // `indigoNight*` are the cards on indigo surfaces; `paperPressed` is a white pill pressed on indigo.
-  indigo: '#6C5CE7',
-  indigoPressed: '#5F51CB',
-  indigoTint: '#EAE8FC',
-  indigoTintHover: '#E2DEFA',
-  indigoTintPressed: '#D9D5F9',
-  indigoText: '#5848D2',
-  indigoDeep: '#4338CA',
-  indigoLight: '#B6AEF3',
-  indigoInk: '#372F7B',
-  indigoNight: '#5B4DC2',
-  indigoNight2: '#5146B0',
-  paperPressed: '#ECEAFB',
+  indigo: '#2B64F4',
+  indigoPressed: '#1752E8',
+  indigoTint: '#E7EEFD',
+  indigoTintHover: '#DDE6FC',
+  indigoTintPressed: '#D2DEFB',
+  indigoText: '#184ED8',
+  indigoDeep: '#1847BF',
+  indigoLight: '#9FB9F9',
+  indigoInk: '#1B3474',
+  indigoNight: '#1C54E3',
+  indigoNight2: '#2050C8',
+  paperPressed: '#E9EEFC',
   // Rewards and states (Harmony "uso dei colori"): sun = mattoni and the days of the pact,
   // green = right / positive, rose = wrong / loss, cyan = insight, lilac = achievements.
   sun: '#FFCC4D',
@@ -92,10 +92,10 @@ export const gallery = {
   stone: '#9C9384',
   stoneTint: '#ECE9E3',
   stoneDeep: '#4A443A',
-  // The pact: warm paper, the red thread, the signature in brand indigo.
+  // The pact: warm paper, the red thread, the signature in deep brand blue.
   contract: '#F6F1E6',
   thread: '#D42B26',
-  sign: '#4338CA',
+  sign: '#1847BF',
 } as const;
 
 /**

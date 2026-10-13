@@ -296,7 +296,7 @@ export const illustration = {
  */
 export const characterColors = {
   volpe: { base: g.coral, mid: '#E2431F', tint: g.coralTint, deep: g.coralDeep },
-  castoro: { base: g.indigo, mid: '#5C4EC4', tint: g.indigoTint, deep: g.indigoDeep },
+  castoro: { base: g.indigo, mid: '#1F57E0', tint: g.indigoTint, deep: g.indigoDeep },
   lontra: { base: g.cyan, mid: '#00ABD1', tint: g.cyanTint, deep: g.cyanDeep },
   scoiattolo: { base: g.sun, mid: '#E4A72A', tint: g.sunTint, deep: g.sunDeep },
 } as const;

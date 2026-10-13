@@ -376,7 +376,7 @@ function blueprint(k: ReturnType<typeof kit>, i: number, j: number, t: BuildingI
   const j1 = j0 + b.fd;
   const st = `stroke="${INDIGO}" stroke-width="1.3" stroke-dasharray="3.5 3" stroke-linejoin="round"`;
   // The lot is marked on the ground with a stake: it opens whenever you want, no locks.
-  let s = k.poly([P(i0, j0), P(i1, j0), P(i1, j1), P(i0, j1)], 'rgba(108,92,231,.08)', st);
+  let s = k.poly([P(i0, j0), P(i1, j0), P(i1, j1), P(i0, j1)], 'rgba(43,100,244,.08)', st);
   const a = P(i0 + 0.08, j1 - 0.08);
   const top = P(i0 + 0.08, j1 - 0.08, Math.min(26, b.h * 0.6 + 6));
   s += k.ln(a, top, '#8A5A2B', 1.8) + `<path d="M${top[0]} ${top[1]} l12 3.5 l-12 4.5 z" fill="${INDIGO}"/>`;

@@ -11,12 +11,12 @@ colors:
   paper: "#FFFFFF"
   surface: "#F8F9FB"
   disabled: "#ECEEF2"
-  indigo: "#6C5CE7"
-  indigo-pressed: "#5F51CB"
-  indigo-tint: "#EAE8FC"
-  indigo-text: "#5848D2"
-  indigo-deep: "#4338CA"
-  indigo-night: "#5B4DC2"
+  indigo: "#2B64F4"
+  indigo-pressed: "#1752E8"
+  indigo-tint: "#E7EEFD"
+  indigo-text: "#184ED8"
+  indigo-deep: "#1847BF"
+  indigo-night: "#1C54E3"
   sun: "#FFCC4D"
   sun-tint: "#FFF6DF"
   sun-deep: "#855D00"
@@ -44,7 +44,7 @@ colors:
   wood-tint: "#F3E6D3"
   contract: "#F6F1E6"
   thread: "#D42B26"
-  sign: "#4338CA"
+  sign: "#1847BF"
 typography:
   display:
     fontFamily: "Instrument Sans, ui-sans-serif, system-ui, sans-serif"
@@ -223,14 +223,14 @@ components:
 
 **Creative North Star: "Il plastico in galleria", a colori Harmony**
 
-Una galleria bianca e luminosa, con l'indaco come firma del marchio, e al centro un plastico colorato fatto a mano: il borgo, i quattro animali, il patto con la ceralacca. Dal 12/10/2026 l'interfaccia segue la tavolozza Harmony: bianco come tela, indaco per tutto quello che si tocca, colori vivaci solo per premi e stati (giusto, sbagliato, mattoni, traguardi, informazioni). Titoli grandi in peso regular, superfici piene senza bordi, pillole indaco: questa è la galleria. Personaggi con volume, edifici isometrici con la luce da sinistra, la carta calda del patto: questo è il plastico.
+Una galleria bianca e luminosa, con il blu come firma del marchio, e al centro un plastico colorato fatto a mano: il borgo, i quattro animali, il patto con la ceralacca. Dal 12/10/2026 l'interfaccia segue la tavolozza Harmony: bianco come tela, blu per tutto quello che si tocca, colori vivaci solo per premi e stati (giusto, sbagliato, mattoni, traguardi, informazioni). Titoli grandi in peso regular, superfici piene senza bordi, pillole blu: questa è la galleria. Personaggi con volume, edifici isometrici con la luce da sinistra, la carta calda del patto: questo è il plastico.
 
 Il tono è **sicuro, caldo e spiritoso**. Sicuro nei titoli enormi e nelle pillole che dicono cosa fanno. Caldo nei personaggi, nella socia che parla e nella carta del patto. Spiritoso in una parola in corsivo per titolo e in un premio che rimbalza. La densità è bassa: molto bianco, una cosa per volta, numeri grandi al posto delle barre. Il progresso si vede nel mondo (un edificio a metà, un abitante in più), non in percentuali.
 
 Rifiuti confermati: l'aspetto da app per bambini (illustrazioni piatte, colori ovunque senza un perché) e l'aspetto da dashboard (bordi da 1 px, griglie di barre, etichette tecniche dappertutto).
 
 **Key Characteristics:**
-- Tela bianca, indaco come unico colore d'azione; gli altri cinque colori Harmony solo con un significato.
+- Tela bianca, blu come unico colore d'azione; gli altri cinque colori Harmony solo con un significato.
 - Titoli in Instrument Sans regular, con una sola parola in Instrument Serif corsivo.
 - Card piene, senza bordi, raggi da 28 a 50 px, con l'alone del loro colore sotto.
 - Volume (luce, ombre morbide, riflessi) solo in borgo, personaggi e oggetti.
@@ -238,17 +238,17 @@ Rifiuti confermati: l'aspetto da app per bambini (illustrazioni piatte, colori o
 
 ## Colors
 
-La tavolozza Harmony: bianco come tela, indaco come firma del marchio, colori vivaci per premi e stati, grigi freddi. Ogni colore ha tre toni: la base, la tinta per gli sfondi, il profondo per il testo sopra la tinta (almeno 4,5:1).
+La tavolozza Harmony: bianco come tela, blu come firma del marchio, colori vivaci per premi e stati, grigi freddi. Ogni colore ha tre toni: la base, la tinta per gli sfondi, il profondo per il testo sopra la tinta (almeno 4,5:1).
 
 ### Primary
-- **Indaco** (indigo, #6C5CE7): bottoni principali, scheda attiva in basso, selezione, barre di avanzamento, anello del focus, parole da toccare nel patto, «Prossimo cantiere» sulla mappa. È il colore che agisce. Per il testo piccolo si usa l'indaco testo (indigo-text), che regge 4,5:1 anche sulla tinta.
-- **Superfici indaco**: la copertina di benvenuto, «Il tuo personaggio», «Lezione fatta.», i toast. Sopra l'indaco il testo è sempre bianco (4,9:1), il bottone diventa bianco con l'etichetta indaco e le card interne sono di un indaco più profondo (indigo-night).
+- **Blu** (token `indigo`, #2B64F4; fino al 12/10/2026 era indaco #6C5CE7): bottoni principali, scheda attiva in basso, selezione, barre di avanzamento, anello del focus, parole da toccare nel patto, «Prossimo cantiere» sulla mappa. È il colore che agisce. Per il testo piccolo si usa il blu testo (indigo-text), che regge 4,5:1 anche sulla tinta.
+- **Superfici blu**: la copertina di benvenuto, «Il tuo personaggio», «Lezione fatta.», i toast. Sopra il blu il testo è sempre bianco (5:1), il bottone diventa bianco con l'etichetta blu e le card interne sono di un blu più profondo (indigo-night).
 - **Bianco** (paper): la tela dell'app.
 
 ### I colori con un significato
 - **Verde** (green): giusto, risultati positivi, abitanti.
 - **Rosa** (rose): sbagliato, perdite. Cerchi e bordi nel rosa vivo; il testo e il bottone «Chiudi» nel rosa profondo, che regge l'etichetta bianca.
-- **Giallo sole** (sun): mattoni e giorni del patto (il «Streak / XP» di Harmony), il cantiere di oggi e i lotti liberi sulla mappa, la parola in corsivo sull'indaco (solo testo grande, 3,2:1).
+- **Giallo sole** (sun): mattoni e giorni del patto (il «Streak / XP» di Harmony), il cantiere di oggi e i lotti liberi sulla mappa, la parola in corsivo sul blu (solo testo grande, 3,2:1).
 - **Ciano** (cyan): informazioni e spiegazioni, come il riquadro «Definizione» nelle lezioni.
 - **Lilla** (lilac): i traguardi. È la superficie dei momenti premio («Prima pietra posata», «Mercato costruito.»), il riempimento del tieni premuto, «Al primo colpo» ed «Edifici costruiti». Sul lilla il testo è sempre in inchiostro: il grigio scende sotto 4,5:1.
 
@@ -263,19 +263,19 @@ La tavolozza Harmony: bianco come tela, indaco come firma del marchio, colori vi
 ### Personaggi ed edifici
 Gli animali prendono i colori della tavolozza, tranne la Volpe, che resta corallo: una volpe rosa non sembra una volpe, e il rosa vuol dire errore.
 - **Corallo** (coral): Volpe Esploratrice, Bottega, Faro.
-- **Indaco** (indigo): Castoro Ingegnere, Municipio, Torre.
+- **Blu** (indigo): Castoro Ingegnere, Municipio, Torre.
 - **Ciano** (cyan): Lontra Conviviale, Pozzo.
 - **Giallo sole** (sun): Scoiattolo Custode, Mercato.
 
 Gli edifici che non hanno un personaggio prendono il colore del loro materiale: **Verde** per il Banco (il tetto), **Foglia** per il Frutteto, **Grano** per il Granaio, **Pietra** per le Mura, **Legno** per il Ponte. Erba, acqua, legno e pietra del borgo restano naturali.
 
 ### Stati
-- **Giusto** (green-tint, bordo green) e **sbagliato** (rose-tint, bordo rose): le risposte delle lezioni. La risposta scelta prima della verifica ha il bordo indaco.
-- **Disattivato**: bottoni principali in tinta indaco con l'etichetta grigia, anche il tieni premuto prima della firma.
-- **Inchiostro della firma** (sign): l'indaco profondo, per la firma disegnata, la firma scritta e il cursore del campo.
+- **Giusto** (green-tint, bordo green) e **sbagliato** (rose-tint, bordo rose): le risposte delle lezioni. La risposta scelta prima della verifica ha il bordo blu.
+- **Disattivato**: bottoni principali in tinta blu con l'etichetta grigia, anche il tieni premuto prima della firma.
+- **Inchiostro della firma** (sign): il blu profondo, per la firma disegnata, la firma scritta e il cursore del campo.
 
 ### Named Rules
-**The Indigo Rule.** L'indaco è l'unico colore d'azione. Se si tocca ed è importante, è indaco; se è indaco, si tocca o mostra dove sei.
+**The Blue Rule.** Il blu è l'unico colore d'azione. Se si tocca ed è importante, è blu; se è blu, si tocca o mostra dove sei.
 
 **The Meaning Rule.** Verde, rosa, giallo, ciano e lilla entrano solo con il loro significato (giusto, sbagliato, mattoni, informazione, traguardo). Mai per decorare.
 
@@ -314,7 +314,7 @@ Il testo è in rem e segue la dimensione scelta nel browser. Grassetto sempre a 
 
 ## Layout
 
-Una colonna centrale larga al massimo 1160 px, con margini di 24 px (16 sotto i 700 px). Le sezioni respirano: 120 px sopra e sotto, 80 sul telefono. Si alternano sezioni bianche, grigio superficie e indaco; la superficie lilla a tutto schermo è riservata ai momenti premio.
+Una colonna centrale larga al massimo 1160 px, con margini di 24 px (16 sotto i 700 px). Le sezioni respirano: 120 px sopra e sotto, 80 sul telefono. Si alternano sezioni bianche, grigio superficie e blu; la superficie lilla a tutto schermo è riservata ai momenti premio.
 
 La spaziatura ha base 4 (4, 8, 12, 16, 24, 32, 48, 64). Le card si dispongono in griglie con 16 px di spazio. Punti di rottura dettati dal contenuto: 1080 px (personaggi e patto passano a una colonna), 900 px (griglie a due colonne, carosello che scorre), 700 px (una colonna, borgo che si scorre), 560 px (il bottone del movimento diventa solo icona), 420 px (le griglie di card brevi passano a una colonna).
 
@@ -326,7 +326,7 @@ L'interfaccia è piatta: niente bordi, niente ombre di elevazione. La profondit�
 
 ### Shadow Vocabulary
 - **Alone della card** (`box-shadow: 0 70px 70px -70px <colore base>`): sotto le card dei personaggi e degli edifici.
-- **Alone del carosello** (`box-shadow: 0 90px 90px -90px <colore base>`): sotto le card dei personaggi in apertura, sull'indaco.
+- **Alone del carosello** (`box-shadow: 0 90px 90px -90px <colore base>`): sotto le card dei personaggi in apertura, sul blu.
 - **Ombra della carta** (`box-shadow: 0 40px 80px -40px rgba(60,40,10,.35)`): il foglio del patto.
 - **Ombra del dispositivo** (`box-shadow: 0 30px 60px -30px rgba(0,0,0,.45), 0 12px 24px -12px rgba(0,0,0,.25)`): i telefoni disegnati.
 
@@ -344,12 +344,12 @@ Forme morbide e piene. I raggi crescono con la dimensione dell'oggetto: 8 px per
 ### Buttons
 Morbidi e decisi: pillole piene che dicono chiaramente cosa fanno.
 - **Shape:** pillola (999 px), alta 52 px, padding laterale 22 px, testo 15 px peso 600.
-- **Primary:** indaco con testo bianco su fondo chiaro (anche sul lilla dei momenti premio).
-- **On indigo:** bianco con testo indaco sulle superfici indaco.
+- **Primary:** blu con testo bianco su fondo chiaro (anche sul lilla dei momenti premio).
+- **On indigo:** bianco con testo blu sulle superfici blu.
 - **Secondary:** velo grigio. **Ghost:** trasparente.
 - **Glass:** pillola semitrasparente alta 34 px con sfocatura dello sfondo, solo sopra le card degli edifici («Vedi le lezioni ↗»).
-- **Hover / Focus / Active:** alla pressione si stringe al 97% in 160 ms; il focus è un anello indaco di 2,5 px staccato di 3 px, bianco sull'indaco.
-- **Tieni premuto:** il bottone indaco si riempie di lilla da sinistra in 1,1 s mentre lo tieni (anche con spazio o Invio); prima della firma è disattivato (tinta indaco, etichetta grigia) e, se lo premi, il riquadro della firma si accende di filo rosso.
+- **Hover / Focus / Active:** alla pressione si stringe al 97% in 160 ms; il focus è un anello blu di 2,5 px staccato di 3 px, bianco sul blu.
+- **Tieni premuto:** il bottone blu si riempie di lilla da sinistra in 1,1 s mentre lo tieni (anche con spazio o Invio); prima della firma è disattivato (tinta blu, etichetta grigia) e, se lo premi, il riquadro della firma si accende di filo rosso.
 
 ### Chips
 - **Style:** pillola alta 28 px, velo grigio, testo etichetta. Sulle card dei personaggi il fondo è bianco al 75% e il testo nel tono profondo del personaggio.
@@ -357,7 +357,7 @@ Morbidi e decisi: pillole piene che dicono chiaramente cosa fanno.
 
 ### Cards / Containers
 - **Corner Style:** 28 px (36 per i personaggi, 34 per gli edifici).
-- **Background:** superficie su bianco, bianco su superficie, indaco profondo sull'indaco; tinta del personaggio o del materiale per personaggi ed edifici; tinta ciano per le definizioni.
+- **Background:** superficie su bianco, bianco su superficie, blu profondo sul blu; tinta del personaggio o del materiale per personaggi ed edifici; tinta ciano per le definizioni.
 - **Shadow Strategy:** nessuna ombra; alone del colore base per personaggi ed edifici (vedi Elevation & Depth).
 - **Border:** nessuno.
 - **Internal Padding:** 24 px (20 per le card strette, 18 per gli edifici, la cui illustrazione esce dal bordo in basso).
@@ -366,10 +366,10 @@ Morbidi e decisi: pillole piene che dicono chiaramente cosa fanno.
 - **Style:** la firma è un riquadro bianco di 120 px con raggio 16 e una riga di base; si firma col dito oppure si scrive il nome in Instrument Serif corsivo da 30 px, nel blu della firma.
 - **Focus:** anello d'inchiostro di 2,5 px attorno al riquadro.
 - **Error / Disabled:** se manca la firma, anello di filo rosso per 1,4 s e un messaggio per lo screen reader.
-- **Scelte nel testo:** le parole sostituibili del patto sono evidenziate in tinta indaco, con raggio 6 e una sottolineatura indaco; si toccano su 44 px. La nota sotto il patto dice «Le parole sottolineate si toccano e cambiano», senza nominare il colore.
+- **Scelte nel testo:** le parole sostituibili del patto sono evidenziate in tinta blu, con raggio 6 e una sottolineatura blu; si toccano su 44 px. La nota sotto il patto dice «Le parole sottolineate si toccano e cambiano», senza nominare il colore.
 
 ### Navigation
-- **Marchio:** il logotipo «Feen» è in Instrument Sans SemiBold; l'icona è «fe» bianco su quadrato indaco con un punto giallo sole in alto a destra (provvisoria, ricavata dal font dell'app).
+- **Marchio:** il logotipo «Feen» è in Instrument Sans SemiBold; l'icona è «fe» bianco su quadrato blu con un punto giallo sole in alto a destra (provvisoria, ricavata dal font dell'app).
 - **Nella board di concept:** barra nera alta 72 px con il logo e due pillole (versione v0.1, ancora in bianco e nero).
 - **Nell'app:** la home è il borgo, un hub world diegetico: si tocca un edificio per entrare nel suo argomento. Barra in basso con quattro schede (Borgo, Lezioni, Patto, Profilo); la scheda Lezioni è la stessa mappa in forma di lista, accessibile.
 
@@ -382,7 +382,7 @@ Un'isola isometrica che cresce: ogni edificio ha quattro stati (progetto a terra
 ## Do's and Don'ts
 
 ### Do:
-- **Do** tenere la tela bianca, l'indaco per le azioni e gli altri colori Harmony solo con il loro significato.
+- **Do** tenere la tela bianca, il blu per le azioni e gli altri colori Harmony solo con il loro significato.
 - **Do** scrivere i titoli in peso regular con una sola parola in Instrument Serif corsivo.
 - **Do** usare card piene senza bordi, con raggi da 28 px in su e l'alone del loro colore.
 - **Do** usare il lilla come superficie intera nei momenti premio (prima pietra, edificio finito), con il testo in inchiostro.
@@ -392,7 +392,7 @@ Un'isola isometrica che cresce: ogni edificio ha quattro stati (progetto a terra
 - **Do** rendere ogni elemento toccabile su almeno 44 px.
 
 ### Don't:
-- **Don't** usare verde, rosa, giallo, ciano o lilla per un bottone o per decorare: i bottoni sono indaco.
+- **Don't** usare verde, rosa, giallo, ciano o lilla per un bottone o per decorare: i bottoni sono blu.
 - **Don't** mettere bordi da 1 px su card o contenitori.
 - **Don't** usare Fragment Mono per etichette o didascalie, né il maiuscolo su testi lunghi.
 - **Don't** usare il grassetto per fare gerarchia nei titoli.
