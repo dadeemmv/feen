@@ -1,5 +1,5 @@
 /**
- * Tab navigator (Borgo · Lezioni · Patto · Profilo) with the custom floating pill bar.
+ * Tab navigator (Borgo · Percorso · Patto · Profilo) with the custom floating pill bar.
  * Also the onboarding gate: until the first-run flow is done every tab redirects to it
  * (the root layout only renders after the store has hydrated, so the flag is final here).
  */
@@ -29,7 +29,7 @@ export default function TabsLayout() {
         sceneStyle: { backgroundColor: colors.background },
       }}>
       <Tabs.Screen name="index" />
-      <Tabs.Screen name="lessons" />
+      <Tabs.Screen name="path" />
       <Tabs.Screen name="pact" />
       <Tabs.Screen name="profile" />
     </Tabs>

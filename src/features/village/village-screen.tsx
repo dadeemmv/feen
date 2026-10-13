@@ -1,70 +1,103 @@
 /**
- * The village (home tab, concept board screen 5). Not a list of lessons but a place that grows
- * while you learn: "Borgo Ginestra", residents, bricks and days of the pact as big numbers, the
- * island with today's site and the partner beside it, the partner's line and the next site with
- * "Costruisci". A building opens its page; the partner opens the pact; "Usa i mattoni" opens the
- * catalogue of homes and decorations.
+ * The village (home tab): a full-screen hub world like FIFA City. The island fills the screen
+ * and moves under your fingers; "Borgo Ginestra" and the big serif numbers (residents, bricks,
+ * days of the pact) float on top over a white fade, and at the bottom the partner says where
+ * today's step of the path is, with "Costruisci". A building opens its page; the partner opens
+ * the pact; "Usa i mattoni" opens the catalogue of homes and decorations.
  */
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 
 import { BrickIcon } from '@/components/icons';
 import { MascotArt } from '@/components/illustrations';
-import { avatarSize, Button, Card, HStack, Screen, Text, VStack, iconSize } from '@/components/ui';
+import { getTabBarBottomOffset } from '@/components/navigation/use-tab-bar-inset';
+import { avatarSize, Button, HStack, iconSize, Screen, Text, VStack } from '@/components/ui';
 import { getChapter } from '@/content/courses';
 import { getMascot } from '@/content/personality';
 import { BUILDINGS } from '@/content/village';
 import { useEntering } from '@/features/onboarding/lib/entering';
 import { toDayKey } from '@/lib/dates';
-import { chaptersDone, nextChapterOf, selectMascot, useStore } from '@/store';
-import { fonts, layout, spacing } from '@/theme';
+import { chaptersDone, selectMascot, useStore } from '@/store';
+import { elevation, fonts, layout, radius, spacing, useTheme } from '@/theme';
 
 import { VillageCounters } from './components/village-counters';
-import { VillageMap } from './components/village-map';
+import { VillageWorld } from './components/village-world';
 import { VILLAGE_COPY } from './copy';
-import { useVillage } from './lib/model';
+import { usePath, useVillage } from './lib/model';
 import { openBuilding, openLesson } from './lib/navigation';
+
+/** The white fade under the header, so the island slides beneath it. */
+const FADE = 40;
 
 export function VillageScreen() {
   const [now] = useState(() => Date.now());
   const village = useVillage(now);
+  const path = usePath();
   const name = useStore((s) => s.name);
   const records = useStore((s) => s.chapterRecords);
   const doneToday = useStore((s) => s.activeDays.includes(toDayKey(now)));
   const mascotId = useStore(selectMascot);
   const { rise } = useEntering();
+  const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
   const mascot = mascotId ? getMascot(mascotId) : null;
   const hour = new Date(now).getHours();
 
   const site = village.current ? BUILDINGS[village.current] : null;
   const siteTotal = site?.chapterIds.length ?? 0;
   const siteDone = site ? chaptersDone(site.id, records) : 0;
-  const nextId = site ? nextChapterOf(site.id, records) : undefined;
+  const nextId = path.steps[path.current]?.chapterId;
   const next = nextId ? getChapter(nextId) : undefined;
-  const nextIndex = site && nextId ? site.chapterIds.indexOf(nextId) + 1 : 0;
+
+  // The camera frames the band between the floating header and the bottom card.
+  const tabBar = getTabBarBottomOffset(insets.bottom) + layout.tabBarHeight + spacing.sm;
+  const [header, setHeader] = useState(0);
+  const [card, setCard] = useState(0);
+  const measure = (set: (h: number) => void) => (e: LayoutChangeEvent) => set(Math.round(e.nativeEvent.layout.height));
+  const cover = { top: header, bottom: tabBar + card };
+  const above = { bottom: cover.bottom + spacing.sm };
 
   return (
-    <Screen withTabBar edges={['top']}>
-      <Animated.View entering={rise(0)} style={styles.heading}>
-        <Text variant="labelMd" color="textSecondary">
-          {VILLAGE_COPY.greeting(name, hour)}
-        </Text>
-        <Text variant="displayMd" accessibilityRole="header">
-          {'Borgo '}
-          <Text variant="displayMd" style={styles.italic}>
-            {VILLAGE_COPY.titleWord(village.name)}
-          </Text>
-        </Text>
-      </Animated.View>
+    <Screen preset="fixed" padded={false} edges={[]}>
+      <View style={styles.root}>
+        <VillageWorld
+          village={village}
+          partner={mascotId}
+          partnerName={mascot?.partner.name}
+          onBuilding={openBuilding}
+          onPartner={() => router.push('/pact')}
+          sitePin={
+            site && siteTotal > 0 ? { done: siteDone, total: siteTotal, open: village.states[site.id] === 'cantiere' } : undefined
+          }
+          cover={cover}
+          controlsStyle={[styles.controls, above]}
+        />
 
-      <Animated.View entering={rise(1)}>
-        <VillageCounters village={village} />
-      </Animated.View>
+        <View style={styles.header} pointerEvents="box-none">
+          <View style={{ backgroundColor: colors.background }} onLayout={measure(setHeader)}>
+            <Animated.View entering={rise(0)} style={[styles.heading, { paddingTop: insets.top + spacing.sm }]}>
+              <Text variant="labelMd" color="textSecondary">
+                {VILLAGE_COPY.greeting(name, hour)}
+              </Text>
+              <Text variant="displayMd" accessibilityRole="header">
+                {'Borgo '}
+                <Text variant="displayMd" style={styles.italic}>
+                  {VILLAGE_COPY.titleWord(village.name)}
+                </Text>
+              </Text>
+              <View style={styles.counters}>
+                <VillageCounters village={village} compact />
+              </View>
+            </Animated.View>
+          </View>
+          <LinearGradient colors={[colors.background, `${colors.background}00`]} style={styles.fade} pointerEvents="none" />
+        </View>
 
-      <Animated.View entering={rise(2)} style={styles.map}>
-        <View style={styles.useBricks}>
+        <View style={[styles.bricks, above]} pointerEvents="box-none">
           <Button
             title={VILLAGE_COPY.decor.entry}
             size="sm"
@@ -74,62 +107,55 @@ export function VillageScreen() {
             testID="village-use-bricks"
           />
         </View>
-        <VillageMap
-          village={village}
-          partner={mascotId}
-          partnerName={mascot?.partner.name}
-          onBuilding={openBuilding}
-          onPartner={() => router.push('/pact')}
-          sitePin={
-            site && siteTotal > 0 ? { done: siteDone, total: siteTotal, open: village.states[site.id] === 'cantiere' } : undefined
-          }
-        />
-      </Animated.View>
 
-      {mascot ? (
-        <Animated.View entering={rise(3)}>
-          <HStack gap="sm" align="center">
-            <MascotArt id={mascot.id} framing="bust" width={avatarSize.md} />
-            <Text variant="bodyMd" style={styles.flex}>
-              <Text variant="labelMd">{`${mascot.partner.name} · `}</Text>
-              {site
-                ? doneToday
-                  ? VILLAGE_COPY.partnerDone(site.at)
-                  : VILLAGE_COPY.partnerSays(site.at)
-                : VILLAGE_COPY.partnerIdle}
-            </Text>
-          </HStack>
+        <Animated.View
+          entering={rise(2)}
+          onLayout={measure(setCard)}
+          style={[styles.card, { bottom: tabBar, backgroundColor: colors.background }]}>
+          <VStack gap="md">
+            {mascot ? (
+              <HStack gap="sm" align="center">
+                <MascotArt id={mascot.id} framing="bust" width={avatarSize.md} />
+                <VStack flex gap="xxxs">
+                  <Text variant="bodyMd">
+                    <Text variant="labelMd">{`${mascot.partner.name} · `}</Text>
+                    {site
+                      ? doneToday
+                        ? VILLAGE_COPY.partnerDone(site.at)
+                        : VILLAGE_COPY.partnerSays(site.at)
+                      : VILLAGE_COPY.partnerIdle}
+                  </Text>
+                  {site && next ? (
+                    <Text variant="bodySm" color="textSecondary" numberOfLines={1}>
+                      {`${next.title} · ${VILLAGE_COPY.minutes(next.estimatedMinutes)} · ${VILLAGE_COPY.bricksReward(next.coinReward)} ${VILLAGE_COPY.bricks}`}
+                    </Text>
+                  ) : null}
+                </VStack>
+              </HStack>
+            ) : null}
+            {site && next ? <Button title={VILLAGE_COPY.build} fullWidth onPress={() => openLesson(next.id)} /> : null}
+          </VStack>
         </Animated.View>
-      ) : null}
-
-      {site && next ? (
-        <Animated.View entering={rise(4)}>
-          <Card padding="lg" contentStyle={styles.next}>
-            <VStack gap="xxs">
-              <Text variant="overline" color="textSecondary">
-                {VILLAGE_COPY.nextSite}
-              </Text>
-              <Text variant="titleMd">{`${site.name} · ${site.topic}`}</Text>
-              <Text variant="bodySm" color="textSecondary">
-                {`${VILLAGE_COPY.lessonOf(nextIndex, siteTotal)} · ${next.title} · ${VILLAGE_COPY.minutes(next.estimatedMinutes)} · ${VILLAGE_COPY.bricksReward(next.coinReward)} ${VILLAGE_COPY.bricks}`}
-              </Text>
-            </VStack>
-            <Button title={VILLAGE_COPY.build} fullWidth onPress={() => openLesson(next.id)} />
-          </Card>
-        </Animated.View>
-      ) : null}
-      <View style={styles.bottom} />
+      </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  heading: { gap: spacing.xxxs, marginTop: spacing.sm, marginBottom: spacing.lg },
+  root: { flex: 1, overflow: 'hidden' },
+  header: { position: 'absolute', left: 0, right: 0, top: 0 },
+  heading: { gap: spacing.xxxs, paddingHorizontal: layout.screenX },
   italic: { fontFamily: fonts.serif.italic, letterSpacing: 0 },
-  map: { marginHorizontal: -layout.screenX, marginVertical: spacing.md },
-  // Over the island, not on it: stays put while the map scrolls sideways.
-  useBricks: { position: 'absolute', right: layout.screenX, bottom: spacing.xs, zIndex: 1 },
-  flex: { flex: 1 },
-  next: { gap: spacing.md },
-  bottom: { height: spacing.xl },
+  counters: { marginTop: spacing.sm },
+  fade: { height: FADE },
+  controls: { right: layout.screenX },
+  bricks: { position: 'absolute', left: layout.screenX },
+  card: {
+    position: 'absolute',
+    left: layout.screenX,
+    right: layout.screenX,
+    padding: spacing.lg,
+    borderRadius: radius.xxl,
+    boxShadow: elevation.lg,
+  },
 });

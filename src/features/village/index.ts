@@ -3,7 +3,7 @@
  * list) and the building pages.
  */
 export { VillageScreen } from './village-screen';
-export { LessonsScreen } from './lessons-screen';
+export { PathScreen } from './path-screen';
 export { BuildingScreen } from './building-screen';
 export { BuildingScene, type BuildingSceneProps } from './components/building-scene';
 export { BuildingCard, type BuildingCardProps } from './components/building-card';

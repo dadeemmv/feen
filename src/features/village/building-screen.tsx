@@ -1,21 +1,22 @@
 /**
  * A building's page (/building/[id]): the product card on its tint with the scene, the state and
- * what you learn there, then its lessons in order. No locks: a project opens whenever you want
- * (at most two sites, the Tower after the Well) and the reason is said plainly when it cannot.
+ * what you learn there, then its lessons in order. The path decides when a lesson opens: done
+ * lessons can be played again, today's step plays now, the others say at which step they come.
  */
 import { StyleSheet, View } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-import { ArrowLeft, Check } from 'lucide-react-native';
+import { router, useLocalSearchParams } from 'expo-router';
+import { ArrowLeft, Check, Lock } from 'lucide-react-native';
 
-import { Button, Card, Icon, IconButton, iconSize, PressableScale, Screen, Text, toast, VStack } from '@/components/ui';
+import { Button, Card, Icon, IconButton, iconSize, PressableScale, Screen, Text, VStack } from '@/components/ui';
 import { getChapter } from '@/content/courses';
 import { BUILDINGS, isBuildingId, type BuildingId } from '@/content/village';
 import { goBackOr } from '@/features/shop/lib/navigation';
-import { buildingState, chaptersDone, getStoreState, nextChapterOf, openSiteIssue, useStoreShallow } from '@/store';
+import { buildingState, chaptersDone, useStoreShallow } from '@/store';
 import { buildingTones, layout, radius, spacing } from '@/theme';
 
 import { BuildingScene } from './components/building-scene';
 import { VILLAGE_COPY } from './copy';
+import { usePath } from './lib/model';
 import { openLesson } from './lib/navigation';
 
 const ART = 200;
@@ -34,28 +35,29 @@ export function BuildingScreen() {
   const state = buildingState(buildingId, s);
   const total = b.chapterIds.length;
   const done = chaptersDone(buildingId, s.chapterRecords);
-  const issue = openSiteIssue(buildingId, s);
-  const nextId = nextChapterOf(buildingId, s.chapterRecords);
-  const next = nextId ? getChapter(nextId) : undefined;
+  const path = usePath();
   const copy = VILLAGE_COPY.building;
 
+  // Where this building's lessons sit on the path.
+  const stepOf = (chapterId: string) => path.steps.findIndex((step) => step.chapterId === chapterId);
+  const todayId = path.steps[path.current]?.chapterId;
+  const today = todayId && b.chapterIds.includes(todayId) ? getChapter(todayId) : undefined;
+  const firstStep = total > 0 ? stepOf(b.chapterIds[0]) : -1;
+  const firstDone = b.chapterIds.find((chapterId) => s.chapterRecords[chapterId] !== undefined);
+
   const issueText = (() => {
-    if (state === 'cantiere' || !issue) return null;
-    if (issue === 'needs-building') return copy.issue['needs-building'](BUILDINGS[b.requires ?? 'pozzo'].name);
-    return copy.issue[issue];
+    if (today || done === total || total === 0) return null;
+    if (done > 0) return copy.later;
+    return firstStep >= 0 ? copy.atStep(firstStep + 1) : null;
   })();
 
-  const start = () => {
-    if (state === 'progetto') {
-      const result = getStoreState().openSite(buildingId);
-      if (!result.ok) return;
-      toast.show({ message: copy.opened(b.name), tone: 'success' });
-    }
-    if (next) openLesson(next.id);
-  };
-
-  const canStart = state === 'cantiere' || (state === 'progetto' && issue === null);
-  const cta = state === 'progetto' ? copy.open : next && state === 'cantiere' ? copy.continue(next.title) : copy.practise;
+  const footer = today ? (
+    <Button title={copy.continue(today.title)} fullWidth onPress={() => openLesson(today.id)} />
+  ) : firstDone ? (
+    <Button title={copy.practise} fullWidth onPress={() => openLesson(firstDone)} />
+  ) : total > 0 ? (
+    <Button title={copy.toPath} fullWidth onPress={() => router.navigate('/path')} />
+  ) : undefined;
 
   return (
     <Screen
@@ -65,11 +67,7 @@ export function BuildingScreen() {
           <IconButton icon={ArrowLeft} accessibilityLabel={copy.back} onPress={() => goBackOr('/')} />
         </View>
       }
-      footer={
-        total > 0 && (canStart || state === 'costruito' || state === 'fiorito') ? (
-          <Button title={cta} fullWidth onPress={start} />
-        ) : undefined
-      }>
+      footer={footer}>
       <VStack gap="xl" style={styles.body}>
         <View style={[styles.card, { backgroundColor: tone.tint, boxShadow: `0px 70px 70px -70px ${tone.glow}` }]}>
           <VStack gap="xxs">
@@ -110,8 +108,8 @@ export function BuildingScreen() {
               const chapter = getChapter(chapterId);
               if (!chapter) return null;
               const isDone = s.chapterRecords[chapterId] !== undefined;
-              const isNext = chapterId === nextId && !isDone;
-              const playable = isDone || state === 'cantiere';
+              const isNext = chapterId === todayId && !isDone;
+              const playable = isDone || isNext;
               return (
                 <PressableScale
                   key={chapterId}
@@ -133,7 +131,9 @@ export function BuildingScreen() {
                       <Icon icon={Check} size={iconSize.md} color="successText" />
                     ) : isNext ? (
                       <Text variant="labelSm">{copy.next}</Text>
-                    ) : null}
+                    ) : (
+                      <Icon icon={Lock} size={iconSize.sm} color="textDisabled" />
+                    )}
                   </Card>
                 </PressableScale>
               );

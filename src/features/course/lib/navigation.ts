@@ -29,5 +29,5 @@ export function openChapter(chapterId: string): boolean {
 /** Back to wherever the path was opened from; deep links fall back to the Academy tab. */
 export function leaveCourse(): void {
   if (router.canGoBack()) router.back();
-  else router.replace('/lessons');
+  else router.replace('/path');
 }

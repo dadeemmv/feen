@@ -1,19 +1,22 @@
 /**
  * The village derived from the store: every building's state, the walls of each site, today's
- * site (where the partner waits), residents, what bricks built, bricks and the day of the pact.
+ * site (the building of the path's current step, where the partner waits), residents, what bricks
+ * built, bricks and the day of the pact. And the path itself (`usePath`).
  */
 import { getMascot } from '@/content/personality';
 import { BUILDING_IDS, BUILDINGS, type BuildingId } from '@/content/village';
 import {
-  activeSites,
   buildingState,
   chaptersDone,
   countResidents,
+  currentStepIndex,
+  learningPath,
   pactDay,
   selectMascot,
-  suggestedBuilding,
+  useStore,
   useStoreShallow,
   type BuildingState,
+  type PathStep,
 } from '@/store';
 
 import type { VillageModel } from './iso';
@@ -46,8 +49,8 @@ export function useVillage(now: number): Village {
     const total = BUILDINGS[id].chapterIds.length;
     if (total > 0) progress[id] = chaptersDone(id, s.chapterRecords) / total;
   }
-  const starts = s.mascot ? getMascot(s.mascot).startBuildings : [];
-  const current = activeSites(s)[0] ?? suggestedBuilding(s, starts);
+  const path = learningPath(s.mascot ? getMascot(s.mascot).startBuildings : []);
+  const current = path[currentStepIndex(path, s.chapterRecords)]?.building;
 
   return {
     states,
@@ -60,4 +63,18 @@ export function useVillage(now: number): Village {
     day: s.pact ? pactDay(s.pact, now) : null,
     days: s.pact?.days ?? null,
   };
+}
+
+export type LearningPath = {
+  steps: PathStep[];
+  /** Index of the step to play now; `steps.length` when the path is finished. */
+  current: number;
+};
+
+/** The path of this player (it depends on the animal) and where they are on it. */
+export function usePath(): LearningPath {
+  const mascot = useStore(selectMascot);
+  const records = useStore((st) => st.chapterRecords);
+  const steps = learningPath(mascot ? getMascot(mascot).startBuildings : []);
+  return { steps, current: currentStepIndex(steps, records) };
 }

@@ -4,10 +4,13 @@
  * (concept board §04). The metaphor of each building already explains its concept: the Well is
  * the emergency fund, the Orchard compound interest.
  *
- * Rules (decided in review, 11/10/2026):
+ * Two layers (decided 13/10/2026): the village (home) and the path (tab "Percorso"), one road of
+ * lessons in sequence: each step raises a building, the next one opens when the one before is done.
+ *
+ * Rules:
  * - buildings grow only with the lessons of their topic (knowledge cannot be bought);
- * - projects are free: no locks, the partner suggests where to start, at most two open sites;
- *   the only constraint is the Tower (investing) after the Well (emergency fund);
+ * - the path starts from the two buildings promised by your animal, then follows `PATH_ORDER`;
+ *   the Tower (investing) always comes after the Well (emergency fund);
  * - the signed pact is the first stone: the Town Hall stands from day one and keeps the pacts.
  */
 import type { BuildingTone } from '@/theme';
@@ -172,6 +175,12 @@ export const BUILDING_IDS: readonly BuildingId[] = [
   'ponte',
   'faro',
 ];
+
+/**
+ * Order of the path after the animal's two start buildings: where money goes out, then saving,
+ * the safety net, scams and protection, time as an ally, and investing last.
+ */
+export const PATH_ORDER: readonly BuildingId[] = ['mercato', 'granaio', 'pozzo', 'faro', 'mura', 'frutteto', 'torre'];
 
 /** The first stone: stands from the moment the pact is signed. */
 export const FIRST_STONE: BuildingId = 'municipio';

@@ -21,6 +21,7 @@ import { isGradedStep, type Chapter, type LessonStep } from '@/content/types';
 import { BUILDINGS, buildingOfChapter, type Building } from '@/content/village';
 import { PopIn } from '@/features/rewards';
 import { BuildingScene } from '@/features/village/components/building-scene';
+import { usePath } from '@/features/village/lib/model';
 import { chaptersDone, countResidents, isBuilt, selectMascot, useStore, useStoreShallow } from '@/store';
 import { duration, easing, fonts, radius, spacing, useTheme } from '@/theme';
 
@@ -76,8 +77,11 @@ export function CompletionScreen({
   const builtNow = Boolean(buildingId && isBuilt(buildingId, village) && summary.isFirstCompletion);
   const total = building?.chapterIds.length ?? 0;
   const done = buildingId ? chaptersDone(buildingId, village.chapterRecords) : 0;
-  const nextId = building?.chapterIds.find((id) => village.chapterRecords[id] === undefined);
-  const next = nextId ? getChapter(nextId) : undefined;
+  // The next step of the path: it may already be in another building.
+  const path = usePath();
+  const nextStep = path.steps[path.current];
+  const next = nextStep ? getChapter(nextStep.chapterId) : undefined;
+  const nextBuilding = nextStep ? BUILDINGS[nextStep.building] : undefined;
   const residents = countResidents(village);
   const firstTry = results.filter((r) => r.firstTryCorrect).length;
   const hasReview = steps.some(isGradedStep);
@@ -186,9 +190,9 @@ export function CompletionScreen({
               {COPY.completion.replayNote}
             </Text>
           </Reveal>
-        ) : !builtNow && next && building ? (
+        ) : !builtNow && next && nextBuilding ? (
           <Reveal delay={COMPLETION.nextDelayMs} style={styles.block}>
-            <NextLessonCard chapter={next} at={building.at} />
+            <NextLessonCard chapter={next} at={nextBuilding.at} />
           </Reveal>
         ) : null}
       </Screen>
@@ -201,7 +205,7 @@ export function CompletionScreen({
   );
 }
 
-/** The next lesson of the same building. Reads the theme inside the screen (deep indigo tiles on indigo). */
+/** The next step of the path. Reads the theme inside the screen (deep indigo tiles on indigo). */
 function NextLessonCard({ chapter, at }: { chapter: Chapter; at: string }) {
   const theme = useTheme();
   return (

@@ -110,13 +110,18 @@ export {
   countHouses,
   countInTents,
   countResidents,
+  currentStepIndex,
   freeLots,
   isBuilt,
+  learningPath,
   nextChapterOf,
   openSiteIssue,
   pactDay,
+  stepStatus,
   suggestedBuilding,
   type BuildingState,
+  type PathStep,
+  type StepStatus,
 } from './rules/village';
 export { getAvailabilityIssue } from './rules/shop';
 export { findShopItem } from './slices/economy';

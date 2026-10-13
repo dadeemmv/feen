@@ -1,6 +1,7 @@
 /**
- * The village map — the home is the village itself, a diegetic hub world like FIFA City. The
- * island stays 620 points wide on the phone (never a thumbnail) and scrolls sideways; the camera
+ * The village map that scrolls sideways — used by "Costruisci con i mattoni" (the home uses the
+ * full-screen `VillageWorld`). The island stays 620 points wide on the phone (never a thumbnail)
+ * and scrolls sideways; the camera
  * starts centred on today's site, with the partner beside it, so buildings are big enough to
  * touch. Every building is a real button (its whole tile), announced with name, topic and state.
  *

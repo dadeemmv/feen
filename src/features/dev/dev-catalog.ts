@@ -19,7 +19,7 @@ export const DEV_PAGES: DevRouteLink[] = [
 
 export const DEV_ROUTES: DevRouteLink[] = [
   { title: 'Home', subtitle: '/', href: '/', emoji: '🏠' },
-  { title: 'Academy', subtitle: '/lessons', href: '/lessons', emoji: '📚' },
+  { title: 'Academy', subtitle: '/path', href: '/path', emoji: '📚' },
   { title: 'Assistente', subtitle: '/assistant', href: '/assistant', emoji: '💬' },
   { title: 'Shop', subtitle: '/', href: '/', emoji: '🛒' },
   { title: 'Percorso', subtitle: `/course/${MAIN_COURSE_ID}`, href: { pathname: '/course/[id]', params: { id: MAIN_COURSE_ID } }, emoji: '🗺️' },

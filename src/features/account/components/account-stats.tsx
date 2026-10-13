@@ -37,7 +37,7 @@ export function AccountStats() {
       <StatShortcut label={`${residents} ${copy.streak}`} onPress={() => router.navigate('/pact')}>
         <StatTile icon={Users} value={residents} label={copy.streak} tone="success" />
       </StatShortcut>
-      <StatShortcut label={`${built} ${copy.built}`} onPress={() => router.navigate('/lessons')}>
+      <StatShortcut label={`${built} ${copy.built}`} onPress={() => router.navigate('/path')}>
         <StatTile icon={Landmark} value={built} label={copy.built} tone="lilac" />
       </StatShortcut>
       <StatShortcut label={`${formatCoins(coins)} ${copy.coins}`} onPress={() => router.push('/build')}>

@@ -1,6 +1,6 @@
 /**
  * Village rules (pure). A building's state is derived, never stored:
- *   progetto  → the lot is marked on the ground, opens whenever you want (no locks);
+ *   progetto  → the lot is marked on the ground, opens when the path reaches it;
  *   cantiere  → opened as a site: each lesson raises the walls;
  *   costruito → all its lessons done;
  *   fiorito   → built, and the review brought by a resident a week later was right.
@@ -14,6 +14,7 @@ import {
   DECORS,
   FIRST_STONE,
   MAX_OPEN_SITES,
+  PATH_ORDER,
   RESIDENTS_PER_HOUSE,
   VILLAGE_LOTS,
   type BuildingId,
@@ -87,6 +88,41 @@ export function pactDay(pact: Pact, now: number): number {
   today.setHours(0, 0, 0, 0);
   const days = Math.round((today.getTime() - start.getTime()) / 86_400_000) + 1;
   return Math.min(pact.days, Math.max(1, days));
+}
+
+/* ── The path ──────────────────────────────────────────────────────────────────────────────── */
+
+/** One step of the path: a lesson and the building it raises. */
+export type PathStep = { chapterId: string; building: BuildingId };
+
+/** `fatta` = done, `oggi` = the step to play now, `chiusa` = opens after the one before. */
+export type StepStatus = 'fatta' | 'oggi' | 'chiusa';
+
+/**
+ * The path: the animal's start buildings first, then `PATH_ORDER`, each building with all its
+ * lessons in order. A building that needs another (the Tower after the Well) pulls it in first.
+ */
+export function learningPath(starts: readonly BuildingId[]): PathStep[] {
+  const order: BuildingId[] = [];
+  const add = (id: BuildingId) => {
+    if (order.includes(id)) return;
+    const { requires } = BUILDINGS[id];
+    if (requires) add(requires);
+    order.push(id);
+  };
+  for (const id of [...starts, ...PATH_ORDER]) if (BUILDINGS[id].chapterIds.length > 0) add(id);
+  return order.flatMap((building) => BUILDINGS[building].chapterIds.map((chapterId) => ({ chapterId, building })));
+}
+
+/** Index of the step to play now: the first not done. `path.length` when the path is finished. */
+export function currentStepIndex(path: readonly PathStep[], records: ProgressData['chapterRecords']): number {
+  const index = path.findIndex((step) => records[step.chapterId] === undefined);
+  return index === -1 ? path.length : index;
+}
+
+export function stepStatus(index: number, current: number, step: PathStep, records: ProgressData['chapterRecords']): StepStatus {
+  if (records[step.chapterId] !== undefined) return 'fatta';
+  return index === current ? 'oggi' : 'chiusa';
 }
 
 /** Where the partner suggests to go next: an open site, else the animal's first start building. */
