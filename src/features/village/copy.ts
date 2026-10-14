@@ -1,5 +1,12 @@
-/** Italian copy of the village (home), the lessons list and the building pages. */
+/** Italian copy of the village (home), the lessons list, the building pages and the reviews. */
 import type { BuildingState } from '@/store';
+
+/** "il pescatore" → "Il pescatore", at the start of a sentence. */
+const cap = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+const inDays = (days: number) => (days <= 1 ? 'domani' : `tra ${days} giorni`);
+/** "il pescatore" → "dal pescatore", "la contadina" → "dalla contadina". */
+const fromWho = (who: string) =>
+  who.replace(/^il /, 'dal ').replace(/^lo /, 'dallo ').replace(/^la /, 'dalla ').replace(/^l’/, 'dall’');
 
 export const VILLAGE_COPY = {
   title: (name: string | null) => (name ? `Borgo ${name}` : 'Il tuo borgo'),
@@ -114,5 +121,42 @@ export const VILLAGE_COPY = {
     atStep: (n: number) => `Il percorso arriva qui alla tappa ${n}. Le lezioni si aprono una dopo l’altra.`,
     later: 'Le prossime lezioni di questo edificio si aprono più avanti nel percorso.',
     toPath: 'Vai al percorso',
+  },
+
+  /**
+   * The review: a week after a building is finished one of its residents comes by with a real
+   * problem. Right answer: the building blooms. Wrong: nothing lost, they come back later.
+   */
+  ripasso: {
+    /** Home card and building page: "Il pescatore ti aspetta al Faro." */
+    waiting: (who: string, at: string) => `${cap(who)} ti aspetta ${at}.`,
+    waitingWhy: (the: string) => `Ha un problema vero: se lo risolvi, ${the} fiorisce.`,
+    help: (pronoun: 'lo' | 'la') => `Aiuta${pronoun}`,
+    bubbleA11y: (who: string, at: string, pronoun: 'lo' | 'la') =>
+      `${cap(who)} ti aspetta ${at} con un problema: aiuta${pronoun}`,
+    /** Building page, before the visit and after a wrong answer. */
+    soon: (who: string, days: number, the: string) =>
+      `${cap(inDays(days))} passa ${who} con un problema vero. Se lo risolvi, ${the} fiorisce.`,
+    again: (who: string, days: number) => `${cap(who)} ripassa ${inDays(days)} con un’altra domanda.`,
+    /** "Fiorito il 14 ottobre 2026: hai aiutato il pescatore." */
+    bloomed: (bloomedWord: string, date: string, who: string) => `${bloomedWord} il ${date}: hai aiutato ${who}.`,
+
+    /** The review screen. */
+    close: 'Chiudi',
+    overline: (name: string) => `Ripasso · ${name}`,
+    asks: (who: string) => `${cap(who)} chiede`,
+    /** "Il pescatore", over the thanks. */
+    resident: (who: string) => cap(who),
+    cta: 'Rispondi',
+    wrongTitle: 'Non proprio.',
+    wrongNote: (who: string, days: number, the: string) =>
+      `${cap(who)} ripassa ${inDays(days)} con un’altra domanda. ${cap(the)} resta com’è: non perdi niente.`,
+    back: 'Torna al borgo',
+    gift: 'Mattoni in regalo',
+    giftFrom: (who: string) => `${cap(fromWho(who))}, per ringraziarti`,
+    nobody: (at: string) => `Per ora nessuno ti aspetta ${at}.`,
+    nobodyHint: 'Gli abitanti passano una settimana dopo che hai finito un edificio, con un problema vero da risolvere.',
+    rightA11y: (name: string, bloomedWord: string) => `Risposta giusta. ${name} ${bloomedWord}.`,
+    wrongA11y: 'Risposta sbagliata. Non perdi niente.',
   },
 } as const;

@@ -3,7 +3,8 @@
  * and moves under your fingers; "Borgo Ginestra" and the big serif numbers (residents, bricks,
  * days of the pact) float on top over a white fade, and at the bottom the partner says where
  * today's step of the path is, with "Costruisci". A building opens its page; the partner opens
- * the pact; "Usa i mattoni" opens the catalogue of homes and decorations.
+ * the pact; "Usa i mattoni" opens the catalogue of homes and decorations. When a resident waits
+ * by a finished building with a problem (the review), the card says so first, with "Aiutalo".
  */
 import { useState } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
@@ -18,17 +19,19 @@ import { getTabBarBottomOffset } from '@/components/navigation/use-tab-bar-inset
 import { avatarSize, Button, HStack, iconSize, Screen, Text, VStack } from '@/components/ui';
 import { getChapter } from '@/content/courses';
 import { getMascot } from '@/content/personality';
-import { BUILDINGS } from '@/content/village';
+import { getReviewSet } from '@/content/reviews';
+import { BUILDINGS, theBuilding } from '@/content/village';
 import { useEntering } from '@/features/onboarding/lib/entering';
 import { toDayKey } from '@/lib/dates';
 import { chaptersDone, selectMascot, useStore } from '@/store';
 import { elevation, fonts, layout, radius, spacing, useTheme } from '@/theme';
 
+import { BuildingScene } from './components/building-scene';
 import { VillageCounters } from './components/village-counters';
 import { VillageWorld } from './components/village-world';
 import { VILLAGE_COPY } from './copy';
 import { usePath, useVillage } from './lib/model';
-import { openBuilding, openLesson } from './lib/navigation';
+import { openBuilding, openLesson, openReview } from './lib/navigation';
 
 /** The white fade under the header, so the island slides beneath it. */
 const FADE = 40;
@@ -52,6 +55,9 @@ export function VillageScreen() {
   const siteDone = site ? chaptersDone(site.id, records) : 0;
   const nextId = path.steps[path.current]?.chapterId;
   const next = nextId ? getChapter(nextId) : undefined;
+  // The first resident waiting with a problem (the others wait by their buildings on the map).
+  const visitorId = village.visitors?.[0];
+  const visitor = visitorId ? getReviewSet(visitorId)?.resident : undefined;
 
   // The camera frames the band between the floating header and the bottom card.
   const tabBar = getTabBarBottomOffset(insets.bottom) + layout.tabBarHeight + spacing.sm;
@@ -70,6 +76,7 @@ export function VillageScreen() {
           partnerName={mascot?.partner.name}
           onBuilding={openBuilding}
           onPartner={() => router.push('/pact')}
+          onVisitor={openReview}
           sitePin={
             site && siteTotal > 0 ? { done: siteDone, total: siteTotal, open: village.states[site.id] === 'cantiere' } : undefined
           }
@@ -113,6 +120,24 @@ export function VillageScreen() {
           onLayout={measure(setCard)}
           style={[styles.card, { bottom: tabBar, backgroundColor: colors.background }]}>
           <VStack gap="md">
+            {visitorId && visitor ? (
+              <HStack gap="sm" align="center">
+                <BuildingScene id={visitorId} state="costruito" visitor width={avatarSize.md} />
+                <VStack flex gap="xxxs">
+                  <Text variant="labelMd">{VILLAGE_COPY.ripasso.waiting(visitor.who, BUILDINGS[visitorId].at)}</Text>
+                  <Text variant="bodySm" color="textSecondary">
+                    {VILLAGE_COPY.ripasso.waitingWhy(theBuilding(BUILDINGS[visitorId]))}
+                  </Text>
+                </VStack>
+                <Button
+                  title={VILLAGE_COPY.ripasso.help(visitor.pronoun)}
+                  size="sm"
+                  variant="secondary"
+                  onPress={() => openReview(visitorId)}
+                  testID="village-help-visitor"
+                />
+              </HStack>
+            ) : null}
             {mascot ? (
               <HStack gap="sm" align="center">
                 <MascotArt id={mascot.id} framing="bust" width={avatarSize.md} />

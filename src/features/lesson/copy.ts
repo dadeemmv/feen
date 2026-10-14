@@ -129,6 +129,8 @@ export const COPY = {
     replayStart: 'Lezione ',
     replayWord: 'rifatta.',
     partnerBuilt: 'Un edificio in più nel borgo, e una cosa in più che sai fare.',
+    /** A finished building whose resident will come by with a review a week later. */
+    partnerBuiltReview: 'Un edificio in più nel borgo. Tra una settimana passa un abitante con un problema vero: se lo risolvi, fiorisce.',
     partnerGrow: (left: number) =>
       left === 1 ? 'Ancora una lezione e l’edificio è finito.' : `Ancora ${left} lezioni e l’edificio è finito.`,
     partnerReplay: 'Rifarla serve: è così che le cose restano.',

@@ -203,6 +203,20 @@ export function buildingOfChapter(chapterId: string): BuildingId | undefined {
   return BUILDING_IDS.find((id) => BUILDINGS[id].chapterIds.includes(chapterId));
 }
 
+/** "il Faro", "la Torre", "le Mura": the building with its article, read from `at`. */
+export function theBuilding(building: Building): string {
+  if (building.at.startsWith('alle ')) return `le ${building.name}`;
+  if (building.at.startsWith('alla ')) return `la ${building.name}`;
+  return `il ${building.name}`;
+}
+
+/** A participle that agrees with the building: `agree(mura, 'fiorit')` → "fiorite". */
+export function agree(building: Building, stem: string): string {
+  if (building.at.startsWith('alle ')) return `${stem}e`;
+  if (building.at.startsWith('alla ')) return `${stem}a`;
+  return `${stem}o`;
+}
+
 /** "Ginestra", "Lavanda", …: the partner suggests three names after the first stone. */
 export const VILLAGE_NAME_IDEAS = [
   'Ginestra',

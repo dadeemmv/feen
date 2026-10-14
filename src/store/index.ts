@@ -90,6 +90,9 @@ export type {
   Placement,
   Purchase,
   ReminderSlot,
+  ReviewFailure,
+  ReviewRecord,
+  ReviewResult,
   Settings,
   SyncStreakResult,
 } from './types';
@@ -123,6 +126,18 @@ export {
   type PathStep,
   type StepStatus,
 } from './rules/village';
+export {
+  builtAt,
+  daysToReview,
+  isReviewWaiting,
+  nextProblem,
+  REVIEW_AFTER_DAYS,
+  REVIEW_RETRY_DAYS,
+  REVIEW_THANKS_BRICKS,
+  reviewDueAt,
+  reviewRecordOf,
+  waitingReviews,
+} from './rules/reviews';
 export { getAvailabilityIssue } from './rules/shop';
 export { findShopItem } from './slices/economy';
 export * from './constants';

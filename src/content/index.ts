@@ -11,3 +11,4 @@ export * from './challenges';
 export * from './assistant';
 export * from './personality';
 export * from './village';
+export * from './reviews';

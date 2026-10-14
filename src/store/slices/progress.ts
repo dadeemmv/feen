@@ -1,7 +1,9 @@
 /**
  * Progress slice: chapter records, the in-progress lesson session ("RIPRENDI DA QUI"),
- * active days (streak), XP and milestone claims, the village's sites and what bricks built.
+ * active days (streak), XP and milestone claims, the village's sites, what bricks built and the
+ * reviews the residents bring.
  */
+import { getReviewSet } from '@/content/reviews';
 import { DECORS } from '@/content/village';
 import { toDayKey } from '@/lib/dates';
 
@@ -9,9 +11,10 @@ import { findChallenge, resolveChallenge } from '../challenges';
 import { createInitialProgress } from '../initial-state';
 import { findCrossedMilestone, findMilestone, resolveMilestone } from '../milestones';
 import { countCompletedLessons } from '../rules/progress';
+import { isReviewWaiting, REVIEW_THANKS_BRICKS, reviewDueAt, reviewRecordOf } from '../rules/reviews';
 import { computeLongestStreak, computeStreak, findPendingShieldDay, insertDay } from '../rules/streak';
 import { activeSites, buildIssue, openSiteIssue, sitesAfterLesson } from '../rules/village';
-import type { ChapterRecord, CompletionSummary, LessonSession, ProgressSlice, SliceCreator } from '../types';
+import type { ChapterRecord, CompletionSummary, LessonSession, ProgressSlice, ReviewRecord, SliceCreator } from '../types';
 
 const toAmount = (value: number) => (Number.isFinite(value) && value > 0 ? Math.floor(value) : 0);
 const clamp01 = (value: number) => (Number.isFinite(value) ? Math.min(1, Math.max(0, value)) : 0);
@@ -113,6 +116,27 @@ export const createProgressSlice: SliceCreator<ProgressSlice> = (set, get) => ({
     const placement = { kind, lot, at: now };
     set((s) => ({ coins: s.coins - DECORS[kind].cost, placements: [...s.placements, placement] }));
     return { ok: true, placement };
+  },
+
+  answerReview: (id, problemId, optionId, now = Date.now()) => {
+    const s = get();
+    if (!isReviewWaiting(id, s, now)) return { ok: false, reason: 'not-waiting' };
+    const problem = getReviewSet(id)?.problems.find((p) => p.id === problemId);
+    if (!problem) return { ok: false, reason: 'unknown-problem' };
+
+    const right = optionId === problem.correctOptionId;
+    const bricks = right ? REVIEW_THANKS_BRICKS : 0;
+    const record: ReviewRecord = {
+      asked: [...(reviewRecordOf(s, id)?.asked ?? []), problemId],
+      lastAt: now,
+      ...(right ? { bloomedAt: now } : {}),
+    };
+    set((st) => ({
+      reviews: { ...st.reviews, [id]: record },
+      bloomed: right && !st.bloomed.includes(id) ? [...st.bloomed, id] : st.bloomed,
+      coins: st.coins + bricks,
+    }));
+    return { ok: true, right, bricks, nextAt: right ? null : reviewDueAt(id, get()) };
   },
 
   claimMilestone: (milestoneId, now = Date.now()) => {

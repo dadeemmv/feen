@@ -379,13 +379,17 @@ Il foglio caldo con trama a puntini, cinque articoli numerati in codice, il tito
 ### Il borgo (signature)
 Un'isola isometrica che cresce: ogni edificio ha quattro stati (progetto a terra con picchetto, cantiere con impalcatura, costruito, fiorito). Selezionare un edificio accende la sua casella con un contorno d'inchiostro e lo solleva di 5 px; la didascalia sotto dice nome, argomento e stato.
 
+**Il ripasso (dal 14/10/2026).** Una settimana dopo che un edificio è finito, il suo abitante (la fruttivendola al Mercato, il fornaio al Granaio, la contadina al Pozzo, il pescatore al Faro, la guardia alle Mura, il giardiniere al Frutteto, la vedetta alla Torre) aspetta accanto all'edificio. Sopra il tetto c'è un fumetto bianco con un «?» in serif corsivo che ondeggia piano; con «riduci movimento» sta fermo. Nella home una riga sopra la socia dice «Il pescatore ti aspetta al Faro.» con il bottone secondario «Aiutalo». Il ripasso è una sola domanda, senza tempo né vite, in una card grigia con le parole dell'abitante tra caporali.
+- **Risposta giusta:** l'edificio fiorisce. Schermata lilla con coriandoli, «Faro *fiorito.*», il grazie dell'abitante, il perché detto dalla socia e 10 mattoni in regalo. Sulla mappa compare un'aiuola di fiori lungo i due lati davanti alla casella.
+- **Risposta sbagliata:** non si perde niente. Quella scelta diventa rosa e quella giusta verde. La socia spiega, e l'abitante ripassa dopo 3 giorni con un'altra domanda.
+
 ## Do's and Don'ts
 
 ### Do:
 - **Do** tenere la tela bianca, il blu per le azioni e gli altri colori Harmony solo con il loro significato.
 - **Do** scrivere i titoli in peso regular con una sola parola in Instrument Serif corsivo.
 - **Do** usare card piene senza bordi, con raggi da 28 px in su e l'alone del loro colore.
-- **Do** usare il lilla come superficie intera nei momenti premio (prima pietra, edificio finito), con il testo in inchiostro.
+- **Do** usare il lilla come superficie intera nei momenti premio (prima pietra, edificio finito, edificio fiorito), con il testo in inchiostro.
 - **Do** mostrare il progresso nel mondo (edifici, abitanti, numeri grandi in serif) invece che con barre e percentuali.
 - **Do** usare la molla (cubic-bezier(.34, 1.56, .64, 1), 480 ms) solo per premi, personaggi e ceralacca; per tutto il resto la curva standard (cubic-bezier(.2, .8, .2, 1), 240 ms).
 - **Do** dare a ogni animazione continua un modo per fermarsi, e con «riduci movimento» togliere gli spostamenti ma tenere le dissolvenze che confermano un'azione.

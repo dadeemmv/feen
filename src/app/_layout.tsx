@@ -99,6 +99,10 @@ function RootStack() {
         name="lesson/[id]"
         options={{ presentation: 'fullScreenModal', gestureEnabled: false, animation: 'slide_from_bottom' }}
       />
+      <Stack.Screen
+        name="review/[id]"
+        options={{ presentation: 'fullScreenModal', gestureEnabled: false, animation: 'slide_from_bottom' }}
+      />
       <Stack.Screen name="story/[id]" options={{ presentation: 'fullScreenModal', animation: 'fade' }} />
       <Stack.Screen name="onboarding" options={{ animation: 'fade', gestureEnabled: false }} />
       <Stack.Screen name="dev" />

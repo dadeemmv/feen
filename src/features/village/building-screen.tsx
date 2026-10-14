@@ -2,32 +2,39 @@
  * A building's page (/building/[id]): the product card on its tint with the scene, the state and
  * what you learn there, then its lessons in order. The path decides when a lesson opens: done
  * lessons can be played again, today's step plays now, the others say at which step they come.
+ * Once built, the page says when its resident comes by with a problem (the review); while they
+ * wait, they stand at the door in the scene and the main button is "Aiutalo".
  */
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ArrowLeft, Check, Lock } from 'lucide-react-native';
 
 import { Button, Card, Icon, IconButton, iconSize, PressableScale, Screen, Text, VStack } from '@/components/ui';
 import { getChapter } from '@/content/courses';
-import { BUILDINGS, isBuildingId, type BuildingId } from '@/content/village';
+import { getReviewSet } from '@/content/reviews';
+import { agree, BUILDINGS, isBuildingId, theBuilding, type BuildingId } from '@/content/village';
 import { goBackOr } from '@/features/shop/lib/navigation';
-import { buildingState, chaptersDone, useStoreShallow } from '@/store';
+import { formatLongDate } from '@/lib/dates';
+import { buildingState, chaptersDone, daysToReview, isReviewWaiting, reviewRecordOf, useStoreShallow } from '@/store';
 import { buildingTones, layout, radius, spacing } from '@/theme';
 
 import { BuildingScene } from './components/building-scene';
 import { VILLAGE_COPY } from './copy';
 import { usePath } from './lib/model';
-import { openLesson } from './lib/navigation';
+import { openLesson, openReview } from './lib/navigation';
 
 const ART = 200;
 
 export function BuildingScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const buildingId: BuildingId = isBuildingId(id) ? id : 'municipio';
+  const [now] = useState(() => Date.now());
   const s = useStoreShallow((st) => ({
     chapterRecords: st.chapterRecords,
     openSites: st.openSites,
     bloomed: st.bloomed,
+    reviews: st.reviews,
     pact: st.pact,
   }));
   const b = BUILDINGS[buildingId];
@@ -37,6 +44,20 @@ export function BuildingScreen() {
   const done = chaptersDone(buildingId, s.chapterRecords);
   const path = usePath();
   const copy = VILLAGE_COPY.building;
+
+  // The resident and the review: when they come, that they wait, or when it bloomed.
+  const resident = getReviewSet(buildingId)?.resident;
+  const waiting = resident !== undefined && isReviewWaiting(buildingId, s, now);
+  const reviewText = (() => {
+    if (!resident) return null;
+    const review = VILLAGE_COPY.ripasso;
+    const bloomedAt = reviewRecordOf(s, buildingId)?.bloomedAt;
+    if (state === 'fiorito') return bloomedAt ? review.bloomed(agree(b, 'Fiorit'), formatLongDate(bloomedAt), resident.who) : null;
+    const days = daysToReview(buildingId, s, now);
+    if (state !== 'costruito' || days === null) return null;
+    if (waiting) return `${review.waiting(resident.who, 'qui')} ${review.waitingWhy(theBuilding(b))}`;
+    return reviewRecordOf(s, buildingId) ? review.again(resident.who, days) : review.soon(resident.who, days, theBuilding(b));
+  })();
 
   // Where this building's lessons sit on the path.
   const stepOf = (chapterId: string) => path.steps.findIndex((step) => step.chapterId === chapterId);
@@ -51,7 +72,9 @@ export function BuildingScreen() {
     return firstStep >= 0 ? copy.atStep(firstStep + 1) : null;
   })();
 
-  const footer = today ? (
+  const footer = waiting ? (
+    <Button title={VILLAGE_COPY.ripasso.help(resident.pronoun)} fullWidth onPress={() => openReview(buildingId)} />
+  ) : today ? (
     <Button title={copy.continue(today.title)} fullWidth onPress={() => openLesson(today.id)} />
   ) : firstDone ? (
     <Button title={copy.practise} fullWidth onPress={() => openLesson(firstDone)} />
@@ -85,7 +108,7 @@ export function BuildingScreen() {
             {b.description}
           </Text>
           <View style={styles.art}>
-            <BuildingScene id={buildingId} state={state} progress={total ? done / total : 0} width={ART} />
+            <BuildingScene id={buildingId} state={state} progress={total ? done / total : 0} visitor={waiting} width={ART} />
           </View>
         </View>
 
@@ -93,6 +116,14 @@ export function BuildingScreen() {
           <Card padding="md">
             <Text variant="bodyMd" color="textSecondary">
               {issueText}
+            </Text>
+          </Card>
+        ) : null}
+
+        {reviewText ? (
+          <Card padding="md">
+            <Text variant="bodyMd" color={waiting ? 'text' : 'textSecondary'}>
+              {reviewText}
             </Text>
           </Card>
         ) : null}

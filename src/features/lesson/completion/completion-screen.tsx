@@ -17,6 +17,7 @@ import { MascotArt } from '@/components/illustrations';
 import { Button, Confetti, CountUp, HStack, Screen, StatTile, Text, avatarSize, iconSize, useReduceMotion } from '@/components/ui';
 import { getChapter } from '@/content/courses';
 import { getMascot } from '@/content/personality';
+import { hasReviews } from '@/content/reviews';
 import { isGradedStep, type Chapter, type LessonStep } from '@/content/types';
 import { BUILDINGS, buildingOfChapter, type Building } from '@/content/village';
 import { PopIn } from '@/features/rewards';
@@ -91,7 +92,9 @@ export function CompletionScreen({
   const partnerLine = practice
     ? COPY.completion.partnerReplay
     : builtNow
-      ? COPY.completion.partnerBuilt
+      ? buildingId && hasReviews(buildingId)
+        ? COPY.completion.partnerBuiltReview
+        : COPY.completion.partnerBuilt
       : COPY.completion.partnerGrow(Math.max(1, total - done));
   // On lilac the tiles turn white, as on the first stone; on indigo they are deep indigo tiles.
   const tileStyle = builtNow ? { backgroundColor: theme.colors.surfaceRaised } : undefined;

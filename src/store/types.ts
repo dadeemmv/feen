@@ -196,12 +196,32 @@ export type ProgressData = {
   openSites: BuildingId[];
   /** Buildings that bloomed: built, and the one-week review brought by a resident was right. */
   bloomed: BuildingId[];
+  /** The residents' visits to each built building (the reviews that make it bloom). */
+  reviews: Partial<Record<BuildingId, ReviewRecord>>;
   /** What bricks built, each on its own free lot (index into `VILLAGE_LOTS`). */
   placements: Placement[];
 };
 
 /** A house, a tree or a decoration bought with bricks and placed on a free lot. */
 export type Placement = { kind: DecorId; lot: number; at: number };
+
+/**
+ * The visits of a building's resident. The first comes a week after the building is finished;
+ * after a wrong answer the resident comes back a few days later with another problem.
+ */
+export type ReviewRecord = {
+  /** Problems already brought (ids), in order: the next visit brings another one. */
+  asked: string[];
+  /** The last answer (epoch ms). */
+  lastAt: number;
+  /** Bloomed (epoch ms), after a right answer. */
+  bloomedAt?: number;
+};
+
+export type ReviewFailure = 'not-waiting' | 'unknown-problem';
+export type ReviewResult =
+  | { ok: true; right: boolean; bricks: number; nextAt: number | null }
+  | { ok: false; reason: ReviewFailure };
 
 export type BuildFailure = 'bricks' | 'taken' | 'no-lot';
 export type BuildResult = { ok: true; placement: Placement } | { ok: false; reason: BuildFailure };
@@ -263,6 +283,11 @@ export type ProgressActions = {
   openSite: (id: BuildingId) => OpenSiteResult;
   /** Spends bricks on a house or a decoration, placed on a free lot of the village. */
   build: (kind: DecorId, lot: number, now?: number) => BuildResult;
+  /**
+   * Answers the problem a resident brought. Right: the building blooms and the resident leaves a
+   * few bricks as thanks. Wrong: nothing is lost, the resident comes back later with another one.
+   */
+  answerReview: (id: BuildingId, problemId: string, optionId: string, now?: number) => ReviewResult;
 };
 
 export type ProgressSlice = ProgressData & ProgressActions;

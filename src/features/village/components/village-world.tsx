@@ -4,18 +4,24 @@
  * site, with the partner beside it, and finds it again when you come back from a lesson.
  *
  * Taps on buildings are recognised by position on the island, so dragging the map never opens
- * the building under your finger. Each building is still a real button for screen readers. Pin
- * and partner stay outside the zoom: same size at any zoom, always readable and touchable.
+ * the building under your finger. Each building is still a real button for screen readers. Pin,
+ * partner and the residents' bubbles stay outside the zoom: same size at any zoom, always
+ * readable and touchable. A resident with a problem stands by its building, with a "?" bubble
+ * over the roof that bobs gently (still under reduced motion); touching it opens the review.
  * The zoom buttons (+, −, centre) also make it work with a mouse or a keyboard.
  */
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent, type StyleProp, type ViewStyle } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
+  cancelAnimation,
   useAnimatedStyle,
   useSharedValue,
   withDecay,
+  withRepeat,
+  withSequence,
   withTiming,
+  type SharedValue,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import { SvgXml } from 'react-native-svg';
@@ -26,11 +32,12 @@ import { MascotArt } from '@/components/illustrations';
 import { useSvgIds } from '@/components/icons/lib/svg-ids';
 import { IconButton, PressableScale, Text, useReduceMotion } from '@/components/ui';
 import type { MascotId } from '@/content/personality';
+import { getReviewSet } from '@/content/reviews';
 import { BUILDING_IDS, BUILDINGS, type BuildingId } from '@/content/village';
-import { galleryColors, radius, spacing } from '@/theme';
+import { elevation, fonts, galleryColors, radius, spacing } from '@/theme';
 
 import { VILLAGE_COPY } from '../copy';
-import { buildingAnchor, LAYOUT, P, partnerAnchor, TW, VILLAGE_VIEWBOX, villageSvg } from '../lib/iso';
+import { buildingAnchor, LAYOUT, P, partnerAnchor, TW, VILLAGE_VIEWBOX, villageSvg, visitorAnchor } from '../lib/iso';
 import type { Village } from '../lib/model';
 
 /** The island is drawn once at this width and zoomed with a transform. */
@@ -49,6 +56,11 @@ const PIN_HEIGHT = 26;
 const PIN_TIP = 6;
 const PIN_LIFT = 34;
 const CAMERA_MS = 420;
+const BUBBLE = 34;
+const BUBBLE_TIP = 6;
+/** The bubble's slow bob: up a few points and back, forever. */
+const BOB = 3;
+const BOB_MS = 900;
 
 const toBase = (x: number, y: number) => ({ x: (x - VILLAGE_VIEWBOX[0]) * UNIT, y: (y - VILLAGE_VIEWBOX[1]) * UNIT });
 
@@ -76,6 +88,8 @@ export type VillageWorldProps = {
   partnerName?: string;
   onBuilding: (id: BuildingId) => void;
   onPartner: () => void;
+  /** A resident's bubble: open the review they bring. */
+  onVisitor: (id: BuildingId) => void;
   /** Lessons done / total of today's site, for the pin; `open` = already a site, not a lot. */
   sitePin?: { done: number; total: number; open: boolean };
   /** Space covered by the floating header and footer: the camera frames the band between them. */
@@ -84,7 +98,17 @@ export type VillageWorldProps = {
   controlsStyle?: StyleProp<ViewStyle>;
 };
 
-export function VillageWorld({ village, partner, partnerName, onBuilding, onPartner, sitePin, cover, controlsStyle }: VillageWorldProps) {
+export function VillageWorld({
+  village,
+  partner,
+  partnerName,
+  onBuilding,
+  onPartner,
+  onVisitor,
+  sitePin,
+  cover,
+  controlsStyle,
+}: VillageWorldProps) {
   const ids = useSvgIds('village');
   const reduceMotion = useReduceMotion();
   const focused = useIsFocused();
@@ -273,6 +297,10 @@ export function VillageWorld({ village, partner, partnerName, onBuilding, onPart
         </Animated.View>
       ) : null}
 
+      {(village.visitors ?? []).map((id) => (
+        <VisitorBubble key={id} id={id} camX={camX} camY={camY} camS={camS} onPress={onVisitor} />
+      ))}
+
       <View style={[styles.controls, controlsStyle]} pointerEvents="box-none">
         <IconButton icon={Plus} size="sm" accessibilityLabel={VILLAGE_COPY.world.zoomIn} onPress={() => zoomBy(ZOOM_STEP)} />
         <IconButton icon={Minus} size="sm" accessibilityLabel={VILLAGE_COPY.world.zoomOut} onPress={() => zoomBy(1 / ZOOM_STEP)} />
@@ -287,6 +315,58 @@ export function VillageWorld({ village, partner, partnerName, onBuilding, onPart
         />
       </View>
     </View>
+  );
+}
+
+/** The "?" bubble over the roof of a building where a resident waits with a problem. */
+function VisitorBubble({
+  id,
+  camX,
+  camY,
+  camS,
+  onPress,
+}: {
+  id: BuildingId;
+  camX: SharedValue<number>;
+  camY: SharedValue<number>;
+  camS: SharedValue<number>;
+  onPress: (id: BuildingId) => void;
+}) {
+  const reduceMotion = useReduceMotion();
+  const bob = useSharedValue(0);
+  useEffect(() => {
+    if (reduceMotion) return;
+    bob.value = withRepeat(withSequence(withTiming(-BOB, { duration: BOB_MS }), withTiming(0, { duration: BOB_MS })), -1);
+    return () => cancelAnimation(bob);
+  }, [reduceMotion, bob]);
+
+  const a = visitorAnchor(id);
+  const base = toBase(a.x, a.y);
+  const style = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: camX.value + base.x * camS.value - BUBBLE / 2 },
+      { translateY: camY.value + base.y * camS.value - BUBBLE - BUBBLE_TIP + bob.value },
+    ],
+  }));
+  const resident = getReviewSet(id)?.resident;
+  const label = resident ? VILLAGE_COPY.ripasso.bubbleA11y(resident.who, BUILDINGS[id].at, resident.pronoun) : BUILDINGS[id].name;
+
+  return (
+    <Animated.View style={[styles.bubbleBox, style]}>
+      <PressableScale
+        scaleTo="small"
+        hitSlop={spacing.xs}
+        onPress={() => onPress(id)}
+        accessibilityRole="button"
+        accessibilityLabel={label}
+        style={styles.bubble}
+        testID={`village-visitor-${id}`}>
+        <Text variant="titleLg" style={styles.bubbleMark}>
+          ?
+        </Text>
+      </PressableScale>
+      <View style={styles.bubbleTip} />
+    </Animated.View>
   );
 }
 
@@ -323,4 +403,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   controls: { position: 'absolute', gap: spacing.xs },
+  bubbleBox: { position: 'absolute', left: 0, top: 0, width: BUBBLE, alignItems: 'center' },
+  bubble: {
+    width: BUBBLE,
+    height: BUBBLE,
+    borderRadius: BUBBLE / 2,
+    backgroundColor: galleryColors.paper,
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: elevation.lg,
+  },
+  bubbleMark: { fontFamily: fonts.serif.italic, color: galleryColors.ink },
+  bubbleTip: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: BUBBLE_TIP,
+    borderRightWidth: BUBBLE_TIP,
+    borderTopWidth: BUBBLE_TIP,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: galleryColors.paper,
+  },
 });

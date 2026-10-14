@@ -1,7 +1,8 @@
 /**
  * The village derived from the store: every building's state, the walls of each site, today's
- * site (the building of the path's current step, where the partner waits), residents, what bricks
- * built, bricks and the day of the pact. And the path itself (`usePath`).
+ * site (the building of the path's current step, where the partner waits), residents, the ones
+ * waiting by a building with a problem, what bricks built, bricks and the day of the pact. And the
+ * path itself (`usePath`).
  */
 import { getMascot } from '@/content/personality';
 import { BUILDING_IDS, BUILDINGS, type BuildingId } from '@/content/village';
@@ -15,6 +16,7 @@ import {
   selectMascot,
   useStore,
   useStoreShallow,
+  waitingReviews,
   type BuildingState,
   type PathStep,
 } from '@/store';
@@ -34,6 +36,7 @@ export function useVillage(now: number): Village {
     chapterRecords: st.chapterRecords,
     openSites: st.openSites,
     bloomed: st.bloomed,
+    reviews: st.reviews,
     pact: st.pact,
     activeDays: st.activeDays,
     coins: st.coins,
@@ -57,6 +60,7 @@ export function useVillage(now: number): Village {
     progress,
     current,
     residents: countResidents(s),
+    visitors: waitingReviews(s, now),
     placements: s.placements,
     name: s.villageName,
     bricks: s.coins,

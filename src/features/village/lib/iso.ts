@@ -114,13 +114,23 @@ function kit(g: string) {
     }
     return s;
   }
+  /** Bloomed: a border of flowers along the two front edges of the tile, in sight from afar. */
   function flowers(i: number, j: number) {
-    const sp = [[0.14, 0.95], [0.3, 0.97], [0.52, 0.96], [0.95, 0.16], [0.97, 0.36], [0.96, 0.58], [0.9, 0.93], [0.74, 0.97]];
-    const cs = [CORAL, SUN, '#FFFFFF', '#FF8FA3'];
-    return sp
+    const cs = [CORAL, galleryColors.lilac, SUN, '#FFFFFF', '#FF8FA3'];
+    const along = [0.08, 0.22, 0.36, 0.5, 0.64, 0.78];
+    const spots: [number, number][] = [
+      ...along.map((t): [number, number] => [t, 0.95]),
+      [0.95, 0.95],
+      ...along.map((t): [number, number] => [0.95, t]),
+    ];
+    return spots
       .map(([a, b], k) => {
-        const p = P(i + a, j + b);
-        return `<circle cx="${p[0]}" cy="${p[1] - 1.5}" r="2.1" fill="${cs[k % 4]}"/>`;
+        const [x, y] = P(i + a, j + b);
+        return (
+          `<ellipse cx="${x}" cy="${y}" rx="3.2" ry="1.6" fill="#4E9A3A"/>` +
+          `<circle cx="${x}" cy="${y - 2.6}" r="2.7" fill="${cs[k % cs.length]}"/>` +
+          `<circle cx="${x}" cy="${y - 2.6}" r="0.9" fill="${SUN_MID}"/>`
+        );
       })
       .join('');
   }
@@ -153,11 +163,11 @@ function kit(g: string) {
       `<ellipse cx="${x + 3}" cy="${y - 9}" rx="3.2" ry="1.8" fill="#7CC95A" transform="rotate(25 ${x + 3} ${y - 9})"/>`
     );
   }
-  function villager(i: number, j: number, col: string, skin: string) {
+  function villager(i: number, j: number, col: string, skin: string, s = 1) {
     const [x, y] = P(i, j);
     return (
-      `<ellipse cx="${x}" cy="${y}" rx="4" ry="1.6" fill="rgba(0,0,0,.15)"/>` +
-      `<rect x="${x - 3}" y="${y - 10}" width="6" height="9" rx="3" fill="${col}"/><circle cx="${x}" cy="${y - 13}" r="3" fill="${skin}"/>`
+      `<ellipse cx="${x}" cy="${y}" rx="${4 * s}" ry="${1.6 * s}" fill="rgba(0,0,0,.15)"/>` +
+      `<rect x="${x - 3 * s}" y="${y - 10 * s}" width="${6 * s}" height="${9 * s}" rx="${3 * s}" fill="${col}"/><circle cx="${x}" cy="${y - 13 * s}" r="${3 * s}" fill="${skin}"/>`
     );
   }
   function fountain(i: number, j: number) {
@@ -249,9 +259,10 @@ function kit(g: string) {
       return st === 'fiorito' ? s + flowers(i, j) : s;
     },
     frutteto(i, j, st) {
-      return [[0.28, 0.3], [0.72, 0.28], [0.3, 0.72], [0.72, 0.72]]
+      const s = [[0.28, 0.3], [0.72, 0.28], [0.3, 0.72], [0.72, 0.72]]
         .map(([a, b]) => (st === 'cantiere' ? sapling(i + a, j + b) : tree(i + a, j + b, 0.78, '#6CC04A', true)))
         .join('');
+      return st === 'fiorito' ? s + flowers(i, j) : s;
     },
     torre(i, j, st) {
       const fw = 0.46;
@@ -437,15 +448,20 @@ const sides = (k: ReturnType<typeof kit>, n: number, T: number) =>
   k.poly([P(0, n), P(n, n), P(n, n, -4), P(0, n, -4)], '#9ED46B') +
   k.poly([P(n, 0), P(n, n), P(n, n, -4), P(n, 0, -4)], '#86BD55');
 
-/** One building on its own tile of ground (building cards, the first stone). */
-export function sceneSvg(t: BuildingId, st: BuildingState, prefix: string, progress?: number) {
+/**
+ * One building on its own tile of ground (building cards, the first stone). `visitor`: its
+ * resident waits at the front corner with a problem (the review).
+ */
+export function sceneSvg(t: BuildingId, st: BuildingState, prefix: string, progress?: number, visitor = false) {
   const k = kit(prefix);
+  const [clothes, skin] = VISITOR_LOOK[t] ?? [INDIGO, '#F1C9A5'];
   const g =
     `<ellipse cx="0" cy="${TH + 15}" rx="26" ry="5" fill="rgba(0,0,0,.08)"/>` +
     sides(k, 1, 9) +
     tile(k, 0, 0, '#C8ED8F') +
     castShadow(k, t, 0, 0, st) +
-    render(k, t, 0, 0, st, progress);
+    render(k, t, 0, 0, st, progress) +
+    (visitor ? k.villager(VISITOR_SPOT[0], VISITOR_SPOT[1], clothes, skin, VISITOR_SCALE) : '');
   const top = TOP[t] - 4;
   return `<svg viewBox="-48 ${-top} 96 ${top + 52}" xmlns="http://www.w3.org/2000/svg">${isoDefs(prefix)}${g}</svg>`;
 }
@@ -509,6 +525,8 @@ export type VillageModel = {
   /** Today's site, highlighted on the ground with the partner next to it. */
   current?: BuildingId;
   residents: number;
+  /** Built buildings whose resident is waiting with a problem: they stand by it, in sight. */
+  visitors?: readonly BuildingId[];
   /** Houses and decorations bought with bricks, each on its lot (index into `VILLAGE_LOTS`). */
   placements: readonly { kind: DecorId; lot: number }[];
   /**
@@ -519,6 +537,24 @@ export type VillageModel = {
 };
 
 const PARTNER_SPOT: [number, number] = [0.8, 0.6];
+/** Where a resident with a problem waits on the building's tile: the front corner, in sight. */
+const VISITOR_SPOT: [number, number] = [0.9, 0.96];
+/** On the island, where a neighbour (the Town Hall, a pine) would hide the front corner. */
+const VISITOR_SPOT_IN_VILLAGE: Partial<Record<BuildingId, [number, number]>> = {
+  mura: [0.25, 0.8],
+  torre: [0.95, 0.1],
+};
+const VISITOR_SCALE = 1.2;
+/** Clothes and skin of the resident who brings each building's review. */
+const VISITOR_LOOK: Partial<Record<BuildingId, [string, string]>> = {
+  mercato: [CORAL, '#F1C9A5'],
+  granaio: [SUN, '#C68642'],
+  pozzo: [GREEN, '#8D5524'],
+  faro: [CYAN, '#FFDBAC'],
+  mura: [INDIGO, '#E0AC69'],
+  frutteto: ['#FF8FA3', '#F1C9A5'],
+  torre: [galleryColors.lilac, '#8D5524'],
+};
 
 /** The island with every building in its state, homes, trees, walkers and the partner. */
 export function villageSvg(m: VillageModel, prefix: string) {
@@ -577,6 +613,14 @@ export function villageSvg(m: VillageModel, prefix: string) {
     const si = i + PARTNER_SPOT[0] + 0.5;
     const sj = j + PARTNER_SPOT[1];
     objs.push({ k: si + sj, k2: si, svg: partnerPole(si, sj) });
+  }
+
+  // A resident with a problem waits by the building (the "?" bubble over the roof is a view).
+  for (const t of m.visitors ?? []) {
+    const { i, j } = LAYOUT[t];
+    const [clothes, skin] = VISITOR_LOOK[t] ?? [INDIGO, '#F1C9A5'];
+    const [di, dj] = VISITOR_SPOT_IN_VILLAGE[t] ?? VISITOR_SPOT;
+    objs.push({ k: i + di + j + dj, k2: i + di, svg: k.villager(i + di, j + dj, clothes, skin, VISITOR_SCALE) });
   }
   DECO.forEach(([t, i, j]) => objs.push({ k: i + j + 1, k2: i, svg: t === 'pine' ? k.pine(i + 0.5, j + 0.5, 0.9) : k.tree(i + 0.5, j + 0.5, 0.85) }));
   objs.push({ k: 7, k2: 3, svg: k.fountain(3, 3) });
@@ -707,6 +751,17 @@ export function partnerAnchor(t: BuildingId) {
   const { i, j } = LAYOUT[t];
   const [x, y] = P(i + PARTNER_SPOT[0] + 0.5, j + PARTNER_SPOT[1]);
   return { x, y: y - 34 };
+}
+
+/**
+ * Just over the roof of a building whose resident waits with a problem (viewBox units): the tip
+ * of the "?" bubble. Over the roof, not over the resident, so it never meets the pin of today's
+ * site on the tile in front.
+ */
+export function visitorAnchor(t: BuildingId) {
+  const { i, j } = LAYOUT[t];
+  const [x, y] = P(i + 0.5, j + 0.5);
+  return { x, y: y - B[t].h + 2 };
 }
 
 /** Screen-space centre of a building (viewBox units), for hit areas and the camera. */
